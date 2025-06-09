@@ -4,8 +4,8 @@ import { Button } from '../components/ui/Button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/Card';
 import Loading from '../components/ui/Loading';
 import ErrorMessage from '../components/ui/ErrorMessage';
-//import VolunteerForm from '../components/forms/VolunteerForm';
-//import DonationForm from '../components/forms/DonationForm';
+import VolunteerForm from '../components/forms/VolunteerForm';
+import DonationForm from '../components/forms/DonationForm';
 import { eventsService } from '../services/eventsService';
 
 const GetInvolved = () => {
@@ -142,7 +142,7 @@ const GetInvolved = () => {
                   </Card>
                 </div>
 
-                {/* <VolunteerForm /> */}
+                <VolunteerForm />
               </div>
             )}
 

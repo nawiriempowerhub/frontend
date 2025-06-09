@@ -1,7 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+
+/* Removed @custom-variant dark (&:is(.dark *)); as it is not a standard CSS or Tailwind rule */
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
@@ -112,7 +113,8 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    border-color: var(--color-border);
+    outline-color: color-mix(in oklab, var(--color-ring) 50%, transparent);
   }
   body {
     @apply bg-background text-foreground;
