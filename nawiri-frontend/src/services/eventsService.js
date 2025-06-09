@@ -1,0 +1,28 @@
+import api from './api';
+
+export const eventsService = {
+  // Get all events
+  getEvents: async () => {
+    const response = await api.get('/events');
+    return response.data;
+  },
+
+  // Create event (admin only)
+  createEvent: async (eventData) => {
+    const response = await api.post('/events', eventData);
+    return response.data;
+  },
+
+  // Update event (admin only)
+  updateEvent: async (id, eventData) => {
+    const response = await api.put(`/events/${id}`, eventData);
+    return response.data;
+  },
+
+  // Delete event (admin only)
+  deleteEvent: async (id) => {
+    const response = await api.delete(`/events/${id}`);
+    return response.data;
+  },
+};
+
