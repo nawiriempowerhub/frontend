@@ -8,10 +8,10 @@ export const aboutService = {
   },
 
   // Update about content (admin only)
-  updateAbout: async (aboutData) => {
-    const response = await api.put('/about/', aboutData);
-    return response.data;
-  },
+  // updateAbout: async (aboutData) => {
+  //   const response = await api.put('/about/', aboutData);
+  //   return response.data;
+  // },
 
   // Get team members
   getTeam: async () => {
@@ -20,22 +20,22 @@ export const aboutService = {
   },
 
   // Add team member (admin only)
-  addTeamMember: async (memberData) => {
-    const response = await api.post('/about/team', memberData);
-    return response.data;
-  },
+  // addTeamMember: async (memberData) => {
+  //   const response = await api.post('/about/team', memberData);
+  //   return response.data;
+  // },
 
   // Update team member (admin only)
-  updateTeamMember: async (id, memberData) => {
-    const response = await api.put(`/about/team/${id}`, memberData);
-    return response.data;
-  },
+  // updateTeamMember: async (id, memberData) => {
+  //   const response = await api.put(`/about/team/${id}`, memberData);
+  //   return response.data;
+  // },
 
   // Delete team member (admin only)
-  deleteTeamMember: async (id) => {
-    const response = await api.delete(`/about/team/${id}`);
-    return response.data;
-  },
+  // deleteTeamMember: async (id) => {
+  //   const response = await api.delete(`/about/team/${id}`);
+  //   return response.data;
+  // },
 
   // Get impact events
   getImpact: async () => {
@@ -44,21 +44,21 @@ export const aboutService = {
   },
 
   // Add impact event (admin only)
-  addImpactEvent: async (impactData) => {
-    const response = await api.post('/about/impact', impactData);
-    return response.data;
-  },
+  // addImpactEvent: async (impactData) => {
+  //   const response = await api.post('/about/impact', impactData);
+  //   return response.data;
+  // },
 
-  // Update impact event (admin only)
-  updateImpactEvent: async (id, impactData) => {
-    const response = await api.put(`/about/impact/${id}`, impactData);
-    return response.data;
-  },
+  // // Update impact event (admin only)
+  // updateImpactEvent: async (id, impactData) => {
+  //   const response = await api.put(`/about/impact/${id}`, impactData);
+  //   return response.data;
+  // },
 
-  // Delete impact event (admin only)
-  deleteImpactEvent: async (id) => {
-    const response = await api.delete(`/about/impact/${id}`);
-    return response.data;
-  },
+  //  Delete impact event (admin only)
+  // deleteImpactEvent: async (id) => {
+  //   const response = await api.delete(`/about/impact/${id}`);
+  //   return response.data;
+  // },
 };
 

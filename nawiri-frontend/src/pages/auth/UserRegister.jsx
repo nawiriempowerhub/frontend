@@ -12,7 +12,7 @@ const UserRegister = () => {
     email: '',
     password: '',
     confirmPassword: '',
-    phone: '',
+    // phone: '',
     interests: []
   });
   const [showPassword, setShowPassword] = useState(false);
@@ -28,10 +28,10 @@ const UserRegister = () => {
     'Women Empowerment',
     'Community Health',
     'Youth Development',
-    'Environmental Conservation',
-    'Economic Empowerment',
-    'Advocacy & Human Rights',
-    'Event Organization'
+    // 'Environmental Conservation',
+    // 'Economic Empowerment',
+    // 'Advocacy & Human Rights',
+    // 'Event Organization'
   ];
 
   const passwordRequirements = [
@@ -141,7 +141,7 @@ const UserRegister = () => {
               />
             </div>
 
-            <div>
+            {/* <div>
               <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
                 Phone Number
               </label>
@@ -154,7 +154,7 @@ const UserRegister = () => {
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                 placeholder="Enter your phone number"
               />
-            </div>
+            </div> */}
 
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
