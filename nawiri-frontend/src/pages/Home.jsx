@@ -1,13 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowRight, Users, Heart, Target, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { Button } from '../components/ui/Button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/Card';
-import Loading from '../components/ui/Loading';
-import ErrorMessage from '../components/ui/ErrorMessage';
+import { Container, Row, Col, Card, Button, Spinner, Alert } from 'react-bootstrap';
 import { programsService } from '../services/programsService';
 import { aboutService } from '../services/aboutService';
 import { eventsService } from '../services/eventsService';
+
+// Custom Loading Component
+const Loading = ({ size = 'md', text = 'Loading...' }) => {
+  const spinnerSize = size === 'lg' ? 'lg' : 'md';
+  
+  return (
+    <div className="d-flex flex-column align-items-center">
+      <Spinner animation="border" variant="primary" size={spinnerSize} />
+      {text && <span className="mt-2">{text}</span>}
+    </div>
+  );
+};
+
+// Custom Error Message Component
+const ErrorMessage = ({ message, onRetry }) => {
+  return (
+    <Alert variant="danger" className="text-center">
+      <Alert.Heading>Something went wrong!</Alert.Heading>
+      <p>{message}</p>
+      {onRetry && (
+        <Button variant="outline-danger" onClick={onRetry}>
+          Try Again
+        </Button>
+      )}
+    </Alert>
+  );
+};
 
 const Home = () => {
   const [programs, setPrograms] = useState([]);
@@ -41,7 +65,7 @@ const Home = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-vh-100 d-flex align-items-center justify-content-center">
         <Loading size="lg" text="Loading..." />
       </div>
     );
@@ -49,7 +73,7 @@ const Home = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-vh-100 d-flex align-items-center justify-content-center">
         <ErrorMessage message={error} onRetry={() => window.location.reload()} />
       </div>
     );
@@ -58,214 +82,299 @@ const Home = () => {
   return (
     <div>
       {/* Hero Section */}
-      <section className="hero-gradient text-white section-padding">
-        <div className="container-max">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Empowering Communities,
-              <span className="block text-accent-foreground">Building Futures</span>
-            </h1>
-            <p className="text-xl md:text-2xl mb-8 text-gray-100">
-              Join us in creating lasting change through education, healthcare, and sustainable development programs across Kenya.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-white text-primary hover:bg-gray-100">
-                <Link to="/get-involved">
-                  Get Involved <ArrowRight className="ml-2 w-4 h-4" />
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-primary">
-                <Link to="/programs">
+      <section 
+        className="py-5 text-white position-relative"
+        style={{
+          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          minHeight: '70vh'
+        }}
+      >
+        <Container className="h-100">
+          <Row className="h-100 align-items-center justify-content-center text-center">
+            <Col lg={10} xl={8}>
+              <h1 className="display-3 fw-bold mb-4">
+                Empowering Communities,
+                <span className="d-block text-warning">Building Futures</span>
+              </h1>
+              <p className="lead fs-4 mb-5 text-light">
+                Join us in creating lasting change through education, healthcare, and sustainable development programs across Kenya.
+              </p>
+              <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+                <Button 
+                  as={Link} 
+                  to="/get-involved" 
+                  size="lg" 
+                  variant="light"
+                  className="fw-semibold"
+                >
+                  Get Involved <ArrowRight className="ms-2" size={20} />
+                </Button>
+                <Button 
+                  as={Link} 
+                  to="/programs" 
+                  size="lg" 
+                  variant="outline-light"
+                  className="fw-semibold"
+                >
                   Our Programs
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </div>
+                </Button>
+              </div>
+            </Col>
+          </Row>
+        </Container>
       </section>
 
       {/* Stats Section */}
-      <section className="section-padding bg-gray-50">
-        <div className="container-max">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                <Users className="w-8 h-8 text-white" />
+      <section className="py-5 bg-light">
+        <Container>
+          <Row className="g-4">
+            <Col md={6} lg={3} className="text-center">
+              <div 
+                className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3"
+                style={{ 
+                  width: '80px', 
+                  height: '80px', 
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' 
+                }}
+              >
+                <Users className="text-white" size={32} />
               </div>
-              <h3 className="text-3xl font-bold text-gray-900 mb-2">1,000+</h3>
-              <p className="text-gray-600">Lives Impacted</p>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-4">
-                <Target className="w-8 h-8 text-white" />
+              <h3 className="display-6 fw-bold text-dark mb-2">1,000+</h3>
+              <p className="text-muted mb-0">Lives Impacted</p>
+            </Col>
+            <Col md={6} lg={3} className="text-center">
+              <div 
+                className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3"
+                style={{ 
+                  width: '80px', 
+                  height: '80px', 
+                  background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)' 
+                }}
+              >
+                <Target className="text-white" size={32} />
               </div>
-              <h3 className="text-3xl font-bold text-gray-900 mb-2">15+</h3>
-              <p className="text-gray-600">Active Programs</p>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                <Heart className="w-8 h-8 text-white" />
+              <h3 className="display-6 fw-bold text-dark mb-2">15+</h3>
+              <p className="text-muted mb-0">Active Programs</p>
+            </Col>
+            <Col md={6} lg={3} className="text-center">
+              <div 
+                className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3"
+                style={{ 
+                  width: '80px', 
+                  height: '80px', 
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' 
+                }}
+              >
+                <Heart className="text-white" size={32} />
               </div>
-              <h3 className="text-3xl font-bold text-gray-900 mb-2">50+</h3>
-              <p className="text-gray-600">Volunteers</p>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-4">
-                <Calendar className="w-8 h-8 text-white" />
+              <h3 className="display-6 fw-bold text-dark mb-2">50+</h3>
+              <p className="text-muted mb-0">Volunteers</p>
+            </Col>
+            <Col md={6} lg={3} className="text-center">
+              <div 
+                className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3"
+                style={{ 
+                  width: '80px', 
+                  height: '80px', 
+                  background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)' 
+                }}
+              >
+                <Calendar className="text-white" size={32} />
               </div>
-              <h3 className="text-3xl font-bold text-gray-900 mb-2">5+</h3>
-              <p className="text-gray-600">Years of Impact</p>
-            </div>
-          </div>
-        </div>
+              <h3 className="display-6 fw-bold text-dark mb-2">5+</h3>
+              <p className="text-muted mb-0">Years of Impact</p>
+            </Col>
+          </Row>
+        </Container>
       </section>
 
       {/* Featured Programs */}
-      <section className="section-padding">
-        <div className="container-max">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Our Featured Programs
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Discover how we're making a difference through our comprehensive programs designed to empower communities and create lasting change.
-            </p>
-          </div>
+      <section className="py-5">
+        <Container>
+          <Row className="justify-content-center text-center mb-5">
+            <Col lg={8}>
+              <h2 className="display-4 fw-bold text-dark mb-4">
+                Our Featured Programs
+              </h2>
+              <p className="lead text-muted">
+                Discover how we're making a difference through our comprehensive programs designed to empower communities and create lasting change.
+              </p>
+            </Col>
+          </Row>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+          <Row className="g-4 mb-5">
             {programs.map((program) => (
-              <Card key={program.id} className="card-hover">
-                <CardHeader>
-                  <CardTitle className="text-xl">{program.title}</CardTitle>
-                  <CardDescription>{program.description}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Button asChild variant="outline" className="w-full">
-                    <Link to={`/programs/${program.id}`}>
-                      Learn More <ArrowRight className="ml-2 w-4 h-4" />
-                    </Link>
-                  </Button>
-                </CardContent>
-              </Card>
+              <Col key={program.id} md={6} lg={4}>
+                <Card className="h-100 shadow-sm border-0 hover-card">
+                  <Card.Body className="d-flex flex-column">
+                    <Card.Title className="h5 fw-bold">{program.title}</Card.Title>
+                    <Card.Text className="text-muted flex-grow-1">
+                      {program.description}
+                    </Card.Text>
+                    <Button 
+                      as={Link} 
+                      to={`/programs/${program.id}`} 
+                      variant="outline-primary"
+                      className="mt-auto"
+                    >
+                      Learn More <ArrowRight className="ms-2" size={16} />
+                    </Button>
+                  </Card.Body>
+                </Card>
+              </Col>
             ))}
-          </div>
+          </Row>
 
-          <div className="text-center">
-            <Button asChild size="lg">
-              <Link to="/programs">
-                View All Programs <ArrowRight className="ml-2 w-4 h-4" />
-              </Link>
-            </Button>
-          </div>
-        </div>
+          <Row className="justify-content-center">
+            <Col xs="auto">
+              <Button as={Link} to="/programs" size="lg" variant="primary">
+                View All Programs <ArrowRight className="ms-2" size={20} />
+              </Button>
+            </Col>
+          </Row>
+        </Container>
       </section>
 
       {/* Impact Stories */}
       {impact.length > 0 && (
-        <section className="section-padding bg-gray-50">
-          <div className="container-max">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                Stories of Impact
-              </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Real stories from the communities we serve, showcasing the transformative power of our programs.
-              </p>
-            </div>
+        <section className="py-5 bg-light">
+          <Container>
+            <Row className="justify-content-center text-center mb-5">
+              <Col lg={8}>
+                <h2 className="display-4 fw-bold text-dark mb-4">
+                  Stories of Impact
+                </h2>
+                <p className="lead text-muted">
+                  Real stories from the communities we serve, showcasing the transformative power of our programs.
+                </p>
+              </Col>
+            </Row>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            <Row className="g-4 mb-5">
               {impact.map((story) => (
-                <Card key={story.id} className="card-hover">
-                  <CardHeader>
-                    <CardTitle className="text-xl">{story.title}</CardTitle>
-                    <CardDescription>{story.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-gray-500">
-                      {new Date(story.date).toLocaleDateString()}
-                    </p>
-                  </CardContent>
-                </Card>
+                <Col key={story.id} md={6} lg={4}>
+                  <Card className="h-100 shadow-sm border-0 hover-card">
+                    <Card.Body className="d-flex flex-column">
+                      <Card.Title className="h5 fw-bold">{story.title}</Card.Title>
+                      <Card.Text className="text-muted flex-grow-1">
+                        {story.description}
+                      </Card.Text>
+                      <small className="text-muted mt-auto">
+                        {new Date(story.date).toLocaleDateString()}
+                      </small>
+                    </Card.Body>
+                  </Card>
+                </Col>
               ))}
-            </div>
+            </Row>
 
-            <div className="text-center">
-              <Button asChild variant="outline" size="lg">
-                <Link to="/media">
-                  View More Stories <ArrowRight className="ml-2 w-4 h-4" />
-                </Link>
-              </Button>
-            </div>
-          </div>
+            <Row className="justify-content-center">
+              <Col xs="auto">
+                <Button as={Link} to="/media" size="lg" variant="outline-primary">
+                  View More Stories <ArrowRight className="ms-2" size={20} />
+                </Button>
+              </Col>
+            </Row>
+          </Container>
         </section>
       )}
 
       {/* Upcoming Events */}
       {events.length > 0 && (
-        <section className="section-padding">
-          <div className="container-max">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                Upcoming Events
-              </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Join us at our upcoming events and be part of the change you want to see in the world.
-              </p>
-            </div>
+        <section className="py-5">
+          <Container>
+            <Row className="justify-content-center text-center mb-5">
+              <Col lg={8}>
+                <h2 className="display-4 fw-bold text-dark mb-4">
+                  Upcoming Events
+                </h2>
+                <p className="lead text-muted">
+                  Join us at our upcoming events and be part of the change you want to see in the world.
+                </p>
+              </Col>
+            </Row>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <Row className="g-4 mb-5">
               {events.map((event) => (
-                <Card key={event.id} className="card-hover">
-                  <CardHeader>
-                    <CardTitle className="text-xl">{event.title}</CardTitle>
-                    <CardDescription>{event.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex items-center space-x-2 text-sm text-gray-500">
-                      <Calendar className="w-4 h-4" />
-                      <span>{new Date(event.date).toLocaleDateString()}</span>
-                    </div>
-                  </CardContent>
-                </Card>
+                <Col key={event.id} md={6}>
+                  <Card className="h-100 shadow-sm border-0 hover-card">
+                    <Card.Body className="d-flex flex-column">
+                      <Card.Title className="h5 fw-bold">{event.title}</Card.Title>
+                      <Card.Text className="text-muted flex-grow-1">
+                        {event.description}
+                      </Card.Text>
+                      <div className="d-flex align-items-center text-muted mt-auto">
+                        <Calendar className="me-2" size={16} />
+                        <small>{new Date(event.date).toLocaleDateString()}</small>
+                      </div>
+                    </Card.Body>
+                  </Card>
+                </Col>
               ))}
-            </div>
+            </Row>
 
-            <div className="text-center">
-              <Button asChild variant="outline" size="lg">
-                <Link to="/events">
-                  View All Events <ArrowRight className="ml-2 w-4 h-4" />
-                </Link>
-              </Button>
-            </div>
-          </div>
+            <Row className="justify-content-center">
+              <Col xs="auto">
+                <Button as={Link} to="/events" size="lg" variant="outline-primary">
+                  View All Events <ArrowRight className="ms-2" size={20} />
+                </Button>
+              </Col>
+            </Row>
+          </Container>
         </section>
       )}
 
       {/* Call to Action */}
-      <section className="hero-gradient text-white section-padding">
-        <div className="container-max">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Ready to Make a Difference?
-            </h2>
-            <p className="text-xl mb-8 text-gray-100">
-              Your support can transform lives and build stronger communities. Join us today and be part of something bigger.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="bg-white text-primary hover:bg-gray-100">
-                <Link to="/get-involved">
-                  Volunteer Now <ArrowRight className="ml-2 w-4 h-4" />
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-primary">
-                <Link to="/contact">
+      <section 
+        className="py-5 text-white"
+        style={{
+          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+        }}
+      >
+        <Container>
+          <Row className="justify-content-center text-center">
+            <Col lg={8}>
+              <h2 className="display-4 fw-bold mb-4">
+                Ready to Make a Difference?
+              </h2>
+              <p className="lead mb-5 text-light">
+                Your support can transform lives and build stronger communities. Join us today and be part of something bigger.
+              </p>
+              <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+                <Button 
+                  as={Link} 
+                  to="/get-involved" 
+                  size="lg" 
+                  variant="light"
+                  className="fw-semibold"
+                >
+                  Volunteer Now <ArrowRight className="ms-2" size={20} />
+                </Button>
+                <Button 
+                  as={Link} 
+                  to="/contact" 
+                  size="lg" 
+                  variant="outline-light"
+                  className="fw-semibold"
+                >
                   Contact Us
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </div>
+                </Button>
+              </div>
+            </Col>
+          </Row>
+        </Container>
       </section>
+
+      {/* Custom CSS for hover effects */}
+      <style jsx>{`
+        .hover-card {
+          transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .hover-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+        }
+      `}</style>
     </div>
   );
 };
