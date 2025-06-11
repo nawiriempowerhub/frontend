@@ -14,31 +14,31 @@ const Header = () => {
   ];
 
   return (
-    <header className="bg-green-600 text-white sticky top-0 z-50 shadow-md">
-      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-4">
+    <header className="bg-green-600 text-white sticky-top z-50 shadow">
+      <div className="container px-3">
+        <div className="d-flex justify-content-between align-items-center py-3">
           {/* Logo Section */}
-          <NavLink to="/" className="flex items-center space-x-2">
+          <NavLink to="/" className="d-flex align-items-center gap-2">
             <img
               src="/nawiri-logo.png"
               alt="Nawiri Empower Hub Logo"
-              className="h-10 w-auto"
-              // onError={(e) => (e.target.src = 'https://via.placeholder.com/150x40?text=Nawiri+Logo')}
+              className="img-fluid"
+              style={{ height: '40px' }}
             />
-            <span className="text-lg font-semibold hidden sm:inline">Nawiri Empower Hub</span>
+            <h2 className="fs-5 fw-semibold d-none d-sm-inline">Nawiri Empower Hub</h2>
           </NavLink>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-6">
+          <nav className="d-none d-md-flex gap-3">
             {navigation.map((item) => (
               <NavLink
                 key={item.name}
                 to={item.href}
                 className={({ isActive }) =>
-                  `text-sm font-medium transition-colors duration-200 ${
+                  `fs-6 fw-medium transition-colors duration-200 ${
                     isActive
-                      ? 'text-green-100 border-b-2 border-green-100'
-                      : 'text-white hover:text-green-100 hover:border-b-2 hover:border-green-100'
+                      ? 'text-green-100 border-bottom border-green-100'
+                      : 'text-white hover-text-green-100 hover-border-green-100'
                   }`
                 }
                 aria-label={`Navigate to ${item.name}`}
@@ -50,7 +50,7 @@ const Header = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="block md:hidden text-white focus:outline-none"
+            className="d-block d-md-none text-white focus:outline-none"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle navigation menu"
           >
@@ -66,16 +66,16 @@ const Header = () => {
         </div>
 
         {/* Mobile Navigation */}
-        <div className={`md:hidden ${isMenuOpen ? 'block' : 'hidden'} bg-green-600 border-t border-green-700 transition-all duration-300 ease-in-out`}>
-          <nav className="flex flex-col py-4 space-y-3 px-4">
+        <div className={`d-md-none ${isMenuOpen ? 'd-block' : 'd-none'} bg-green-600 border-top border-green-700 transition-all duration-300 ease-in-out`}>
+          <nav className="d-flex flex-column py-3 gap-2 px-3">
             {navigation.map((item) => (
               <NavLink
                 key={item.name}
                 to={item.href}
                 onClick={() => setIsMenuOpen(false)}
                 className={({ isActive }) =>
-                  `text-sm font-medium transition-colors duration-200 ${
-                    isActive ? 'text-green-100' : 'text-white hover:text-green-100'
+                  `fs-6 fw-medium transition-colors duration-200 ${
+                    isActive ? 'text-green-100' : 'text-white hover-text-green-100'
                   }`
                 }
                 aria-label={`Navigate to ${item.name}`}

@@ -4,66 +4,66 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-white">
-      <div className="container-max section-padding">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <footer className="bg-gray-900 text-white w-900">
+      <div className="container-fluid section-padding">
+        <div className="row g-4">
           {/* Logo and Description */}
-          <div className="lg:col-span-2">
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                <Heart className="w-6 h-6 text-white" />
-              </div>
+          <div className="col-12 col-md-6 col-lg-6">
+            <div className="d-flex align-items-center gap-2 mb-3">
+              {/* <div className="bg-primary rounded p-2 d-flex align-items-center justify-content-center" style={{ width: '40px', height: '40px' }}>
+                <Heart className="text-white" style={{ width: '24px', height: '24px' }} />
+              </div> */}
               <div>
-                <h3 className="text-xl font-bold">Nawiri EmpowerHub</h3>
-                <p className="text-sm text-gray-400">Empowering Communities</p>
+                <h3 className="fs-4 fw-bold">Nawiri EmpowerHub</h3>
+                <p className="small text-gray-100">Empowering Communities</p>
               </div>
             </div>
-            <p className="text-gray-300 mb-6 max-w-md">
-              Empowering communities through education, healthcare, and sustainable development programs. 
+            <p className="mb-3">
+              Empowering communities through education, healthcare, and sustainable development programs.
               Together, we build a brighter future for all.
             </p>
-            <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+            <div className="d-flex gap-3">
+              <a href="#" className="text-gray-100 hover-text-white transition-colors">
                 <Facebook className="w-5 h-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <a href="https://x.com/NEmpowerhub" className="text-gray-100 hover-text-white transition-colors">
                 <Twitter className="w-5 h-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <a href="#" className="text-gray-100 hover-text-white transition-colors">
                 <Instagram className="w-5 h-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <a href="#" className="text-gray-100 hover-text-white transition-colors">
                 <Linkedin className="w-5 h-5" />
               </a>
             </div>
           </div>
 
           {/* Quick Links */}
-          <div>
-            <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
-            <ul className="space-y-2">
+          <div className="col-12 col-md-6 col-lg-3">
+            <h4 className="fs-5 fw-semibold mb-3">Quick Links</h4>
+            <ul className="d-flex flex-column gap-2">
               <li>
-                <Link to="/about" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/about" className="hover-text-white transition-colors">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link to="/programs" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/programs" className="hover-text-white transition-colors">
                   Our Programs
                 </Link>
               </li>
               <li>
-                <Link to="/media" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/media" className="hover-text-white transition-colors">
                   Media & Impact
                 </Link>
               </li>
               <li>
-                <Link to="/get-involved" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/get-involved" className="hover-text-white transition-colors">
                   Get Involved
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/contact" className="hover-text-white transition-colors">
                   Contact Us
                 </Link>
               </li>
@@ -71,20 +71,20 @@ const Footer = () => {
           </div>
 
           {/* Contact Info */}
-          <div>
-            <h4 className="text-lg font-semibold mb-4">Contact Info</h4>
-            <ul className="space-y-3">
-              <li className="flex items-center space-x-3">
-                <Mail className="w-4 h-4 text-primary" />
-                <span className="text-gray-300">info@nawiri.org</span>
+          <div className="col-12 col-md-6 col-lg-3">
+            <h4 className="fs-5 fw-semibold mb-3">Contact Info</h4>
+            <ul className="d-flex flex-column gap-3">
+              <li className="d-flex align-items-center gap-3">
+                <Mail className="text-primary" style={{ width: '16px', height: '16px' }} />
+                <span className="">info@nawiri.org</span>
               </li>
-              <li className="flex items-center space-x-3">
-                <Phone className="w-4 h-4 text-primary" />
-                <span className="text-gray-300">+254 700 000 000</span>
+              <li className="d-flex align-items-center gap-3">
+                <Phone className="text-primary" style={{ width: '16px', height: '16px' }} />
+                <span className="">+254 700 000 000</span>
               </li>
-              <li className="flex items-start space-x-3">
-                <MapPin className="w-4 h-4 text-primary mt-1" />
-                <span className="text-gray-300">
+              <li className="d-flex align-items-start gap-3">
+                <MapPin className="text-primary mt-1" style={{ width: '16px', height: '16px' }} />
+                <span className="">
                   Nairobi, Kenya<br />
                   P.O. Box 12345-00100
                 </span>
@@ -94,15 +94,15 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-400 text-sm">
+        <div className="border-top border-gray-800 mt-4 pt-4 d-flex flex-column flex-md-row justify-content-between align-items-center">
+          <p className="text-gray-100 small">
             © 2024 Nawiri EmpowerHub. All rights reserved.
           </p>
-          <div className="flex space-x-6 mt-4 md:mt-0">
-            <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">
+          <div className="d-flex gap-3 mt-3 mt-md-0">
+            <a href="#" className="text-gray-100 hover-text-white small transition-colors">
               Privacy Policy
             </a>
-            <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">
+            <a href="#" className="text-gray-100 hover-text-white small transition-colors">
               Terms of Service
             </a>
           </div>
@@ -113,4 +113,3 @@ const Footer = () => {
 };
 
 export default Footer;
-

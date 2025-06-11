@@ -1,8 +1,7 @@
+
 import React, { useState, useEffect } from 'react';
 import { ArrowRight, Users, Calendar, MapPin } from 'lucide-react';
-import { Link, useParams } from 'react-router-dom';
-import { Button } from '../components/ui/Button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/Card';
+import { Link } from 'react-router-dom';
 import Loading from '../components/ui/Loading';
 import ErrorMessage from '../components/ui/ErrorMessage';
 import { programsService } from '../services/programsService';
@@ -30,7 +29,7 @@ const Programs = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-vh-100 d-flex align-items-center justify-content-center">
         <Loading size="lg" text="Loading programs..." />
       </div>
     );
@@ -38,22 +37,22 @@ const Programs = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-vh-100 d-flex align-items-center justify-content-center">
         <ErrorMessage message={error} onRetry={() => window.location.reload()} />
       </div>
     );
   }
 
   return (
-    <div>
+    <div className="w-100">
       {/* Hero Section */}
-      <section className="hero-gradient text-white section-padding">
-        <div className="container-max">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+      <section className="hero-gradient text-white section-padding w-100">
+        <div className="container-fluid px-3">
+          <div className="text-center">
+            <h1 className="display-4 fw-bold mb-4">
               Our Programs
             </h1>
-            <p className="text-xl md:text-2xl text-gray-100">
+            <p className="fs-4 text-gray-100">
               Comprehensive initiatives designed to empower communities through education, healthcare, and sustainable development.
             </p>
           </div>
@@ -62,51 +61,51 @@ const Programs = () => {
 
       {/* Programs Grid */}
       <section className="section-padding">
-        <div className="container-max">
+        <div className="container-fluid px-3">
           {programs.length === 0 ? (
-            <div className="text-center py-12">
-              <h3 className="text-2xl font-semibold text-gray-900 mb-4">No Programs Available</h3>
-              <p className="text-gray-600 mb-8">We're working on exciting new programs. Check back soon!</p>
-              <Button asChild>
-                <Link to="/contact">Contact Us for More Information</Link>
-              </Button>
+            <div className="text-center py-5">
+              <h3 className="fs-3 fw-semibold text-dark mb-3">No Programs Available</h3>
+              <p className="text-muted mb-4">We're working on exciting new programs. Check back soon!</p>
+              <a href="/contact" className="btn btn-primary">
+                Contact Us for More Information
+              </a>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="row g-4">
               {programs.map((program) => (
-                <Card key={program.id} className="card-hover">
-                  <CardHeader>
-                    <CardTitle className="text-xl">{program.title}</CardTitle>
-                    <CardDescription>{program.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-3 mb-6">
-                      {program.location && (
-                        <div className="flex items-center space-x-2 text-sm text-gray-600">
-                          <MapPin className="w-4 h-4" />
-                          <span>{program.location}</span>
-                        </div>
-                      )}
-                      {program.participants && (
-                        <div className="flex items-center space-x-2 text-sm text-gray-600">
-                          <Users className="w-4 h-4" />
-                          <span>{program.participants} participants</span>
-                        </div>
-                      )}
-                      {program.start_date && (
-                        <div className="flex items-center space-x-2 text-sm text-gray-600">
-                          <Calendar className="w-4 h-4" />
-                          <span>Started {new Date(program.start_date).toLocaleDateString()}</span>
-                        </div>
-                      )}
+                <div key={program.id} className="col-12 col-md-6 col-lg-4">
+                  <div className="card card-hover">
+                    <div className="card-header">
+                      <h5 className="card-title fs-5">{program.title}</h5>
+                      <p className="card-text text-muted">{program.description}</p>
                     </div>
-                    <Button asChild className="w-full">
-                      <Link to={`/programs/${program.id}`}>
-                        Learn More <ArrowRight className="ml-2 w-4 h-4" />
-                      </Link>
-                    </Button>
-                  </CardContent>
-                </Card>
+                    <div className="card-body">
+                      <div className="d-flex flex-column gap-3 mb-4">
+                        {program.location && (
+                          <div className="d-flex align-items-center gap-2 small text-muted">
+                            <MapPin style={{ width: '16px', height: '16px' }} />
+                            <span>{program.location}</span>
+                          </div>
+                        )}
+                        {program.participants && (
+                          <div className="d-flex align-items-center gap-2 small text-muted">
+                            <Users style={{ width: '16px', height: '16px' }} />
+                            <span>{program.participants} participants</span>
+                          </div>
+                        )}
+                        {program.start_date && (
+                          <div className="d-flex align-items-center gap-2 small text-muted">
+                            <Calendar style={{ width: '16px', height: '16px' }} />
+                            <span>Started {new Date(program.start_date).toLocaleDateString()}</span>
+                          </div>
+                        )}
+                      </div>
+                      <a href={`/programs/${program.id}`} className="btn btn-primary w-100">
+                        Learn More <ArrowRight className="ms-2" style={{ width: '16px', height: '16px' }} />
+                      </a>
+                    </div>
+                  </div>
+                </div>
               ))}
             </div>
           )}
@@ -114,26 +113,22 @@ const Programs = () => {
       </section>
 
       {/* Call to Action */}
-      <section className="hero-gradient text-white section-padding">
-        <div className="container-max">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+      <section className="hero-gradient text-white section-padding w-100">
+        <div className="container-fluid px-3">
+          <div className="text-center">
+            <h2 className="h3 fw-bold mb-4">
               Want to Support Our Programs?
             </h2>
-            <p className="text-xl mb-8 text-gray-100">
+            <p className="fs-5 mb-4 text-gray-100">
               Your support helps us expand our reach and create more opportunities for communities to thrive.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="bg-white text-primary hover:bg-gray-100">
-                <Link to="/get-involved">
-                  Get Involved <ArrowRight className="ml-2 w-4 h-4" />
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-primary">
-                <Link to="/contact">
-                  Contact Us
-                </Link>
-              </Button>
+            <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+              <a href="/get-involved" className="btn btn-light text-primary hover-bg-gray-100 fw-medium">
+                Get Involved <ArrowRight className="ms-2" style={{ width: '16px', height: '16px' }} />
+              </a>
+              <a href="/contact" className="btn btn-outline-light fw-medium">
+                Contact Us
+              </a>
             </div>
           </div>
         </div>
@@ -143,4 +138,3 @@ const Programs = () => {
 };
 
 export default Programs;
-

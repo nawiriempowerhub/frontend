@@ -8,10 +8,8 @@ const VolunteerForm = () => {
     name: '',
     email: '',
     phone: '',
-    skills: '',
     availability: '',
     motivation: '',
-    experience: '',
   });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -36,10 +34,8 @@ const VolunteerForm = () => {
         name: '',
         email: '',
         phone: '',
-        skills: '',
         availability: '',
         motivation: '',
-        experience: '',
       });
     } catch (err) {
       setError(err.message || 'Failed to submit application. Please try again.');
@@ -134,7 +130,7 @@ const VolunteerForm = () => {
             />
           </div>
 
-          <div>
+          {/* <div>
             <label htmlFor="skills" className="block text-sm font-medium text-gray-700 mb-2">
               Skills & Expertise
             </label>
@@ -147,7 +143,7 @@ const VolunteerForm = () => {
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
               placeholder="Tell us about your skills, expertise, or areas where you'd like to help"
             />
-          </div>
+          </div> */}
 
           <div>
             <label htmlFor="availability" className="block text-sm font-medium text-gray-700 mb-2">
@@ -184,7 +180,7 @@ const VolunteerForm = () => {
             />
           </div>
 
-          <div>
+          {/* <div>
             <label htmlFor="experience" className="block text-sm font-medium text-gray-700 mb-2">
               Previous Volunteer Experience
             </label>
@@ -197,7 +193,7 @@ const VolunteerForm = () => {
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
               placeholder="Tell us about any previous volunteer experience (optional)"
             />
-          </div>
+          </div> */}
 
           <Button type="submit" disabled={loading} className="w-full">
             {loading ? 'Submitting...' : 'Submit Application'}

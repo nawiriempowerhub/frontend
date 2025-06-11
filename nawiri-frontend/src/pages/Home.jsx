@@ -69,7 +69,7 @@ const Home = () => {
               Join us in creating lasting change through education, healthcare, and sustainable development programs across Kenya.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="bg-white text-primary hover:bg-gray-100">
+              <Button size="lg" className="bg-white text-primary hover:bg-gray-100">
                 <Link to="/get-involved">
                   Get Involved <ArrowRight className="ml-2 w-4 h-4" />
                 </Link>
@@ -232,7 +232,7 @@ const Home = () => {
 
             <div className="text-center">
               <Button asChild variant="outline" size="lg">
-                <Link to="/get-involved">
+                <Link to="/events">
                   View All Events <ArrowRight className="ml-2 w-4 h-4" />
                 </Link>
               </Button>

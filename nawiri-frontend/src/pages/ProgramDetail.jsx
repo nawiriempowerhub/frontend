@@ -1,8 +1,7 @@
+
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Users, Calendar, MapPin, Target } from 'lucide-react';
-import { Button } from '../components/ui/Button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/Card';
 import Loading from '../components/ui/Loading';
 import ErrorMessage from '../components/ui/ErrorMessage';
 import { programsService } from '../services/programsService';
@@ -40,7 +39,7 @@ const ProgramDetail = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-vh-100 d-flex align-items-center justify-content-center">
         <Loading size="lg" text="Loading program details..." />
       </div>
     );
@@ -48,7 +47,7 @@ const ProgramDetail = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-vh-100 d-flex align-items-center justify-content-center">
         <ErrorMessage message={error} onRetry={() => window.location.reload()} />
       </div>
     );
@@ -56,29 +55,27 @@ const ProgramDetail = () => {
 
   if (!program) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-vh-100 d-flex align-items-center justify-content-center">
         <ErrorMessage message="Program not found" />
       </div>
     );
   }
 
   return (
-    <div>
+    <div className="w-100">
       {/* Hero Section */}
-      <section className="hero-gradient text-white section-padding">
-        <div className="container-max">
-          <div className="mb-6">
-            <Button asChild variant="outline" className="border-white text-white hover:bg-white hover:text-primary">
-              <Link to="/programs">
-                <ArrowLeft className="mr-2 w-4 h-4" /> Back to Programs
-              </Link>
-            </Button>
+      <section className="hero-gradient text-white section-padding w-100">
+        <div className="container-fluid px-3">
+          <div className="mb-4">
+            <a href="/programs" className="btn btn-outline-light">
+              <ArrowLeft style={{ width: '16px', height: '16px' }} className="me-2" /> Back to Programs
+            </a>
           </div>
-          <div className="max-w-4xl">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+          <div>
+            <h1 className="display-4 fw-bold mb-4">
               {program.title}
             </h1>
-            <p className="text-xl md:text-2xl text-gray-100">
+            <p className="fs-4 text-gray-100">
               {program.description}
             </p>
           </div>
@@ -87,69 +84,69 @@ const ProgramDetail = () => {
 
       {/* Program Details */}
       <section className="section-padding">
-        <div className="container-max">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <div className="container-fluid px-3">
+          <div className="row g-5">
             {/* Main Content */}
-            <div className="lg:col-span-2">
-              <div className="prose prose-lg max-w-none">
-                <h2 className="text-3xl font-bold text-gray-900 mb-6">About This Program</h2>
-                <p className="text-gray-600 mb-8">
+            <div className="col-12 col-lg-8">
+              <div className="prose">
+                <h2 className="h3 fw-bold text-dark mb-4">About This Program</h2>
+                <p className="text-muted mb-4">
                   {program.long_description || program.description}
                 </p>
 
                 {program.objectives && (
-                  <div className="mb-8">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-4">Program Objectives</h3>
-                    <ul className="list-disc list-inside space-y-2 text-gray-600">
+                  <div className="mb-4">
+                    <h3 className="h4 fw-bold text-dark mb-3">Program Objectives</h3>
+                    <ul className="list-group list-group-flush d-flex flex-column gap-2 text-muted">
                       {program.objectives.split('\n').map((objective, index) => (
-                        <li key={index}>{objective}</li>
+                        <li key={index} className="list-group-item">{objective}</li>
                       ))}
                     </ul>
                   </div>
                 )}
 
                 {program.activities && (
-                  <div className="mb-8">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-4">Key Activities</h3>
-                    <p className="text-gray-600">{program.activities}</p>
+                  <div className="mb-4">
+                    <h3 className="h4 fw-bold text-dark mb-3">Key Activities</h3>
+                    <p className="text-muted">{program.activities}</p>
                   </div>
                 )}
               </div>
             </div>
 
             {/* Sidebar */}
-            <div className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Program Information</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
+            <div className="col-12 col-lg-4 d-flex flex-column gap-4">
+              <div className="card">
+                <div className="card-header">
+                  <h5 className="card-title">Program Information</h5>
+                </div>
+                <div className="card-body d-flex flex-column gap-3">
                   {program.location && (
-                    <div className="flex items-center space-x-3">
-                      <MapPin className="w-5 h-5 text-primary" />
+                    <div className="d-flex align-items-center gap-3">
+                      <MapPin style={{ width: '20px', height: '20px' }} className="text-primary" />
                       <div>
-                        <p className="font-medium">Location</p>
-                        <p className="text-sm text-gray-600">{program.location}</p>
+                        <p className="fw-medium">Location</p>
+                        <p className="small text-muted">{program.location}</p>
                       </div>
                     </div>
                   )}
                   
                   {program.participants && (
-                    <div className="flex items-center space-x-3">
-                      <Users className="w-5 h-5 text-primary" />
+                    <div className="d-flex align-items-center gap-3">
+                      <Users style={{ width: '20px', height: '20px' }} className="text-primary" />
                       <div>
-                        <p className="font-medium">Participants</p>
-                        <p className="text-sm text-gray-600">{program.participants} people</p>
+                        <p className="fw-medium">Participants</p>
+                        <p className="small text-muted">{program.participants} people</p>
                       </div>
                     </div>
                   )}
                   
                   {program.start_date && (
-                    <div className="flex items-center space-x-3">
-                      <Calendar className="w-5 h-5 text-primary" />
+                    <div className="d-flex align-items-center gap-3">
+                      <Calendar style={{ width: '20px', height: '20px' }} className="text-primary" />
                       <div>
-                        <p className="font-medium">Start Date</p>
-                        <p className="text-sm text-gray-600">
+                        <p className="fw-medium">Start Date</p>
+                        <p className="small text-muted">
                           {new Date(program.start_date).toLocaleDateString()}
                         </p>
                       </div>
@@ -157,33 +154,29 @@ const ProgramDetail = () => {
                   )}
                   
                   {program.status && (
-                    <div className="flex items-center space-x-3">
-                      <Target className="w-5 h-5 text-primary" />
+                    <div className="d-flex align-items-center gap-3">
+                      <Target style={{ width: '20px', height: '20px' }} className="text-primary" />
                       <div>
-                        <p className="font-medium">Status</p>
-                        <p className="text-sm text-gray-600 capitalize">{program.status}</p>
+                        <p className="fw-medium">Status</p>
+                        <p className="small text-muted text-capitalize">{program.status}</p>
                       </div>
                     </div>
                   )}
-                </CardContent>
-              </Card>
+                </div>
+              </div>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle>Get Involved</CardTitle>
-                  <CardDescription>
+              <div className="card">
+                <div className="card-header">
+                  <h5 className="card-title">Get Involved</h5>
+                  <p className="card-text text-muted">
                     Support this program and help us create lasting change.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <Button asChild className="w-full">
-                    <Link to="/get-involved">Volunteer</Link>
-                  </Button>
-                  <Button asChild variant="outline" className="w-full">
-                    <Link to="/contact">Learn More</Link>
-                  </Button>
-                </CardContent>
-              </Card>
+                  </p>
+                </div>
+                <div className="card-body d-flex flex-column gap-2">
+                  <a href="/get-involved" className="btn btn-primary w-100">Volunteer</a>
+                  <a href="/contact" className="btn btn-outline-primary w-100">Learn More</a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -192,27 +185,29 @@ const ProgramDetail = () => {
       {/* Program Media */}
       {media.length > 0 && (
         <section className="section-padding bg-gray-50">
-          <div className="container-max">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
+          <div className="container-fluid px-3">
+            <h2 className="h3 fw-bold text-dark mb-4 text-center">
               Program Gallery
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="row g-4">
               {media.map((item) => (
-                <Card key={item.id} className="card-hover">
-                  <CardHeader>
-                    <CardTitle className="text-lg">{item.title}</CardTitle>
-                    {item.description && (
-                      <CardDescription>{item.description}</CardDescription>
-                    )}
-                  </CardHeader>
-                  {item.url && (
-                    <CardContent>
-                      <div className="aspect-video bg-gray-200 rounded-md flex items-center justify-center">
-                        <span className="text-gray-500">Media Content</span>
+                <div key={item.id} className="col-12 col-md-6 col-lg-4">
+                  <div className="card card-hover">
+                    <div className="card-header">
+                      <h5 className="card-title fs-6">{item.title}</h5>
+                      {item.description && (
+                        <p className="card-text text-muted">{item.description}</p>
+                      )}
+                    </div>
+                    {item.url && (
+                      <div className="card-body">
+                        <div className="ratio ratio-16x9 bg-gray-200 rounded mb-3 d-flex align-items-center justify-content-center">
+                          <span className="text-gray-500">Media Content</span>
+                        </div>
                       </div>
-                    </CardContent>
-                  )}
-                </Card>
+                    )}
+                  </div>
+                </div>
               ))}
             </div>
           </div>
@@ -220,26 +215,22 @@ const ProgramDetail = () => {
       )}
 
       {/* Call to Action */}
-      <section className="hero-gradient text-white section-padding">
-        <div className="container-max">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+      <section className="hero-gradient text-white section-padding w-100">
+        <div className="container-fluid px-3">
+          <div className="text-center">
+            <h2 className="h3 fw-bold mb-4">
               Support {program.title}
             </h2>
-            <p className="text-xl mb-8 text-gray-100">
+            <p className="fs-5 mb-4 text-gray-100">
               Your contribution can help us expand this program and reach more communities in need.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="bg-white text-primary hover:bg-gray-100">
-                <Link to="/get-involved">
-                  Get Involved
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-primary">
-                <Link to="/contact">
-                  Contact Us
-                </Link>
-              </Button>
+            <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+              <a href="/get-involved" className="btn btn-light text-primary hover-bg-gray-100 fw-medium">
+                Get Involved
+              </a>
+              <a href="/contact" className="btn btn-outline-light fw-medium">
+                Contact Us
+              </a>
             </div>
           </div>
         </div>
@@ -249,4 +240,3 @@ const ProgramDetail = () => {
 };
 
 export default ProgramDetail;
-

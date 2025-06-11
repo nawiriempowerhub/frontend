@@ -9,6 +9,7 @@ const DonationForm = () => {
     donor_name: '',
     donor_email: '',
     message: '',
+    payment_method: 'card',
   });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -39,7 +40,8 @@ const DonationForm = () => {
       const donationData = {
         amount: parseFloat(formData.amount),
         donor_name: formData.donor_name || null,
-        donor_email: formData.donor_email || null,
+        email: formData.donor_email || null,
+        phone_number: formData.phone_number || '',
       };
 
       await donationsService.createDonation(donationData);
@@ -49,6 +51,7 @@ const DonationForm = () => {
         donor_name: '',
         donor_email: '',
         message: '',
+        payment_method: 'card',
       });
     } catch (err) {
       setError(err.message || 'Failed to process donation. Please try again.');
@@ -70,9 +73,7 @@ const DonationForm = () => {
           <p className="text-gray-600 mb-6">
             Your donation has been received. Thank you for supporting our mission to empower communities.
           </p>
-          <Button onClick={() => setSuccess(false)}>
-            Make Another Donation
-          </Button>
+          <Button onClick={() => setSuccess(false)}>Make Another Donation</Button>
         </CardContent>
       </Card>
     );
@@ -96,9 +97,7 @@ const DonationForm = () => {
 
           {/* Predefined Amounts */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-3">
-              Select Amount (USD)
-            </label>
+            <label className="block text-sm font-medium text-gray-700 mb-3">Select Amount (USD)</label>
             <div className="grid grid-cols-3 md:grid-cols-5 gap-3 mb-4">
               {predefinedAmounts.map((amount) => (
                 <button
@@ -188,7 +187,7 @@ const DonationForm = () => {
             />
           </div>
 
-          {/* Donation Info */}
+          {/* Impact Info */}
           <div className="bg-blue-50 border border-blue-200 rounded-md p-4">
             <h4 className="font-medium text-blue-900 mb-2">Your Impact</h4>
             <p className="text-sm text-blue-700">
@@ -196,6 +195,16 @@ const DonationForm = () => {
             </p>
           </div>
 
+          {/* Payment Details */}
+          <div className="bg-yellow-50 border border-yellow-200 rounded-md p-4">
+            <h4 className="font-semibold text-yellow-800 mb-1">Payment Details</h4>
+            <p className="text-sm text-yellow-700">
+              <strong>Paybill:</strong> 522533<br />
+              <strong>Account Number:</strong> 7964728
+            </p>
+          </div>
+
+          {/* Submit Button */}
           <Button type="submit" disabled={loading} className="w-full">
             {loading ? 'Processing...' : `Donate $${formData.amount || '0'}`}
           </Button>
@@ -210,4 +219,3 @@ const DonationForm = () => {
 };
 
 export default DonationForm;
-

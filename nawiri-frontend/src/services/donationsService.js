@@ -7,16 +7,16 @@ export const donationsService = {
     return response.data;
   },
 
-  // Get donations (admin only)
-  getDonations: async () => {
-    const response = await api.get('/donations');
-    return response.data;
-  },
+  // // Get donations (admin only)
+  // getDonations: async () => {
+  //   const response = await api.get('/donations');
+  //   return response.data;
+  // },
 
-  // Get donation by ID (admin only)
-  getDonation: async (id) => {
-    const response = await api.get(`/donations/${id}`);
-    return response.data;
-  },
+  // // Get donation by ID (admin only)
+  // getDonation: async (id) => {
+  //   const response = await api.get(`/donations/${id}`);
+  //   return response.data;
+  // },
 };
 

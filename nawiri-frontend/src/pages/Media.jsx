@@ -1,6 +1,6 @@
+
 import React, { useState, useEffect } from 'react';
 import { Image, Video, FileText, Calendar } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/Card';
 import Loading from '../components/ui/Loading';
 import ErrorMessage from '../components/ui/ErrorMessage';
 import { mediaService } from '../services/mediaService';
@@ -37,13 +37,13 @@ const Media = () => {
   const getMediaIcon = (type) => {
     switch (type?.toLowerCase()) {
       case 'image':
-        return <Image className="w-5 h-5" />;
+        return <Image style={{ width: '20px', height: '20px' }} />;
       case 'video':
-        return <Video className="w-5 h-5" />;
+        return <Video style={{ width: '20px', height: '20px' }} />;
       case 'document':
-        return <FileText className="w-5 h-5" />;
+        return <FileText style={{ width: '20px', height: '20px' }} />;
       default:
-        return <Image className="w-5 h-5" />;
+        return <Image style={{ width: '20px', height: '20px' }} />;
     }
   };
 
@@ -53,7 +53,7 @@ const Media = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-vh-100 d-flex align-items-center justify-content-center">
         <Loading size="lg" text="Loading media content..." />
       </div>
     );
@@ -61,22 +61,22 @@ const Media = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-vh-100 d-flex align-items-center justify-content-center">
         <ErrorMessage message={error} onRetry={() => window.location.reload()} />
       </div>
     );
   }
 
   return (
-    <div>
+    <div className="w-100">
       {/* Hero Section */}
-      <section className="hero-gradient text-white section-padding">
-        <div className="container-max">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+      <section className="hero-gradient text-white section-padding w-100">
+        <div className="container-fluid px-3">
+          <div className="text-center">
+            <h1 className="display-4 fw-bold mb-4">
               Media & Impact
             </h1>
-            <p className="text-xl md:text-2xl text-gray-100">
+            <p className="fs-4 text-gray-100">
               Explore our gallery of photos, videos, and stories that showcase the impact of our programs and the communities we serve.
             </p>
           </div>
@@ -85,16 +85,16 @@ const Media = () => {
 
       {/* Filter Tabs */}
       <section className="section-padding bg-gray-50">
-        <div className="container-max">
-          <div className="flex flex-wrap justify-center gap-4 mb-8">
+        <div className="container-fluid px-3">
+          <div className="d-flex flex-wrap justify-content-center gap-3 mb-4">
             {['all', 'image', 'video', 'document'].map((filterType) => (
               <button
                 key={filterType}
                 onClick={() => setFilter(filterType)}
-                className={`px-6 py-2 rounded-full font-medium transition-colors ${
+                className={`px-4 py-2 rounded-pill fw-medium transition-colors ${
                   filter === filterType
                     ? 'bg-primary text-white'
-                    : 'bg-white text-gray-700 hover:bg-gray-100'
+                    : 'bg-white text-gray-700 hover-bg-gray-100'
                 }`}
               >
                 {filterType.charAt(0).toUpperCase() + filterType.slice(1)}
@@ -104,43 +104,45 @@ const Media = () => {
 
           {/* Media Gallery */}
           {filteredMedia.length === 0 ? (
-            <div className="text-center py-12">
-              <h3 className="text-2xl font-semibold text-gray-900 mb-4">No Media Available</h3>
-              <p className="text-gray-600">We're working on adding more content. Check back soon!</p>
+            <div className="text-center py-5">
+              <h3 className="fs-3 fw-semibold text-dark mb-3">No Media Available</h3>
+              <p className="text-muted">We're working on adding more content. Check back soon!</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="row g-4">
               {filteredMedia.map((item) => (
-                <Card key={item.id} className="card-hover">
-                  <CardHeader>
-                    <div className="flex items-center space-x-2 mb-2">
-                      {getMediaIcon(item.type)}
-                      <span className="text-sm text-gray-500 capitalize">
-                        {item.type || 'Media'}
-                      </span>
-                    </div>
-                    <CardTitle className="text-lg">{item.title}</CardTitle>
-                    {item.description && (
-                      <CardDescription>{item.description}</CardDescription>
-                    )}
-                  </CardHeader>
-                  <CardContent>
-                    {item.url ? (
-                      <div className="aspect-video bg-gray-200 rounded-md flex items-center justify-center mb-4">
-                        <span className="text-gray-500">Media Content</span>
-                      </div>
-                    ) : (
-                      <div className="aspect-video bg-gradient-to-br from-primary/20 to-accent/20 rounded-md flex items-center justify-center mb-4">
+                <div key={item.id} className="col-12 col-md-6 col-lg-4">
+                  <div className="card card-hover">
+                    <div className="card-header">
+                      <div className="d-flex align-items-center gap-2 mb-2">
                         {getMediaIcon(item.type)}
+                        <span className="small text-gray-500 text-capitalize">
+                          {item.type || 'Media'}
+                        </span>
                       </div>
-                    )}
-                    {item.created_at && (
-                      <p className="text-sm text-gray-500">
-                        {new Date(item.created_at).toLocaleDateString()}
-                      </p>
-                    )}
-                  </CardContent>
-                </Card>
+                      <h5 className="card-title fs-6">{item.title}</h5>
+                      {item.description && (
+                        <p className="card-text text-muted">{item.description}</p>
+                      )}
+                    </div>
+                    <div className="card-body">
+                      {item.url ? (
+                        <div className="ratio ratio-16x9 bg-gray-200 rounded mb-3 d-flex align-items-center justify-content-center">
+                          <span className="text-gray-500">Media Content</span>
+                        </div>
+                      ) : (
+                        <div className="ratio ratio-16x9 bg-primary-accent-gradient rounded mb-3 d-flex align-items-center justify-content-center">
+                          {getMediaIcon(item.type)}
+                        </div>
+                      )}
+                      {item.created_at && (
+                        <p className="small text-gray-500">
+                          {new Date(item.created_at).toLocaleDateString()}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
               ))}
             </div>
           )}
@@ -150,38 +152,40 @@ const Media = () => {
       {/* Impact Stories */}
       {impact.length > 0 && (
         <section className="section-padding">
-          <div className="container-max">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <div className="container-fluid px-3">
+            <div className="text-center mb-5">
+              <h2 className="h3 fw-bold text-dark mb-3">
                 Stories of Impact
               </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              <p className="fs-5 text-muted">
                 Real stories from the communities we serve, showcasing the transformative power of our programs and initiatives.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="row g-4">
               {impact.map((story) => (
-                <Card key={story.id} className="card-hover">
-                  <CardHeader>
-                    <div className="flex items-center space-x-2 mb-2">
-                      <Calendar className="w-4 h-4 text-primary" />
-                      <span className="text-sm text-gray-500">
-                        {new Date(story.date).toLocaleDateString()}
-                      </span>
-                    </div>
-                    <CardTitle className="text-xl">{story.title}</CardTitle>
-                    <CardDescription>{story.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    {story.impact_metrics && (
-                      <div className="bg-gray-50 rounded-lg p-4">
-                        <h4 className="font-medium text-gray-900 mb-2">Impact Metrics</h4>
-                        <p className="text-sm text-gray-600">{story.impact_metrics}</p>
+                <div key={story.id} className="col-12 col-md-6 col-lg-4">
+                  <div className="card card-hover">
+                    <div className="card-header">
+                      <div className="d-flex align-items-center gap-2 mb-2">
+                        <Calendar style={{ width: '16px', height: '16px' }} className="text-primary" />
+                        <span className="small text-gray-500">
+                          {new Date(story.date).toLocaleDateString()}
+                        </span>
                       </div>
-                    )}
-                  </CardContent>
-                </Card>
+                      <h5 className="card-title fs-5">{story.title}</h5>
+                      <p className="card-text text-muted">{story.description}</p>
+                    </div>
+                    <div className="card-body">
+                      {story.impact_metrics && (
+                        <div className="bg-gray-50 rounded p-3">
+                          <h6 className="fw-medium text-dark mb-2">Impact Metrics</h6>
+                          <p className="small text-muted">{story.impact_metrics}</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
               ))}
             </div>
           </div>
@@ -189,26 +193,20 @@ const Media = () => {
       )}
 
       {/* Call to Action */}
-      <section className="hero-gradient text-white section-padding">
-        <div className="container-max">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+      <section className="hero-gradient text-white section-padding w-100">
+        <div className="container-fluid px-3">
+          <div className="text-center">
+            <h2 className="h3 fw-bold mb-4">
               Be Part of Our Story
             </h2>
-            <p className="text-xl mb-8 text-gray-100">
+            <p className="fs-5 mb-4 text-gray-100">
               Join us in creating more stories of impact and transformation. Your involvement can help us reach more communities and create lasting change.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="/get-involved"
-                className="inline-flex items-center justify-center px-8 py-3 bg-white text-primary font-medium rounded-md hover:bg-gray-100 transition-colors"
-              >
+            <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+              <a href="/get-involved" className="btn btn-light text-primary hover-bg-gray-100 fw-medium">
                 Get Involved
               </a>
-              <a
-                href="/programs"
-                className="inline-flex items-center justify-center px-8 py-3 border border-white text-white font-medium rounded-md hover:bg-white hover:text-primary transition-colors"
-              >
+              <a href="/programs" className="btn btn-outline-light fw-medium">
                 View Our Programs
               </a>
             </div>
@@ -220,4 +218,3 @@ const Media = () => {
 };
 
 export default Media;
-

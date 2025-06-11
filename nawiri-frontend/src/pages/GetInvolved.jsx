@@ -1,7 +1,6 @@
+
 import React, { useState, useEffect } from 'react';
 import { Heart, Calendar, MapPin, Users, DollarSign, Target } from 'lucide-react';
-import { Button } from '../components/ui/Button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/Card';
 import Loading from '../components/ui/Loading';
 import ErrorMessage from '../components/ui/ErrorMessage';
 import VolunteerForm from '../components/forms/VolunteerForm';
@@ -38,7 +37,7 @@ const GetInvolved = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-vh-100 d-flex align-items-center justify-content-center">
         <Loading size="lg" text="Loading opportunities..." />
       </div>
     );
@@ -46,22 +45,22 @@ const GetInvolved = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-vh-100 d-flex align-items-center justify-content-center">
         <ErrorMessage message={error} onRetry={() => window.location.reload()} />
       </div>
     );
   }
 
   return (
-    <div>
+    <div className="w-100">
       {/* Hero Section */}
-      <section className="hero-gradient text-white section-padding">
-        <div className="container-max">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+      <section className="hero-gradient text-white section-padding w-100">
+        <div className="container-fluid px-3">
+          <div className="text-center">
+            <h1 className="display-4 fw-bold mb-4">
               Get Involved
             </h1>
-            <p className="text-xl md:text-2xl text-gray-100">
+            <p className="fs-4 text-gray-100">
               Join our mission to empower communities. Whether through volunteering, donating, or participating in events, your contribution makes a difference.
             </p>
           </div>
@@ -70,18 +69,18 @@ const GetInvolved = () => {
 
       {/* Tab Navigation */}
       <section className="section-padding">
-        <div className="container-max">
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
+        <div className="container-fluid px-3">
+          <div className="d-flex flex-wrap justify-content-center gap-3 mb-5">
             {tabs.map((tab) => {
               const Icon = tab.icon;
               return (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center space-x-2 px-6 py-3 rounded-full font-medium transition-colors ${
+                  className={`d-flex align-items-center gap-2 px-4 py-2 rounded-pill fw-medium transition-colors ${
                     activeTab === tab.id
                       ? 'bg-primary text-white'
-                      : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+                      : 'bg-white text-gray-700 hover-bg-gray-100 border border-gray-200'
                   }`}
                 >
                   <Icon className="w-5 h-5" />
@@ -92,54 +91,60 @@ const GetInvolved = () => {
           </div>
 
           {/* Tab Content */}
-          <div className="max-w-4xl mx-auto">
+          <div>
             {activeTab === 'volunteer' && (
               <div>
-                <div className="text-center mb-12">
-                  <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                <div className="text-center mb-5">
+                  <h2 className="h3 fw-bold text-dark mb-3">
                     Become a Volunteer
                   </h2>
-                  <p className="text-xl text-gray-600">
+                  <p className="fs-5 text-muted">
                     Join our team of dedicated volunteers and help us create positive change in communities across Kenya.
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-                  <Card className="text-center">
-                    <CardHeader>
-                      <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                        <Heart className="w-8 h-8 text-white" />
+                <div className="row g-4 mb-5">
+                  <div className="col-12 col-md-4">
+                    <div className="card text-center">
+                      <div className="card-header">
+                        <div className="bg-primary rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3" style={{ width: '64px', height: '64px' }}>
+                          <Heart className="text-white" style={{ width: '32px', height: '32px' }} />
+                        </div>
+                        <h5 className="card-title">Make a Difference</h5>
+                        <p className="card-text text-muted">
+                          Directly impact lives and contribute to meaningful change in communities.
+                        </p>
                       </div>
-                      <CardTitle>Make a Difference</CardTitle>
-                      <CardDescription>
-                        Directly impact lives and contribute to meaningful change in communities.
-                      </CardDescription>
-                    </CardHeader>
-                  </Card>
+                    </div>
+                  </div>
 
-                  <Card className="text-center">
-                    <CardHeader>
-                      <div className="w-16 h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-4">
-                        <Users className="w-8 h-8 text-white" />
+                  <div className="col-12 col-md-4">
+                    <div className="card text-center">
+                      <div className="card-header">
+                        <div className="bg-accent rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3" style={{ width: '64px', height: '64px' }}>
+                          <Users className="text-white" style={{ width: '32px', height: '32px' }} />
+                        </div>
+                        <h5 className="card-title">Build Connections</h5>
+                        <p className="card-text text-muted">
+                          Connect with like-minded individuals and build lasting relationships.
+                        </p>
                       </div>
-                      <CardTitle>Build Connections</CardTitle>
-                      <CardDescription>
-                        Connect with like-minded individuals and build lasting relationships.
-                      </CardDescription>
-                    </CardHeader>
-                  </Card>
+                    </div>
+                  </div>
 
-                  <Card className="text-center">
-                    <CardHeader>
-                      <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                        <Target className="w-8 h-8 text-white" />
+                  <div className="col-12 col-md-4">
+                    <div className="card text-center">
+                      <div className="card-header">
+                        <div className="bg-primary rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3" style={{ width: '64px', height: '64px' }}>
+                          <Target className="text-white" style={{ width: '32px', height: '32px' }} />
+                        </div>
+                        <h5 className="card-title">Develop Skills</h5>
+                        <p className="card-text text-muted">
+                          Gain valuable experience and develop new skills while serving others.
+                        </p>
                       </div>
-                      <CardTitle>Develop Skills</CardTitle>
-                      <CardDescription>
-                        Gain valuable experience and develop new skills while serving others.
-                      </CardDescription>
-                    </CardHeader>
-                  </Card>
+                    </div>
+                  </div>
                 </div>
 
                 <VolunteerForm />
@@ -148,42 +153,48 @@ const GetInvolved = () => {
 
             {activeTab === 'donate' && (
               <div>
-                <div className="text-center mb-12">
-                  <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                <div className="text-center mb-5">
+                  <h2 className="h3 fw-bold text-dark mb-3">
                     Support Our Mission
                   </h2>
-                  <p className="text-xl text-gray-600">
+                  <p className="fs-5 text-muted">
                     Your donation helps us expand our programs and reach more communities in need.
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-                  <Card className="text-center">
-                    <CardHeader>
-                      <CardTitle className="text-2xl text-primary">$25</CardTitle>
-                      <CardDescription>
-                        Provides educational materials for one child for a month.
-                      </CardDescription>
-                    </CardHeader>
-                  </Card>
+                <div className="row g-4 mb-5">
+                  <div className="col-12 col-md-4">
+                    <div className="card text-center">
+                      <div className="card-header">
+                        <h5 className="card-title fs-3 text-primary">sh250</h5>
+                        <p className="card-text text-muted">
+                          Provides educational materials for one child for a month.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
 
-                  <Card className="text-center">
-                    <CardHeader>
-                      <CardTitle className="text-2xl text-primary">$50</CardTitle>
-                      <CardDescription>
-                        Supports healthcare services for a family for one month.
-                      </CardDescription>
-                    </CardHeader>
-                  </Card>
+                  <div className="col-12 col-md-4">
+                    <div className="card text-center">
+                      <div className="card-header">
+                        <h5 className="card-title fs-3 text-primary">sh500</h5>
+                        <p className="card-text text-muted">
+                          Supports healthcare services for a family for one month.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
 
-                  <Card className="text-center">
-                    <CardHeader>
-                      <CardTitle className="text-2xl text-primary">$100</CardTitle>
-                      <CardDescription>
-                        Funds a complete skills training workshop for 10 participants.
-                      </CardDescription>
-                    </CardHeader>
-                  </Card>
+                  <div className="col-12 col-md-4">
+                    <div className="card text-center">
+                      <div className="card-header">
+                        <h5 className="card-title fs-3 text-primary">sh1000</h5>
+                        <p className="card-text text-muted">
+                          Funds a complete skills training workshop for 10 participants.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <DonationForm />
@@ -192,56 +203,58 @@ const GetInvolved = () => {
 
             {activeTab === 'events' && (
               <div>
-                <div className="text-center mb-12">
-                  <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                <div className="text-center mb-5">
+                  <h2 className="h3 fw-bold text-dark mb-3">
                     Upcoming Events
                   </h2>
-                  <p className="text-xl text-gray-600">
+                  <p className="fs-5 text-muted">
                     Join us at our upcoming events and be part of the change you want to see.
                   </p>
                 </div>
 
                 {events.length === 0 ? (
-                  <div className="text-center py-12">
-                    <Calendar className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                    <h3 className="text-2xl font-semibold text-gray-900 mb-4">No Upcoming Events</h3>
-                    <p className="text-gray-600 mb-8">We're planning exciting new events. Check back soon!</p>
-                    <Button>Contact Us for Updates</Button>
+                  <div className="text-center py-5">
+                    <Calendar className="text-gray-400 mx-auto mb-3" style={{ width: '64px', height: '64px' }} />
+                    <h3 className="fs-3 fw-semibold text-dark mb-3">No Upcoming Events</h3>
+                    <p className="text-muted mb-4">We're planning exciting new events. Check back soon!</p>
+                    <a href="/contact" className="btn btn-primary">Contact Us for Updates</a>
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="row g-4">
                     {events.map((event) => (
-                      <Card key={event.id} className="card-hover">
-                        <CardHeader>
-                          <CardTitle className="text-xl">{event.title}</CardTitle>
-                          <CardDescription>{event.description}</CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                          <div className="space-y-3">
-                            {event.date && (
-                              <div className="flex items-center space-x-2 text-sm text-gray-600">
-                                <Calendar className="w-4 h-4" />
-                                <span>{new Date(event.date).toLocaleDateString()}</span>
-                              </div>
-                            )}
-                            {event.location && (
-                              <div className="flex items-center space-x-2 text-sm text-gray-600">
-                                <MapPin className="w-4 h-4" />
-                                <span>{event.location}</span>
-                              </div>
-                            )}
-                            {event.capacity && (
-                              <div className="flex items-center space-x-2 text-sm text-gray-600">
-                                <Users className="w-4 h-4" />
-                                <span>{event.capacity} participants</span>
-                              </div>
-                            )}
+                      <div key={event.id} className="col-12 col-md-6">
+                        <div className="card card-hover">
+                          <div className="card-header">
+                            <h5 className="card-title fs-5">{event.title}</h5>
+                            <p className="card-text text-muted">{event.description}</p>
                           </div>
-                          <Button className="w-full mt-6">
-                            Register for Event
-                          </Button>
-                        </CardContent>
-                      </Card>
+                          <div className="card-body">
+                            <div className="d-flex flex-column gap-3">
+                              {event.date && (
+                                <div className="d-flex align-items-center gap-2 small text-muted">
+                                  <Calendar style={{ width: '16px', height: '16px' }} />
+                                  <span>{new Date(event.date).toLocaleDateString()}</span>
+                                </div>
+                              )}
+                              {event.location && (
+                                <div className="d-flex align-items-center gap-2 small text-muted">
+                                  <MapPin style={{ width: '16px', height: '16px' }} />
+                                  <span>{event.location}</span>
+                                </div>
+                              )}
+                              {event.capacity && (
+                                <div className="d-flex align-items-center gap-2 small text-muted">
+                                  <Users style={{ width: '16px', height: '16px' }} />
+                                  <span>{event.capacity} participants</span>
+                                </div>
+                              )}
+                            </div>
+                            <a href="#" className="btn btn-primary w-100 mt-3">
+                              Register for Event
+                            </a>
+                          </div>
+                        </div>
+                      </div>
                     ))}
                   </div>
                 )}
@@ -252,18 +265,18 @@ const GetInvolved = () => {
       </section>
 
       {/* Call to Action */}
-      <section className="hero-gradient text-white section-padding">
-        <div className="container-max">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+      <section className="hero-gradient text-white section-padding w-100">
+        <div className="container-fluid px-3">
+          <div className="text-center">
+            <h2 className="h3 fw-bold mb-4">
               Every Action Counts
             </h2>
-            <p className="text-xl mb-8 text-gray-100">
+            <p className="fs-5 text-gray-100 mb-4">
               Whether you volunteer your time, make a donation, or attend our events, every action contributes to positive change in communities across Kenya.
             </p>
-            <Button size="lg" className="bg-white text-primary hover:bg-gray-100">
+            <a href="/contact" className="btn btn-light text-primary hover-bg-gray-100 fw-medium">
               Contact Us to Learn More
-            </Button>
+            </a>
           </div>
         </div>
       </section>
@@ -272,4 +285,3 @@ const GetInvolved = () => {
 };
 
 export default GetInvolved;
-

@@ -3,14 +3,14 @@ import { AlertCircle } from 'lucide-react';
 
 const ErrorMessage = ({ message, onRetry }) => {
   return (
-    <div className="flex flex-col items-center justify-center p-8 text-center">
-      <AlertCircle className="w-12 h-12 text-destructive mb-4" />
-      <h3 className="text-lg font-semibold text-gray-900 mb-2">Something went wrong</h3>
-      <p className="text-gray-600 mb-4">{message || 'An unexpected error occurred.'}</p>
+    <div className="d-flex flex-column align-items-center justify-content-center p-4 text-center w-100">
+      <AlertCircle style={{ width: '48px', height: '48px' }} className="text-danger mb-3" />
+      <h3 className="fs-5 fw-semibold text-dark mb-2">Something went wrong</h3>
+      <p className="text-muted mb-3">{message || 'An unexpected error occurred.'}</p>
       {onRetry && (
         <button
           onClick={onRetry}
-          className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors"
+          className="px-4 py-2 btn btn-primary"
         >
           Try Again
         </button>
@@ -20,5 +20,3 @@ const ErrorMessage = ({ message, onRetry }) => {
 };
 
 export default ErrorMessage;
-
-9
