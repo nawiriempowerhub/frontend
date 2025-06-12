@@ -21,11 +21,11 @@ const Header = () => {
           {/* Logo Section */}
           <NavLink to="/" className="d-flex align-items-center gap-2">
             <img
-              src={nawiriLogo}
-              alt="Nawiri Empower Hub Logo"
-              className="rounded-full object-cover"
-              style={{ height: "40px", width: "40px" }}
-            />
+            src={nawiriLogo}
+            alt="Nawiri Empower Hub Logo"
+            className="rounded-circle object-fit-cover border-2 border-white"
+            style={{ height: "40px", width: "40px" }}
+          />
 
             <h2 className="fs-5 fw-semibold d-none d-sm-inline">
               Nawiri Empower Hub

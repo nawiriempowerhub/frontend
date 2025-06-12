@@ -33,17 +33,17 @@ function App() {
         {/* Public Routes (accessible to all) */}
         <Route path="/" element={
           <Layout>
-            <Home />
-          </Layout>
-        } />
-        <Route path="/about" element={
-          <Layout>
             <About />
           </Layout>
         } />
         <Route path="/home" element={
           <Layout>
             <Home />
+          </Layout>
+        } />
+        <Route path="/about" element={
+          <Layout>
+            <About />
           </Layout>
         } />
         <Route path="/programs" element={
@@ -76,8 +76,7 @@ function App() {
             <Events />
           </Layout>
         } />
-
-
+        
         {/* Commented out non-public routes */}
         {/* Landing Page */}
         {/* <Route path="/" element={<LandingPage />} /> */}

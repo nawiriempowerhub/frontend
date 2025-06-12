@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from '../ui/Button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/Card';
+import { Check, Loader2, AlertCircle } from 'lucide-react';
 import { volunteersService } from '../../services/volunteersService';
 
 const VolunteerForm = () => {
@@ -46,163 +45,241 @@ const VolunteerForm = () => {
 
   if (success) {
     return (
-      <Card>
-        <CardContent className="text-center py-8">
-          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
-          </div>
-          <h3 className="text-xl font-semibold text-gray-900 mb-2">Application Submitted!</h3>
-          <p className="text-gray-600 mb-6">
-            Thank you for your interest in volunteering with us. We'll review your application and get back to you soon.
-          </p>
-          <Button onClick={() => setSuccess(false)}>
-            Submit Another Application
-          </Button>
-        </CardContent>
-      </Card>
+      <div className="text-center py-5 fade-in">
+        <div 
+          className="bg-success bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4"
+          style={{ width: '80px', height: '80px' }}
+        >
+          <Check className="text-success" style={{ width: '40px', height: '40px', strokeWidth: 2 }} />
+        </div>
+        <h3 className="h4 fw-semibold text-dark mb-3">Application Submitted Successfully!</h3>
+        <p className="text-muted mb-4 mx-auto" style={{ maxWidth: '400px' }}>
+          Thank you for your interest in volunteering with us. We'll review your application and get back to you soon.
+        </p>
+        <button 
+          onClick={() => setSuccess(false)}
+          className="btn btn-outline-primary px-4 py-2 fw-medium"
+          style={{ transition: 'all 0.3s ease' }}
+        >
+          Submit Another Application
+        </button>
+      </div>
     );
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Volunteer Application</CardTitle>
-        <CardDescription>
+    <div className="card border-0 shadow-sm">
+      <div className="card-body p-4 p-md-5">
+        <h2 className="h4 fw-semibold text-dark mb-3">Volunteer Application</h2>
+        <p className="text-muted mb-4">
           Fill out this form to apply as a volunteer. We'll review your application and contact you with next steps.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        </p>
+        <form onSubmit={handleSubmit}>
           {error && (
-            <div className="bg-red-50 border border-red-200 rounded-md p-4">
-              <p className="text-red-600 text-sm">{error}</p>
+            <div className="alert alert-danger d-flex align-items-start gap-3 mb-4 fade-in" role="alert">
+              <AlertCircle className="text-danger flex-shrink-0 mt-1" style={{ width: '20px', height: '20px' }} />
+              <div className="small">{error}</div>
             </div>
           )}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                Full Name *
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                placeholder="Enter your full name"
-              />
+          <div className="row g-4 mb-4">
+            <div className="col-12 col-md-6">
+              <div className="form-floating">
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                  className="form-control form-control-lg border-2"
+                  placeholder="John Doe"
+                  style={{ 
+                    transition: 'all 0.3s ease',
+                    borderColor: '#e9ecef'
+                  }}
+                  onFocus={(e) => {
+                    e.target.style.borderColor = '#0d6efd';
+                    e.target.style.boxShadow = '0 0 0 0.2rem rgba(13, 110, 253, 0.25)';
+                  }}
+                  onBlur={(e) => {
+                    e.target.style.borderColor = '#e9ecef';
+                    e.target.style.boxShadow = 'none';
+                  }}
+                />
+                <label htmlFor="name" className="text-muted">
+                  Full Name <span className="text-danger">*</span>
+                </label>
+              </div>
             </div>
 
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                Email Address *
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                placeholder="Enter your email"
-              />
+            <div className="col-12 col-md-6">
+              <div className="form-floating">
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  className="form-control form-control-lg border-2"
+                  placeholder="your@email.com"
+                  style={{ 
+                    transition: 'all 0.3s ease',
+                    borderColor: '#e9ecef'
+                  }}
+                  onFocus={(e) => {
+                    e.target.style.borderColor = '#0d6efd';
+                    e.target.style.boxShadow = '0 0 0 0.2rem rgba(13, 110, 253, 0.25)';
+                  }}
+                  onBlur={(e) => {
+                    e.target.style.borderColor = '#e9ecef';
+                    e.target.style.boxShadow = 'none';
+                  }}
+                />
+                <label htmlFor="email" className="text-muted">
+                  Email Address <span className="text-danger">*</span>
+                </label>
+              </div>
             </div>
           </div>
 
-          <div>
-            <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-              Phone Number
-            </label>
-            <input
-              type="tel"
-              id="phone"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-              placeholder="Enter your phone number"
-            />
+          <div className="mb-4">
+            <div className="form-floating">
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                className="form-control form-control-lg border-2"
+                placeholder="Enter your phone number"
+                style={{ 
+                  transition: 'all 0.3s ease',
+                  borderColor: '#e9ecef'
+                }}
+                onFocus={(e) => {
+                  e.target.style.borderColor = '#0d6efd';
+                  e.target.style.boxShadow = '0 0 0 0.2rem rgba(13, 110, 253, 0.25)';
+                }}
+                onBlur={(e) => {
+                  e.target.style.borderColor = '#e9ecef';
+                  e.target.style.boxShadow = 'none';
+                }}
+              />
+              <label htmlFor="phone" className="text-muted">
+                Phone Number
+              </label>
+            </div>
           </div>
 
-          {/* <div>
-            <label htmlFor="skills" className="block text-sm font-medium text-gray-700 mb-2">
-              Skills & Expertise
-            </label>
-            <textarea
-              id="skills"
-              name="skills"
-              value={formData.skills}
-              onChange={handleChange}
-              rows={3}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-              placeholder="Tell us about your skills, expertise, or areas where you'd like to help"
-            />
-          </div> */}
+          <div className="mb-4">
+            <div className="form-floating">
+              <select
+                id="availability"
+                name="availability"
+                value={formData.availability}
+                onChange={handleChange}
+                className="form-control form-control-lg border-2"
+                style={{ 
+                  transition: 'all 0.3s ease',
+                  borderColor: '#e9ecef'
+                }}
+                onFocus={(e) => {
+                  e.target.style.borderColor = '#0d6efd';
+                  e.target.style.boxShadow = '0 0 0 0.2rem rgba(13, 110, 253, 0.25)';
+                }}
+                onBlur={(e) => {
+                  e.target.style.borderColor = '#e9ecef';
+                  e.target.style.boxShadow = 'none';
+                }}
+              >
+                <option value="">Select your availability</option>
+                <option value="weekdays">Weekdays</option>
+                <option value="weekends">Weekends</option>
+                <option value="both">Both weekdays and weekends</option>
+                <option value="flexible">Flexible</option>
+              </select>
+              <label htmlFor="availability" className="text-muted">
+                Availability
+              </label>
+            </div>
+          </div>
 
-          <div>
-            <label htmlFor="availability" className="block text-sm font-medium text-gray-700 mb-2">
-              Availability
-            </label>
-            <select
-              id="availability"
-              name="availability"
-              value={formData.availability}
-              onChange={handleChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+          <div className="mb-4">
+            <div className="form-floating">
+              <textarea
+                id="motivation"
+                name="motivation"
+                value={formData.motivation}
+                onChange={handleChange}
+                required
+                className="form-control border-2"
+                placeholder="Share your motivation for volunteering"
+                style={{ 
+                  height: '150px',
+                  resize: 'none',
+                  transition: 'all 0.3s ease',
+                  borderColor: '#e9ecef'
+                }}
+                onFocus={(e) => {
+                  e.target.style.borderColor = '#0d6efd';
+                  e.target.style.boxShadow = '0 0 0 0.2rem rgba(13, 110, 253, 0.25)';
+                }}
+                onBlur={(e) => {
+                  e.target.style.borderColor = '#e9ecef';
+                  e.target.style.boxShadow = 'none';
+                }}
+              />
+              <label htmlFor="motivation" className="text-muted">
+                Why do you want to volunteer with us? <span className="text-danger">*</span>
+              </label>
+            </div>
+          </div>
+
+          <div className="d-grid gap-2 mb-3">
+            <button 
+              type="submit" 
+              disabled={loading} 
+              className="btn btn-primary btn-lg fw-medium py-3"
+              style={{ 
+                transition: 'all 0.3s ease',
+                boxShadow: '0 4px 12px rgba(13, 110, 253, 0.2)'
+              }}
+              onMouseEnter={(e) => {
+                if (!loading) {
+                  e.target.style.transform = 'translateY(-2px)';
+                  e.target.style.boxShadow = '0 6px 20px rgba(13, 110, 253, 0.3)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = 'translateY(0)';
+                e.target.style.boxShadow = '0 4px 12px rgba(13, 110, 253, 0.2)';
+              }}
             >
-              <option value="">Select your availability</option>
-              <option value="weekdays">Weekdays</option>
-              <option value="weekends">Weekends</option>
-              <option value="both">Both weekdays and weekends</option>
-              <option value="flexible">Flexible</option>
-            </select>
+              {loading ? (
+                <>
+                  <Loader2 className="me-2 animate-spin" style={{ width: '20px', height: '20px' }} />
+                  Submitting Application...
+                </>
+              ) : (
+                <>
+                  <i className="fas fa-paper-plane me-2"></i>
+                  Submit Application
+                </>
+              )}
+            </button>
           </div>
 
-          <div>
-            <label htmlFor="motivation" className="block text-sm font-medium text-gray-700 mb-2">
-              Why do you want to volunteer with us? *
-            </label>
-            <textarea
-              id="motivation"
-              name="motivation"
-              value={formData.motivation}
-              onChange={handleChange}
-              required
-              rows={4}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-              placeholder="Share your motivation for volunteering with Nawiri EmpowerHub"
-            />
-          </div>
-
-          {/* <div>
-            <label htmlFor="experience" className="block text-sm font-medium text-gray-700 mb-2">
-              Previous Volunteer Experience
-            </label>
-            <textarea
-              id="experience"
-              name="experience"
-              value={formData.experience}
-              onChange={handleChange}
-              rows={3}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-              placeholder="Tell us about any previous volunteer experience (optional)"
-            />
-          </div> */}
-
-          <Button type="submit" disabled={loading} className="w-full">
-            {loading ? 'Submitting...' : 'Submit Application'}
-          </Button>
+          <p className="text-muted small text-center mb-0">
+            <i className="fas fa-shield-alt me-1"></i>
+            By submitting this form, you agree to our 
+            <a href="#" className="text-primary text-decoration-none ms-1">privacy policy</a>.
+          </p>
         </form>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 
 export default VolunteerForm;
-

@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Heart, Calendar, MapPin, Users, DollarSign, Target } from 'lucide-react';
 import Loading from '../components/ui/Loading';
 import ErrorMessage from '../components/ui/ErrorMessage';
@@ -37,7 +38,7 @@ const GetInvolved = () => {
 
   if (loading) {
     return (
-      <div className="min-vh-100 d-flex align-items-center justify-content-center">
+      <div classNameName="min-vh-100 d-flex align-items-center justify-content-center">
         <Loading size="lg" text="Loading opportunities..." />
       </div>
     );
@@ -45,7 +46,7 @@ const GetInvolved = () => {
 
   if (error) {
     return (
-      <div className="min-vh-100 d-flex align-items-center justify-content-center">
+      <div classNameName="min-vh-100 d-flex align-items-center justify-content-center">
         <ErrorMessage message={error} onRetry={() => window.location.reload()} />
       </div>
     );
@@ -53,16 +54,41 @@ const GetInvolved = () => {
 
   return (
     <div className="w-100">
-      {/* Hero Section */}
-      <section className="hero-gradient text-white section-padding w-100">
+      {/* Hero Section with Background Image */}
+      <section 
+        className="text-white section-padding w-100 position-relative"
+        style={{
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/src/assets/hero-bg.jpg')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          minHeight: '60vh',
+        }}
+        aria-label="Hero section with community background"
+      >
         <div className="container-fluid px-3">
-          <div className="text-center">
+          <div className="text-center py-5">
             <h1 className="display-4 fw-bold mb-4">
               Get Involved
+              <span className="d-block text-warning">Make a Difference</span>
             </h1>
-            <p className="fs-4 text-gray-100">
+            <p className="fs-4 text-white opacity-75 mb-5 mx-auto" style={{ maxWidth: '800px' }}>
               Join our mission to empower communities. Whether through volunteering, donating, or participating in events, your contribution makes a difference.
             </p>
+            <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+              <Link 
+                to="/contact" 
+                className="btn btn-light text-primary fw-medium px-4 py-2"
+              >
+                Contact Us
+              </Link>
+              <Link 
+                to="/programs" 
+                className="btn btn-outline-light fw-medium px-4 py-2"
+              >
+                View Our Programs
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -217,7 +243,9 @@ const GetInvolved = () => {
                     <Calendar className="text-gray-400 mx-auto mb-3" style={{ width: '64px', height: '64px' }} />
                     <h3 className="fs-3 fw-semibold text-dark mb-3">No Upcoming Events</h3>
                     <p className="text-muted mb-4">We're planning exciting new events. Check back soon!</p>
-                    <a href="/contact" className="btn btn-primary">Contact Us for Updates</a>
+                    <Link to="/contact" className="btn btn-primary">
+                      Contact Us for Updates
+                    </Link>
                   </div>
                 ) : (
                   <div className="row g-4">
@@ -249,9 +277,9 @@ const GetInvolved = () => {
                                 </div>
                               )}
                             </div>
-                            <a href="#" className="btn btn-primary w-100 mt-3">
+                            <Link to={`/events/${event.id}`} className="btn btn-primary w-100 mt-3">
                               Register for Event
-                            </a>
+                            </Link>
                           </div>
                         </div>
                       </div>
@@ -274,9 +302,9 @@ const GetInvolved = () => {
             <p className="fs-5 text-gray-100 mb-4">
               Whether you volunteer your time, make a donation, or attend our events, every action contributes to positive change in communities across Kenya.
             </p>
-            <a href="/contact" className="btn btn-light text-primary hover-bg-gray-100 fw-medium">
+            <Link to="/contact" className="btn btn-light text-primary fw-medium px-4 py-2">
               Contact Us to Learn More
-            </a>
+            </Link>
           </div>
         </div>
       </section>

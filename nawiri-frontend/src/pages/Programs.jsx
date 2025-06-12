@@ -44,16 +44,40 @@ const Programs = () => {
 
   return (
     <div className="w-100">
-      {/* Hero Section */}
-      <section className="bg-primary text-white py-5 py-md-6 w-100">
+      {/* Hero Section with Background Image */}
+      <section 
+        className="text-white py-5 py-md-6 w-100 position-relative"
+        style={{
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/src/assets/hero-bg.jpg')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          minHeight: '60vh',
+        }}
+      >
         <div className="container px-3 px-md-4">
           <div className="text-center py-4">
             <h2 className="display-4 fw-bold mb-4">
               Our Programs
+              <span className="d-block text-warning">Transforming Lives</span>
             </h2>
-            <p className="fs-4 text-light opacity-75 mb-0 mx-auto" style={{ maxWidth: '800px' }}>
+            <p className="fs-4 text-white opacity-75 mb-0 mx-auto" style={{ maxWidth: '800px' }}>
               Comprehensive initiatives designed to empower communities through education, healthcare, and sustainable development.
             </p>
+            <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center mt-5">
+              <Link 
+                to="/get-involved" 
+                className="btn btn-light text-primary fw-medium px-4 d-flex align-items-center justify-content-center"
+              >
+                Get Involved <ArrowRight className="ms-2" style={{ width: '16px', height: '16px' }} />
+              </Link>
+              <Link 
+                to="/contact" 
+                className="btn btn-outline-light fw-medium px-4"
+              >
+                Contact Us
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -65,9 +89,9 @@ const Programs = () => {
             <div className="text-center py-5 my-4">
               <h3 className="fs-3 fw-semibold text-dark mb-3">No Programs Available</h3>
               <p className="text-muted mb-4 fs-5">We're working on exciting new programs. Check back soon!</p>
-              <a href="/contact" className="btn btn-primary btn-lg px-4">
+              <Link to="/contact" className="btn btn-primary btn-lg px-4">
                 Contact Us for More Information
-              </a>
+              </Link>
             </div>
           ) : (
             <div className="row g-4">
@@ -99,12 +123,12 @@ const Programs = () => {
                           </div>
                         )}
                       </div>
-                      <a 
-                        href={`/programs/${program.id}`} 
+                      <Link 
+                        to={`/programs/${program.id}`} 
                         className="btn btn-primary w-100 d-flex align-items-center justify-content-center"
                       >
                         Learn More <ArrowRight className="ms-2" style={{ width: '16px', height: '16px' }} />
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -125,18 +149,18 @@ const Programs = () => {
               Your support helps us expand our reach and create more opportunities for communities to thrive.
             </p>
             <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
-              <a 
-                href="/get-involved" 
+              <Link 
+                to="/get-involved" 
                 className="btn btn-light text-primary fw-medium px-4 d-flex align-items-center justify-content-center"
               >
                 Get Involved <ArrowRight className="ms-2" style={{ width: '16px', height: '16px' }} />
-              </a>
-              <a 
-                href="/contact" 
+              </Link>
+              <Link 
+                to="/contact" 
                 className="btn btn-outline-light fw-medium px-4"
               >
                 Contact Us
-              </a>
+              </Link>
             </div>
           </div>
         </div>

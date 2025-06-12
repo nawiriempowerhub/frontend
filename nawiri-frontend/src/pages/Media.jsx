@@ -4,6 +4,7 @@ import Loading from '../components/ui/Loading';
 import ErrorMessage from '../components/ui/ErrorMessage';
 import { mediaService } from '../services/mediaService';
 import { aboutService } from '../services/aboutService';
+import { Link } from 'react-router-dom';
 
 const Media = () => {
   const [media, setMedia] = useState([]);
@@ -11,7 +12,7 @@ const Media = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [filter, setFilter] = useState('all');
-  const [mediaTypeFilter, setMediaTypeFilter] = useState('all'); // New state for media type filter
+  const [mediaTypeFilter, setMediaTypeFilter] = useState('all');
   const [activeTab, setActiveTab] = useState('media');
 
   useEffect(() => {
@@ -48,7 +49,6 @@ const Media = () => {
     }
   };
 
-  // Get unique media types for filter options
   const mediaTypes = [...new Set(media.map(item => item.type?.toLowerCase()))].filter(Boolean);
 
   const filteredMedia = media.filter(item => {
@@ -77,16 +77,41 @@ const Media = () => {
 
   return (
     <div className="w-100">
-      {/* Hero Section */}
-      <section className="hero-gradient text-white section-padding w-100">
+      {/* Hero Section with Background Image */}
+      <section 
+        className="text-white section-padding w-100 position-relative"
+        style={{
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/src/assets/hero-bg.jpg')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          minHeight: '60vh',
+        }}
+        aria-label="Hero section with community background"
+      >
         <div className="container-fluid px-3">
-          <div className="text-center">
+          <div className="text-center py-5">
             <h2 className="display-4 fw-bold mb-4">
               Media & Impact
+              <span className="d-block text-warning">Stories That Inspire</span>
             </h2>
-            <p className="fs-4 text-gray-100">
+            <p className="fs-4 text-white opacity-75 mb-5 mx-auto" style={{ maxWidth: '800px' }}>
               Explore our gallery of photos, videos, and stories that showcase the impact of our programs and the communities we serve.
             </p>
+            <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+              <Link 
+                to="/get-involved" 
+                className="btn btn-light text-primary fw-medium px-4 py-2"
+              >
+                Get Involved
+              </Link>
+              <Link 
+                to="/programs" 
+                className="btn btn-outline-light fw-medium px-4 py-2"
+              >
+                View Our Programs
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -121,28 +146,6 @@ const Media = () => {
           <div className="container-fluid px-3">
             {/* Filter Tabs */}
             <div className="d-flex flex-wrap justify-content-center gap-3 mb-5">
-              {/* Content Type Filter */}
-              {/* <div className="w-100 text-center mb-3">
-                <h5 className="fw-semibold text-muted mb-3">Filter by Content Type</h5>
-                <div className="d-flex flex-wrap justify-content-center gap-3">
-                  {['all', 'hasUrl', 'noUrl'].map((filterType) => (
-                    <button
-                      key={filterType}
-                      onClick={() => setFilter(filterType)}
-                      className={`btn btn-sm px-4 py-2 rounded-pill fw-medium ${
-                        filter === filterType
-                          ? 'btn-primary'
-                          : 'btn-outline-primary'
-                      }`}
-                    >
-                      {filterType === 'hasUrl' ? 'Has URL' : 
-                       filterType === 'noUrl' ? 'No URL' : 
-                       'All Content'}
-                    </button>
-                  ))}
-                </div>
-              </div> */}
-              
               {/* Media Type Filter */}
               <div className="w-100 text-center">
                 <h5 className="fw-semibold text-muted mb-3">Filter by Media Type</h5>
@@ -244,7 +247,7 @@ const Media = () => {
         </section>
       )}
 
-      {/* Impact Stories Section - Remaining code stays the same */}
+      {/* Impact Stories Section */}
       {activeTab === 'impact' && (
         <section className="section-padding">
           <div className="container-fluid px-3">
@@ -310,12 +313,12 @@ const Media = () => {
               Join us in creating more stories of impact and transformation. Your involvement can help us reach more communities and create lasting change.
             </p>
             <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
-              <a href="/get-involved" className="btn btn-light text-primary hover-bg-gray-100 fw-medium">
+              <Link to="/get-involved" className="btn btn-light text-primary fw-medium px-4 py-2">
                 Get Involved
-              </a>
-              <a href="/programs" className="btn btn-outline-light fw-medium">
+              </Link>
+              <Link to="/programs" className="btn btn-outline-light fw-medium px-4 py-2">
                 View Our Programs
-              </a>
+              </Link>
             </div>
           </div>
         </div>

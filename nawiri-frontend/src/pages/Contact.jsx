@@ -1,20 +1,47 @@
+
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import ContactForm from '../components/forms/ContactForm';
 
 const Contact = () => {
   return (
     <div className="w-100">
-      {/* Hero Section */}
-      <section className="hero-gradient text-white section-padding w-100">
+      {/* Hero Section with Background Image */}
+      <section 
+        className="text-white section-padding w-100 position-relative"
+        style={{
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/src/assets/hero-bg.jpg')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          minHeight: '60vh',
+        }}
+        aria-label="Hero section with community background"
+      >
         <div className="container-fluid px-3">
-          <div className="text-center">
+          <div className="text-center py-5">
             <h1 className="display-4 fw-bold mb-4">
               Contact Us
+              <span className="d-block text-warning">We’re Here to Help</span>
             </h1>
-            <p className="fs-4 text-gray-100">
+            <p className="fs-4 text-white opacity-75 mb-5 mx-auto" style={{ maxWidth: '800px' }}>
               Get in touch with us to learn more about our programs, volunteer opportunities, or how you can support our mission.
             </p>
+            <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+              <Link 
+                to="/get-involved" 
+                className="btn btn-light text-primary fw-medium px-4 py-2"
+              >
+                Get Involved
+              </Link>
+              <Link 
+                to="/programs" 
+                className="btn btn-outline-light fw-medium px-4 py-2"
+              >
+                View Our Programs
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -202,12 +229,12 @@ const Contact = () => {
               Don't wait to get involved. Contact us today and start your journey of creating positive change in communities across Kenya.
             </p>
             <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
-              <a href="/get-involved" className="btn btn-light text-primary hover-bg-gray-100 fw-medium">
+              <Link to="/get-involved" className="btn btn-light text-primary fw-medium px-4 py-2">
                 Get Involved Now
-              </a>
-              <a href="/programs" className="btn btn-outline-light fw-medium">
+              </Link>
+              <Link to="/programs" className="btn btn-outline-light fw-medium px-4 py-2">
                 Learn About Our Programs
-              </a>
+              </Link>
             </div>
           </div>
         </div>
