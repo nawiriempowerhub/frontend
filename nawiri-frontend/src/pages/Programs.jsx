@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { ArrowRight, Users, Calendar, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -46,13 +45,13 @@ const Programs = () => {
   return (
     <div className="w-100">
       {/* Hero Section */}
-      <section className="hero-gradient text-white section-padding w-100">
-        <div className="container-fluid px-3">
-          <div className="text-center">
-            <h1 className="display-4 fw-bold mb-4">
+      <section className="bg-primary text-white py-5 py-md-6 w-100">
+        <div className="container px-3 px-md-4">
+          <div className="text-center py-4">
+            <h2 className="display-4 fw-bold mb-4">
               Our Programs
-            </h1>
-            <p className="fs-4 text-gray-100">
+            </h2>
+            <p className="fs-4 text-light opacity-75 mb-0 mx-auto" style={{ maxWidth: '800px' }}>
               Comprehensive initiatives designed to empower communities through education, healthcare, and sustainable development.
             </p>
           </div>
@@ -60,13 +59,13 @@ const Programs = () => {
       </section>
 
       {/* Programs Grid */}
-      <section className="section-padding">
-        <div className="container-fluid px-3">
+      <section className="py-5 py-md-6 bg-light">
+        <div className="container px-3 px-md-4">
           {programs.length === 0 ? (
-            <div className="text-center py-5">
+            <div className="text-center py-5 my-4">
               <h3 className="fs-3 fw-semibold text-dark mb-3">No Programs Available</h3>
-              <p className="text-muted mb-4">We're working on exciting new programs. Check back soon!</p>
-              <a href="/contact" className="btn btn-primary">
+              <p className="text-muted mb-4 fs-5">We're working on exciting new programs. Check back soon!</p>
+              <a href="/contact" className="btn btn-primary btn-lg px-4">
                 Contact Us for More Information
               </a>
             </div>
@@ -74,33 +73,36 @@ const Programs = () => {
             <div className="row g-4">
               {programs.map((program) => (
                 <div key={program.id} className="col-12 col-md-6 col-lg-4">
-                  <div className="card card-hover">
-                    <div className="card-header">
-                      <h5 className="card-title fs-5">{program.title}</h5>
-                      <p className="card-text text-muted">{program.description}</p>
+                  <div className="card h-100 shadow-sm border-0 hover-shadow transition-all">
+                    <div className="card-header bg-white border-bottom-0 pb-0">
+                      <h5 className="card-title fs-5 fw-semibold text-dark">{program.title}</h5>
+                      <p className="card-text text-muted mt-2">{program.description}</p>
                     </div>
-                    <div className="card-body">
+                    <div className="card-body pt-0">
                       <div className="d-flex flex-column gap-3 mb-4">
                         {program.location && (
                           <div className="d-flex align-items-center gap-2 small text-muted">
-                            <MapPin style={{ width: '16px', height: '16px' }} />
+                            <MapPin className="flex-shrink-0" style={{ width: '16px', height: '16px' }} />
                             <span>{program.location}</span>
                           </div>
                         )}
                         {program.participants && (
                           <div className="d-flex align-items-center gap-2 small text-muted">
-                            <Users style={{ width: '16px', height: '16px' }} />
+                            <Users className="flex-shrink-0" style={{ width: '16px', height: '16px' }} />
                             <span>{program.participants} participants</span>
                           </div>
                         )}
                         {program.start_date && (
                           <div className="d-flex align-items-center gap-2 small text-muted">
-                            <Calendar style={{ width: '16px', height: '16px' }} />
+                            <Calendar className="flex-shrink-0" style={{ width: '16px', height: '16px' }} />
                             <span>Started {new Date(program.start_date).toLocaleDateString()}</span>
                           </div>
                         )}
                       </div>
-                      <a href={`/programs/${program.id}`} className="btn btn-primary w-100">
+                      <a 
+                        href={`/programs/${program.id}`} 
+                        className="btn btn-primary w-100 d-flex align-items-center justify-content-center"
+                      >
                         Learn More <ArrowRight className="ms-2" style={{ width: '16px', height: '16px' }} />
                       </a>
                     </div>
@@ -113,20 +115,26 @@ const Programs = () => {
       </section>
 
       {/* Call to Action */}
-      <section className="hero-gradient text-white section-padding w-100">
-        <div className="container-fluid px-3">
+      <section className="bg-primary text-white py-5 py-md-6 w-100">
+        <div className="container px-3 px-md-4">
           <div className="text-center">
             <h2 className="h3 fw-bold mb-4">
               Want to Support Our Programs?
             </h2>
-            <p className="fs-5 mb-4 text-gray-100">
+            <p className="fs-5 text-light opacity-75 mb-5 mx-auto" style={{ maxWidth: '800px' }}>
               Your support helps us expand our reach and create more opportunities for communities to thrive.
             </p>
             <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
-              <a href="/get-involved" className="btn btn-light text-primary hover-bg-gray-100 fw-medium">
+              <a 
+                href="/get-involved" 
+                className="btn btn-light text-primary fw-medium px-4 d-flex align-items-center justify-content-center"
+              >
                 Get Involved <ArrowRight className="ms-2" style={{ width: '16px', height: '16px' }} />
               </a>
-              <a href="/contact" className="btn btn-outline-light fw-medium">
+              <a 
+                href="/contact" 
+                className="btn btn-outline-light fw-medium px-4"
+              >
                 Contact Us
               </a>
             </div>

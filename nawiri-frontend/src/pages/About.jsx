@@ -102,10 +102,10 @@ const About = () => {
       >
         <Container>
           <Row className="justify-content-center text-center">
-            <Col lg={8}>
-              <h1 className="display-4 fw-bold mb-4">
+            <Col md={8}>
+              <h3 className="display-4 fw-bold mb-4">
                 About Nawiri EmpowerHub
-              </h1>
+              </h3>
               <p className="lead fs-4 text-light">
                 Empowering communities through sustainable development, education,
                 and healthcare initiatives across Kenya.

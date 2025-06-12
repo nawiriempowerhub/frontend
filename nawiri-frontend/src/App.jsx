@@ -10,7 +10,7 @@ import ProgramDetail from './pages/ProgramDetail';
 import Media from './pages/Media';
 import GetInvolved from './pages/GetInvolved';
 import Contact from './pages/Contact';
-
+import Events from './pages/Events';
 // Commented out imports for non-public features
 // import { AdminAuthProvider } from './context/AdminAuthContext';
 // import { UserAuthProvider } from './context/UserAuthContext';
@@ -33,17 +33,17 @@ function App() {
         {/* Public Routes (accessible to all) */}
         <Route path="/" element={
           <Layout>
-            <About />
-          </Layout>
-        } />
-        <Route path="/home" element={
-          <Layout>
             <Home />
           </Layout>
         } />
         <Route path="/about" element={
           <Layout>
             <About />
+          </Layout>
+        } />
+        <Route path="/home" element={
+          <Layout>
+            <Home />
           </Layout>
         } />
         <Route path="/programs" element={
@@ -71,6 +71,12 @@ function App() {
             <Contact />
           </Layout>
         } />
+        <Route path="/events" element={
+          <Layout>
+            <Events />
+          </Layout>
+        } />
+
 
         {/* Commented out non-public routes */}
         {/* Landing Page */}

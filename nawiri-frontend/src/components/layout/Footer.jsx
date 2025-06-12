@@ -4,18 +4,15 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-white w-900">
+    <footer className="text-dark w-900"> {/* Removed bg-gray-900 and changed text to dark */}
       <div className="container-fluid section-padding">
         <div className="row g-4">
           {/* Logo and Description */}
           <div className="col-12 col-md-6 col-lg-6">
             <div className="d-flex align-items-center gap-2 mb-3">
-              {/* <div className="bg-primary rounded p-2 d-flex align-items-center justify-content-center" style={{ width: '40px', height: '40px' }}>
-                <Heart className="text-white" style={{ width: '24px', height: '24px' }} />
-              </div> */}
               <div>
                 <h3 className="fs-4 fw-bold">Nawiri EmpowerHub</h3>
-                <p className="small text-gray-100">Empowering Communities</p>
+                <p className="small text-muted">Empowering Communities</p> {/* Changed text-gray-100 to text-muted */}
               </div>
             </div>
             <p className="mb-3">
@@ -23,16 +20,16 @@ const Footer = () => {
               Together, we build a brighter future for all.
             </p>
             <div className="d-flex gap-3">
-              <a href="#" className="text-gray-100 hover-text-white transition-colors">
+              <a href="#" className="text-muted hover-text-primary transition-colors"> {/* Changed text colors */}
                 <Facebook className="w-5 h-5" />
               </a>
-              <a href="https://x.com/NEmpowerhub" className="text-gray-100 hover-text-white transition-colors">
+              <a href="https://x.com/NEmpowerhub" className="text-muted hover-text-primary transition-colors">
                 <Twitter className="w-5 h-5" />
               </a>
-              <a href="#" className="text-gray-100 hover-text-white transition-colors">
+              <a href="#" className="text-muted hover-text-primary transition-colors">
                 <Instagram className="w-5 h-5" />
               </a>
-              <a href="#" className="text-gray-100 hover-text-white transition-colors">
+              <a href="#" className="text-muted hover-text-primary transition-colors">
                 <Linkedin className="w-5 h-5" />
               </a>
             </div>
@@ -43,27 +40,27 @@ const Footer = () => {
             <h4 className="fs-5 fw-semibold mb-3">Quick Links</h4>
             <ul className="d-flex flex-column gap-2">
               <li>
-                <Link to="/about" className="hover-text-white transition-colors">
+                <Link to="/about" className="text-muted hover-text-primary transition-colors"> {/* Changed text colors */}
                   About Us
                 </Link>
               </li>
               <li>
-                <Link to="/programs" className="hover-text-white transition-colors">
+                <Link to="/programs" className="text-muted hover-text-primary transition-colors">
                   Our Programs
                 </Link>
               </li>
               <li>
-                <Link to="/media" className="hover-text-white transition-colors">
+                <Link to="/media" className="text-muted hover-text-primary transition-colors">
                   Media & Impact
                 </Link>
               </li>
               <li>
-                <Link to="/get-involved" className="hover-text-white transition-colors">
+                <Link to="/get-involved" className="text-muted hover-text-primary transition-colors">
                   Get Involved
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="hover-text-white transition-colors">
+                <Link to="/contact" className="text-muted hover-text-primary transition-colors">
                   Contact Us
                 </Link>
               </li>
@@ -76,15 +73,15 @@ const Footer = () => {
             <ul className="d-flex flex-column gap-3">
               <li className="d-flex align-items-center gap-3">
                 <Mail className="text-primary" style={{ width: '16px', height: '16px' }} />
-                <span className="">info@nawiri.org</span>
+                <span className="text-muted">info@nawiri.org</span> {/* Changed text color */}
               </li>
               <li className="d-flex align-items-center gap-3">
                 <Phone className="text-primary" style={{ width: '16px', height: '16px' }} />
-                <span className="">+254 700 000 000</span>
+                <span className="text-muted">+254 700 000 000</span> {/* Changed text color */}
               </li>
               <li className="d-flex align-items-start gap-3">
                 <MapPin className="text-primary mt-1" style={{ width: '16px', height: '16px' }} />
-                <span className="">
+                <span className="text-muted"> {/* Changed text color */}
                   Nairobi, Kenya<br />
                   P.O. Box 12345-00100
                 </span>
@@ -94,15 +91,15 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-top border-gray-800 mt-4 pt-4 d-flex flex-column flex-md-row justify-content-between align-items-center">
-          <p className="text-gray-100 small">
+        <div className="border-top border-gray-300 mt-4 pt-4 d-flex flex-column flex-md-row justify-content-between align-items-center"> {/* Changed border color */}
+          <p className="text-muted small"> {/* Changed text color */}
             © 2024 Nawiri EmpowerHub. All rights reserved.
           </p>
           <div className="d-flex gap-3 mt-3 mt-md-0">
-            <a href="#" className="text-gray-100 hover-text-white small transition-colors">
+            <a href="#" className="text-muted hover-text-primary small transition-colors"> {/* Changed text colors */}
               Privacy Policy
             </a>
-            <a href="#" className="text-gray-100 hover-text-white small transition-colors">
+            <a href="#" className="text-muted hover-text-primary small transition-colors">
               Terms of Service
             </a>
           </div>
