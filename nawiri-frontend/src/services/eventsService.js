@@ -24,5 +24,10 @@ export const eventsService = {
     const response = await api.delete(`/events/${id}`);
     return response.data;
   },
-};
 
+  // Register user for event
+  registerForEvent: async (registrationData) => {
+    const response = await api.post('/events/register', registrationData);
+    return response.data;
+  },
+};

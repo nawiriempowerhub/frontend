@@ -8,7 +8,7 @@ import { programsService } from '../services/programsService';
 import { mediaService } from '../services/mediaService';
 
 const ProgramDetail = () => {
-  const { id } = useParams();
+  const { id } = useParams();  //wrap parameters in curly braces to destructure
   const [program, setProgram] = useState(null);
   const [media, setMedia] = useState([]);
   const [loading, setLoading] = useState(true);

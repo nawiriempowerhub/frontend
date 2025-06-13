@@ -1,11 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import { Loader2, AlertCircle, CalendarDays, MapPin, Clock } from 'lucide-react';
-import { eventsService } from '../services/eventsService';
+import React, { useState, useEffect } from "react";
+import {
+  Loader2,
+  AlertCircle,
+  CalendarDays,
+  MapPin,
+  Clock,
+  Users,
+  CheckCircle,
+} from "lucide-react";
+import { eventsService } from "../services/eventsService";
 
 const Events = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [formData, setFormData] = useState({ 
+    name: "", 
+    email: "", 
+    phone: "",
+    message: "" 
+  });
+  const [registering, setRegistering] = useState(false);
+  const [registerSuccess, setRegisterSuccess] = useState(null);
+  const [registerError, setRegisterError] = useState(null);
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -14,7 +33,7 @@ const Events = () => {
         const data = await eventsService.getEvents();
         setEvents(data);
       } catch (err) {
-        setError(err.message || 'Failed to fetch events. Please try again.');
+        setError(err.message || "Failed to fetch events. Please try again.");
       } finally {
         setLoading(false);
       }
@@ -22,109 +41,332 @@ const Events = () => {
     fetchEvents();
   }, []);
 
-  // Function to format date with day name
+  const handleRegisterClick = (event) => {
+    setSelectedEvent(event);
+    setShowModal(true);
+    setRegisterSuccess(null);
+    setRegisterError(null);
+    setFormData({ name: "", email: "", phone: "", message: "" });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setRegistering(true);
+    setRegisterError(null);
+    
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/events/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...formData, event_id: selectedEvent.id }),
+      });
+      
+      if (!res.ok) throw new Error("Failed to register");
+      
+      setRegisterSuccess(true);
+      setTimeout(() => {
+        setShowModal(false);
+        setRegisterSuccess(null);
+      }, 2000);
+    } catch (err) {
+      setRegisterError("Registration failed. Please try again.");
+    } finally {
+      setRegistering(false);
+    }
+  };
+
   const formatEventDate = (dateString) => {
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
-  // Function to format time
   const formatEventTime = (dateString) => {
-    return new Date(dateString).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    return new Date(dateString).toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setRegisterSuccess(null);
+    setRegisterError(null);
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="text-center mb-12">
-        <h2 className="text-4xl font-bold text-gray-900 mb-3">
-          Upcoming Events
-        </h2>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-          Join us for these exciting upcoming events and be part of our community
-        </p>
-      </div>
+    <div className="bg-light">
+      {/* Hero Section */}
+      <section className="bg-primary text-white py-5">
+        <div className="container">
+          <div className="row justify-content-center text-center">
+            <div className="col-lg-8">
+              <h1 className="display-4 fw-bold mb-4">Upcoming Events</h1>
+              <p className="fs-5 text-white-50 mb-0">
+                Join us for these exciting upcoming events and be part of our community
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-      {error && (
-        <div className="bg-red-50 border border-red-100 rounded-xl p-4 flex items-start gap-3 mb-8 animate-fade-in max-w-2xl mx-auto">
-          <AlertCircle className="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" />
-          <p className="text-red-600">{error}</p>
-        </div>
-      )}
-
-      {loading ? (
-        <div className="flex flex-col items-center justify-center py-12 space-y-4">
-          <Loader2 className="w-10 h-10 animate-spin text-primary" />
-          <p className="text-gray-600">Loading events...</p>
-        </div>
-      ) : events.length === 0 ? (
-        <div className="bg-gray-50 rounded-xl p-8 text-center max-w-2xl mx-auto">
-          <h3 className="text-xl font-semibold text-gray-900 mb-2">No Events Scheduled</h3>
-          <p className="text-gray-600 mb-4">Check back later for upcoming events</p>
-          <button 
-            onClick={() => window.location.reload()} 
-            className="px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
-          >
-            Refresh
-          </button>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {events.map((event) => (
-            <div
-              key={event.id}
-              className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
-            >
-              {/* Event Image Placeholder */}
-              <div className="h-48 bg-gradient-to-r from-primary to-accent flex items-center justify-center">
-                <span className="text-white text-xl font-semibold">Event Image</span>
-              </div>
-              
-              <div className="p-6">
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="inline-block w-3 h-3 rounded-full bg-primary"></span>
-                  <span className="text-sm font-medium text-primary">{event.category || 'General'}</span>
+      {/* Events Section */}
+      <section className="py-5">
+        <div className="container">
+          {error && (
+            <div className="row justify-content-center mb-4">
+              <div className="col-lg-8">
+                <div className="alert alert-danger d-flex align-items-start gap-3" role="alert">
+                  <AlertCircle className="text-danger flex-shrink-0 mt-1" style={{ width: '20px', height: '20px' }} />
+                  <div>{error}</div>
                 </div>
-                
-                <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2">
-                  {event.title}
-                </h3>
-                
-                <p className="text-gray-600 mb-4 line-clamp-3">
-                  {event.description}
-                </p>
-                
-                <div className="space-y-3">
-                  <div className="flex items-start gap-3">
-                    <CalendarDays className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <p className="text-sm font-medium text-gray-500">Date</p>
-                      <p className="text-gray-900">{formatEventDate(event.date)}</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start gap-3">
-                    <Clock className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <p className="text-sm font-medium text-gray-500">Time</p>
-                      <p className="text-gray-900">{formatEventTime(event.date)}</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start gap-3">
-                    <MapPin className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <p className="text-sm font-medium text-gray-500">Location</p>
-                      <p className="text-gray-900">{event.location}</p>
-                    </div>
-                  </div>
-                </div>
-                
-                <button className="mt-6 w-full py-2.5 bg-primary/10 text-primary rounded-lg font-medium hover:bg-primary/20 transition-colors">
-                  Register Now
-                </button>
               </div>
             </div>
-          ))}
+          )}
+
+          {loading ? (
+            <div className="d-flex flex-column align-items-center justify-content-center py-5">
+              <Loader2 className="text-primary mb-3" style={{ width: '40px', height: '40px' }} />
+              <div className="spinner-border text-primary mb-3" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
+              <p className="text-muted">Loading events...</p>
+            </div>
+          ) : events.length === 0 ? (
+            <div className="row justify-content-center">
+              <div className="col-lg-6">
+                <div className="card border-0 shadow-sm text-center">
+                  <div className="card-body py-5">
+                    <h3 className="h4 fw-semibold text-dark mb-3">No Events Scheduled</h3>
+                    <p className="text-muted mb-4">Check back later for upcoming events</p>
+                    <button
+                      onClick={() => window.location.reload()}
+                      className="btn btn-primary px-4"
+                    >
+                      Refresh
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="row g-4">
+              {events.map((event) => (
+                <div key={event.id} className="col-12 col-md-6 col-lg-4">
+                  <div className="card h-100 border-0 shadow-sm">
+                    {/* Event Image Placeholder */}
+                    <div 
+                      className="card-img-top bg-primary d-flex align-items-center justify-content-center text-white"
+                      style={{ height: '200px' }}
+                    >
+                      <div className="text-center">
+                        <i className="fas fa-calendar-alt fa-3x mb-2"></i>
+                        <div className="fw-semibold">Event Image</div>
+                      </div>
+                    </div>
+
+                    <div className="card-body d-flex flex-column">
+                      {/* Event Category */}
+                      <div className="d-flex align-items-center gap-2 mb-2">
+                        <span className="badge bg-primary rounded-pill">
+                          {event.category || "General"}
+                        </span>
+                      </div>
+
+                      {/* Event Title */}
+                      <h5 className="card-title fw-bold text-dark mb-3">
+                        {event.title}
+                      </h5>
+
+                      {/* Event Description */}
+                      <p className="card-text text-muted mb-4 flex-grow-1">
+                        {event.description}
+                      </p>
+
+                      {/* Event Details */}
+                      <div className="mb-4">
+                        <div className="d-flex align-items-start gap-3 mb-3">
+                          <CalendarDays className="text-muted mt-1" style={{ width: '18px', height: '18px' }} />
+                          <div>
+                            <small className="text-muted fw-medium d-block">Date</small>
+                            <span className="text-dark">{formatEventDate(event.date)}</span>
+                          </div>
+                        </div>
+                        
+                        <div className="d-flex align-items-start gap-3 mb-3">
+                          <Clock className="text-muted mt-1" style={{ width: '18px', height: '18px' }} />
+                          <div>
+                            <small className="text-muted fw-medium d-block">Time</small>
+                            <span className="text-dark">{formatEventTime(event.date)}</span>
+                          </div>
+                        </div>
+                        
+                        <div className="d-flex align-items-start gap-3 mb-3">
+                          <MapPin className="text-muted mt-1" style={{ width: '18px', height: '18px' }} />
+                          <div>
+                            <small className="text-muted fw-medium d-block">Location</small>
+                            <span className="text-dark">{event.location}</span>
+                          </div>
+                        </div>
+
+                        {event.capacity && (
+                          <div className="d-flex align-items-start gap-3">
+                            <Users className="text-muted mt-1" style={{ width: '18px', height: '18px' }} />
+                            <div>
+                              <small className="text-muted fw-medium d-block">Capacity</small>
+                              <span className="text-dark">{event.capacity} attendees</span>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Register Button */}
+                      <button
+                        className="btn btn-primary w-100 fw-medium"
+                        onClick={() => handleRegisterClick(event)}
+                      >
+                        <i className="fas fa-user-plus me-2"></i>
+                        Register Now
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Registration Modal */}
+      {showModal && (
+        <div className="modal fade show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content border-0 shadow">
+              <div className="modal-header border-0 pb-0">
+                <h5 className="modal-title fw-bold">
+                  Register for {selectedEvent?.title}
+                </h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={closeModal}
+                  aria-label="Close"
+                ></button>
+              </div>
+              
+              <div className="modal-body">
+                {registerSuccess ? (
+                  <div className="text-center py-4">
+                    <CheckCircle className="text-success mb-3" style={{ width: '60px', height: '60px' }} />
+                    <h6 className="fw-bold text-success mb-2">Registration Successful!</h6>
+                    <p className="text-muted mb-0">
+                      You will receive a confirmation email shortly.
+                    </p>
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubmit}>
+                    {registerError && (
+                      <div className="alert alert-danger d-flex align-items-center gap-2 mb-4">
+                        <AlertCircle style={{ width: '18px', height: '18px' }} />
+                        <small>{registerError}</small>
+                      </div>
+                    )}
+
+                    <div className="row g-3">
+                      <div className="col-12">
+                        <div className="form-floating">
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="name"
+                            placeholder="Your Name"
+                            value={formData.name}
+                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                            required
+                          />
+                          <label htmlFor="name">Full Name *</label>
+                        </div>
+                      </div>
+
+                      <div className="col-12">
+                        <div className="form-floating">
+                          <input
+                            type="email"
+                            className="form-control"
+                            id="email"
+                            placeholder="Your Email"
+                            value={formData.email}
+                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                            required
+                          />
+                          <label htmlFor="email">Email Address *</label>
+                        </div>
+                      </div>
+
+                      <div className="col-12">
+                        <div className="form-floating">
+                          <input
+                            type="tel"
+                            className="form-control"
+                            id="phone"
+                            placeholder="Your Phone"
+                            value={formData.phone}
+                            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                          />
+                          <label htmlFor="phone">Phone Number</label>
+                        </div>
+                      </div>
+
+                      <div className="col-12">
+                        <div className="form-floating">
+                          <textarea
+                            className="form-control"
+                            id="message"
+                            placeholder="Additional message"
+                            style={{ height: '100px' }}
+                            value={formData.message}
+                            onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                          ></textarea>
+                          <label htmlFor="message">Additional Message (Optional)</label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="d-grid gap-2 mt-4">
+                      <button
+                        type="submit"
+                        className="btn btn-primary btn-lg fw-medium"
+                        disabled={registering}
+                      >
+                        {registering ? (
+                          <>
+                            <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                            Registering...
+                          </>
+                        ) : (
+                          <>
+                            <i className="fas fa-check me-2"></i>
+                            Complete Registration
+                          </>
+                        )}
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-outline-secondary"
+                        onClick={closeModal}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </form>
+                )}
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>
@@ -132,3 +374,4 @@ const Events = () => {
 };
 
 export default Events;
+
