@@ -100,7 +100,7 @@ const DonationForm = () => {
 
           {/* Predefined Amounts */}
           <div className="mb-4">
-            <label className="block text-muted mb-3">Select Amount (USD)</label>
+            <label className="block text-muted mb-3">Select Amount (Ksh)</label>
             <div className="row g-3 mb-4">
               {predefinedAmounts.map((amount) => (
                 <div key={amount} className="col-6 col-md-3 col-lg-2">
@@ -114,7 +114,7 @@ const DonationForm = () => {
                     } py-2 fw-medium`}
                     style={{ transition: 'all 0.3s ease' }}
                   >
-                    ${amount}
+                    Ksh {amount}
                   </button>
                 </div>
               ))}
@@ -149,7 +149,7 @@ const DonationForm = () => {
                   e.target.style.boxShadow = 'none';
                 }}
               />
-              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted">$</span>
+              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted">Ksh</span>
               <label htmlFor="amount" className="text-muted">
                 Or Enter Custom Amount <span className="text-danger">*</span>
               </label>
@@ -255,6 +255,8 @@ const DonationForm = () => {
               100% of your donation goes directly to our programs. We are committed to transparency and will provide updates on how your contribution is making a difference.
             </p>
           </div>
+       
+        <p>or Send Donations with this details</p>
 
           {/* Payment Details */}
           <div className="alert alert-warning mb-4" role="alert">
@@ -294,7 +296,7 @@ const DonationForm = () => {
               ) : (
                 <>
                   <i className="fas fa-donate me-2"></i>
-                  Donate ${formData.amount || '0'}
+                  Donate  Ksh {formData.amount || '0'}
                 </>
               )}
             </button>
@@ -305,7 +307,7 @@ const DonationForm = () => {
             By submitting this form, you agree to our 
             <a href="#" className="text-primary text-decoration-none ms-1">privacy policy</a>.
             <br />
-            This is a demo form. In a real implementation, this would integrate with a payment processor.
+            {/* This is a demo form. In a real implementation, this would integrate with a payment processor. */}
           </p>
         </form>
       </div>

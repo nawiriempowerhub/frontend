@@ -11,6 +11,7 @@ import Media from './pages/Media';
 import GetInvolved from './pages/GetInvolved';
 import Contact from './pages/Contact';
 import Events from './pages/Events';
+import EventDetail from './pages/EventDetail';
 // Commented out imports for non-public features
 // import { AdminAuthProvider } from './context/AdminAuthContext';
 // import { UserAuthProvider } from './context/UserAuthContext';
@@ -76,7 +77,12 @@ function App() {
             <Events />
           </Layout>
         } />
-        
+         <Route path="/events/:id" element={
+          <Layout>
+            <EventDetail />
+          </Layout>
+          } />
+
         {/* Commented out non-public routes */}
         {/* Landing Page */}
         {/* <Route path="/" element={<LandingPage />} /> */}

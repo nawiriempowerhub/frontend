@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Button } from '../ui/Button';
-import { contactService } from '../../services/contactService';
 import { Check, Loader2, AlertCircle } from 'lucide-react';
+import axios from 'axios';
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -10,9 +9,7 @@ const ContactForm = () => {
     subject: '',
     message: '',
   });
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState(null);
+  const [status, setStatus] = useState(null);
 
   const handleChange = (e) => {
     setFormData({
@@ -23,26 +20,22 @@ const ContactForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setError(null);
-
+    setStatus(null);
     try {
-      await contactService.submitContact(formData);
-      setSuccess(true);
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/contact`, formData);
+      setStatus({ type: 'success', message: 'Message sent successfully! We will respond soon.' });
       setFormData({
         name: '',
         email: '',
         subject: '',
         message: '',
       });
-    } catch (err) {
-      setError(err.message || 'Failed to send message. Please try again.');
-    } finally {
-      setLoading(false);
+    } catch (error) {
+      setStatus({ type: 'danger', message: 'Failed to send message. Please try again.' });
     }
   };
 
-  if (success) {
+  if (status && status.type === 'success') {
     return (
       <div className="text-center py-5 fade-in">
         <div 
@@ -56,7 +49,7 @@ const ContactForm = () => {
           Thank you for contacting us. Our team will get back to you within 24 hours.
         </p>
         <button 
-          onClick={() => setSuccess(false)}
+          onClick={() => setStatus(null)}
           className="btn btn-outline-primary px-4 py-2 fw-medium"
           style={{ transition: 'all 0.3s ease' }}
         >
@@ -70,10 +63,10 @@ const ContactForm = () => {
     <div className="card border-0 shadow-sm">
       <div className="card-body p-4 p-md-5">
         <form onSubmit={handleSubmit}>
-          {error && (
+          {status && status.type === 'danger' && (
             <div className="alert alert-danger d-flex align-items-start gap-3 mb-4 fade-in" role="alert">
               <AlertCircle className="text-danger flex-shrink-0 mt-1" style={{ width: '20px', height: '20px' }} />
-              <div className="small">{error}</div>
+              <div className="small">{status.message}</div>
             </div>
           )}
 
@@ -203,14 +196,14 @@ const ContactForm = () => {
           <div className="d-grid gap-2 mb-3">
             <button 
               type="submit" 
-              disabled={loading} 
+              disabled={status && status.type === 'danger'} 
               className="btn btn-primary btn-lg fw-medium py-3"
               style={{ 
                 transition: 'all 0.3s ease',
                 boxShadow: '0 4px 12px rgba(13, 110, 253, 0.2)'
               }}
               onMouseEnter={(e) => {
-                if (!loading) {
+                if (!(status && status.type === 'danger')) {
                   e.target.style.transform = 'translateY(-2px)';
                   e.target.style.boxShadow = '0 6px 20px rgba(13, 110, 253, 0.3)';
                 }
@@ -220,7 +213,7 @@ const ContactForm = () => {
                 e.target.style.boxShadow = '0 4px 12px rgba(13, 110, 253, 0.2)';
               }}
             >
-              {loading ? (
+              {status && status.type === 'danger' ? (
                 <>
                   <Loader2 className="me-2" style={{ width: '20px', height: '20px' }} />
                   <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
@@ -247,4 +240,3 @@ const ContactForm = () => {
 };
 
 export default ContactForm;
-

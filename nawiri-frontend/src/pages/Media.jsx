@@ -215,7 +215,7 @@ const Media = () => {
                         )}
                       </div>
                       <div className="card-body pt-0">
-                        {item.url ? (
+                        {item.file_url ? (
                           <div className="ratio ratio-16x9 bg-light rounded mb-3 d-flex align-items-center justify-content-center overflow-hidden">
                             <div className="w-100 h-100 d-flex align-items-center justify-content-center">
                               {getMediaIcon(item.type)}
@@ -232,9 +232,9 @@ const Media = () => {
                             <p className="small text-muted mb-0">
                               {new Date(item.created_at).toLocaleDateString()}
                             </p>
-                            <button className="btn btn-sm btn-outline-primary">
+                            {/* <button className="btn btn-sm btn-outline-primary">
                               View Details
-                            </button>
+                            </button> */}
                           </div>
                         )}
                       </div>
