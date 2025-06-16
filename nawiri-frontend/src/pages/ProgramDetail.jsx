@@ -1,18 +1,18 @@
-
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Users, Calendar, MapPin, Target } from 'lucide-react';
+import { ArrowLeft, Users, Calendar, MapPin, Target, X } from 'lucide-react';
 import Loading from '../components/ui/Loading';
 import ErrorMessage from '../components/ui/ErrorMessage';
 import { programsService } from '../services/programsService';
 import { mediaService } from '../services/mediaService';
 
 const ProgramDetail = () => {
-  const { id } = useParams();  //wrap parameters in curly braces to destructure
+  const { id } = useParams();
   const [program, setProgram] = useState(null);
   const [media, setMedia] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     const fetchProgramData = async () => {
@@ -36,6 +36,14 @@ const ProgramDetail = () => {
       fetchProgramData();
     }
   }, [id]);
+
+  const openLightbox = (item) => {
+    setSelectedImage(item);
+  };
+
+  const closeLightbox = () => {
+    setSelectedImage(null);
+  };
 
   if (loading) {
     return (
@@ -182,7 +190,7 @@ const ProgramDetail = () => {
         </div>
       </section>
 
-      {/* Program Media */}
+      {/* Program Gallery */}
       {media.length > 0 && (
         <section className="section-padding bg-gray-50">
           <div className="container-fluid px-3">
@@ -199,19 +207,62 @@ const ProgramDetail = () => {
                         <p className="card-text text-muted">{item.description}</p>
                       )}
                     </div>
-                    {item.url && (
-                      <div className="card-body">
-                        <div className="ratio ratio-16x9 bg-gray-200 rounded mb-3 d-flex align-items-center justify-content-center">
-                          <span className="text-gray-500">Media Content</span>
-                        </div>
-                      </div>
-                    )}
+                    <div className="card-body p-0">
+                      <img
+                        src={`${import.meta.env.VITE_API_BASE_URL}${item.url}`}
+                        alt={item.title}
+                        className="card-img-top rounded-0 cursor-pointer"
+                        style={{ aspectRatio: '16/9', objectFit: 'cover' }}
+                        onClick={() => openLightbox(item)}
+                      />
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
           </div>
         </section>
+      )}
+
+      {/* Lightbox Modal */}
+      {selectedImage && (
+        <div
+          className="modal fade show d-block"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="lightboxModalLabel"
+          aria-hidden="false"
+          onClick={closeLightbox}
+        >
+          <div className="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div className="modal-content bg-transparent border-0" onClick={(e) => e.stopPropagation()}>
+              <div className="modal-header border-0 p-2 position-absolute top-0 end-0">
+                <button
+                  type="button"
+                  className="btn-close btn-close-white"
+                  aria-label="Close"
+                  onClick={closeLightbox}
+                >
+                  <X style={{ width: '24px', height: '24px', color: 'white' }} />
+                </button>
+              </div>
+              <div className="modal-body p-0">
+                <img
+                  src={`${import.meta.env.VITE_API_BASE_URL}${selectedImage.url}`}
+                  alt={selectedImage.title}
+                  className="img-fluid rounded"
+                  style={{ maxHeight: '80vh', width: '100%', objectFit: 'contain' }}
+                />
+                <div className="text-center mt-3 text-white">
+                  <h5 className="mb-1">{selectedImage.title}</h5>
+                  {selectedImage.description && (
+                    <p className="small">{selectedImage.description}</p>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
 
       {/* Call to Action */}

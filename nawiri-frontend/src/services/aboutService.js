@@ -1,9 +1,9 @@
-import api from './api';
+import api from "./api";
 
 export const aboutService = {
   // Get about content
   getAbout: async () => {
-    const response = await api.get('/about/');
+    const response = await api.get("/about/");
     return response.data;
   },
 
@@ -15,8 +15,17 @@ export const aboutService = {
 
   // Get team members
   getTeam: async () => {
-    const response = await api.get('/about/team');
-    return response.data;
+    const response = await api.get("/about/team");
+    const data = response.data;
+
+    if (Array.isArray(data)) {
+      return data;
+    } else if (Array.isArray(data.team)) {
+      return data.team;
+    } else {
+      console.warn("Unexpected team response shape:", data);
+      return [];
+    }
   },
 
   // Add team member (admin only)
@@ -39,8 +48,17 @@ export const aboutService = {
 
   // Get impact events
   getImpact: async () => {
-    const response = await api.get('/about/impact');
-    return response.data;
+    const response = await api.get("/about/impact");
+    const data = response.data;
+
+    if (Array.isArray(data)) {
+      return data;
+    } else if (Array.isArray(data.impact)) {
+      return data.impact;
+    } else {
+      console.warn("Unexpected impact response shape:", data);
+      return [];
+    }
   },
 
   // Add impact event (admin only)
@@ -61,4 +79,3 @@ export const aboutService = {
   //   return response.data;
   // },
 };
-

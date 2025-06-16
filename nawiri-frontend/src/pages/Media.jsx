@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { Image, Video, FileText, Calendar } from 'lucide-react';
-import Loading from '../components/ui/Loading';
-import ErrorMessage from '../components/ui/ErrorMessage';
-import { mediaService } from '../services/mediaService';
-import { aboutService } from '../services/aboutService';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { Image, Video, FileText, Calendar } from "lucide-react";
+import Loading from "../components/ui/Loading";
+import ErrorMessage from "../components/ui/ErrorMessage";
+import { mediaService } from "../services/mediaService";
+import { aboutService } from "../services/aboutService";
+import { Link } from "react-router-dom";
 
 const Media = () => {
   const [media, setMedia] = useState([]);
   const [impact, setImpact] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [filter, setFilter] = useState('all');
-  const [mediaTypeFilter, setMediaTypeFilter] = useState('all');
-  const [activeTab, setActiveTab] = useState('media');
+  const [filter, setFilter] = useState("all");
+  const [mediaTypeFilter, setMediaTypeFilter] = useState("all");
+  const [activeTab, setActiveTab] = useState("media");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,7 +23,7 @@ const Media = () => {
           mediaService.getMedia(),
           aboutService.getImpact(),
         ]);
-        
+
         setMedia(mediaData);
         setImpact(impactData);
       } catch (err) {
@@ -38,24 +38,53 @@ const Media = () => {
 
   const getMediaIcon = (type) => {
     switch (type?.toLowerCase()) {
-      case 'image':
-        return <Image className="text-primary" style={{ width: '20px', height: '20px' }} />;
-      case 'video':
-        return <Video className="text-primary" style={{ width: '20px', height: '20px' }} />;
-      case 'document':
-        return <FileText className="text-primary" style={{ width: '20px', height: '20px' }} />;
+      case "image":
+        return (
+          <Image
+            className="text-primary"
+            style={{ width: "20px", height: "20px" }}
+          />
+        );
+      case "video":
+        return (
+          <Video
+            className="text-primary"
+            style={{ width: "20px", height: "20px" }}
+          />
+        );
+      case "document":
+        return (
+          <FileText
+            className="text-primary"
+            style={{ width: "20px", height: "20px" }}
+          />
+        );
       default:
-        return <Image className="text-primary" style={{ width: '20px', height: '20px' }} />;
+        return (
+          <Image
+            className="text-primary"
+            style={{ width: "20px", height: "20px" }}
+          />
+        );
     }
   };
 
-  const mediaTypes = [...new Set(media.map(item => item.type?.toLowerCase()))].filter(Boolean);
+  // Before mapping:
+  if (!Array.isArray(media)) {
+    console.error("media is not an array:", media);
+    return null; // or a fallback UI
+  }
+  const mediaTypes = Array.isArray(media)
+    ? [...new Set(media.map((item) => item.type?.toLowerCase()))].filter(
+        Boolean
+      )
+    : [];
 
-  const filteredMedia = media.filter(item => {
-    const matchesFilter = filter === 'all' || 
-      (filter === 'hasUrl' ? item.url : !filter);
-    const matchesMediaType = mediaTypeFilter === 'all' || 
-      item.type?.toLowerCase() === mediaTypeFilter;
+  const filteredMedia = media.filter((item) => {
+    const matchesFilter =
+      filter === "all" || (filter === "hasUrl" ? item.url : !filter);
+    const matchesMediaType =
+      mediaTypeFilter === "all" || item.type?.toLowerCase() === mediaTypeFilter;
     return matchesFilter && matchesMediaType;
   });
 
@@ -70,7 +99,10 @@ const Media = () => {
   if (error) {
     return (
       <div className="min-vh-100 d-flex align-items-center justify-content-center">
-        <ErrorMessage message={error} onRetry={() => window.location.reload()} />
+        <ErrorMessage
+          message={error}
+          onRetry={() => window.location.reload()}
+        />
       </div>
     );
   }
@@ -78,14 +110,14 @@ const Media = () => {
   return (
     <div className="w-100">
       {/* Hero Section with Background Image */}
-      <section 
+      <section
         className="text-white section-padding w-100 position-relative"
         style={{
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/src/assets/hero-bg.jpg')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          minHeight: '60vh',
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          minHeight: "60vh",
         }}
         aria-label="Hero section with community background"
       >
@@ -95,18 +127,22 @@ const Media = () => {
               Media & Impact
               <span className="d-block text-warning">Stories That Inspire</span>
             </h2>
-            <p className="fs-4 text-white opacity-75 mb-5 mx-auto" style={{ maxWidth: '800px' }}>
-              Explore our gallery of photos, videos, and stories that showcase the impact of our programs and the communities we serve.
+            <p
+              className="fs-4 text-white opacity-75 mb-5 mx-auto"
+              style={{ maxWidth: "800px" }}
+            >
+              Explore our gallery of photos, videos, and stories that showcase
+              the impact of our programs and the communities we serve.
             </p>
             <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
-              <Link 
-                to="/get-involved" 
+              <Link
+                to="/get-involved"
                 className="btn btn-light text-primary fw-medium px-4 py-2"
               >
                 Get Involved
               </Link>
-              <Link 
-                to="/programs" 
+              <Link
+                to="/programs"
                 className="btn btn-outline-light fw-medium px-4 py-2"
               >
                 View Our Programs
@@ -122,16 +158,20 @@ const Media = () => {
           <ul className="nav nav-tabs border-0">
             <li className="nav-item">
               <button
-                className={`nav-link ${activeTab === 'media' ? 'active fw-bold' : ''}`}
-                onClick={() => setActiveTab('media')}
+                className={`nav-link ${
+                  activeTab === "media" ? "active fw-bold" : ""
+                }`}
+                onClick={() => setActiveTab("media")}
               >
                 Media Gallery
               </button>
             </li>
             <li className="nav-item">
               <button
-                className={`nav-link ${activeTab === 'impact' ? 'active fw-bold' : ''}`}
-                onClick={() => setActiveTab('impact')}
+                className={`nav-link ${
+                  activeTab === "impact" ? "active fw-bold" : ""
+                }`}
+                onClick={() => setActiveTab("impact")}
               >
                 Impact Stories
               </button>
@@ -141,21 +181,23 @@ const Media = () => {
       </div>
 
       {/* Media Gallery Section */}
-      {activeTab === 'media' && (
+      {activeTab === "media" && (
         <section className="section-padding bg-gray-50">
           <div className="container-fluid px-3">
             {/* Filter Tabs */}
             <div className="d-flex flex-wrap justify-content-center gap-3 mb-5">
               {/* Media Type Filter */}
               <div className="w-100 text-center">
-                <h5 className="fw-semibold text-muted mb-3">Filter by Media Type</h5>
+                <h5 className="fw-semibold text-muted mb-3">
+                  Filter by Media Type
+                </h5>
                 <div className="d-flex flex-wrap justify-content-center gap-3">
                   <button
-                    onClick={() => setMediaTypeFilter('all')}
+                    onClick={() => setMediaTypeFilter("all")}
                     className={`btn btn-sm px-4 py-2 rounded-pill fw-medium ${
-                      mediaTypeFilter === 'all'
-                        ? 'btn-primary'
-                        : 'btn-outline-primary'
+                      mediaTypeFilter === "all"
+                        ? "btn-primary"
+                        : "btn-outline-primary"
                     }`}
                   >
                     All Media Types
@@ -166,8 +208,8 @@ const Media = () => {
                       onClick={() => setMediaTypeFilter(type)}
                       className={`btn btn-sm px-4 py-2 rounded-pill fw-medium ${
                         mediaTypeFilter === type
-                          ? 'btn-primary'
-                          : 'btn-outline-primary'
+                          ? "btn-primary"
+                          : "btn-outline-primary"
                       }`}
                     >
                       {type.charAt(0).toUpperCase() + type.slice(1)}
@@ -181,17 +223,21 @@ const Media = () => {
             {filteredMedia.length === 0 ? (
               <div className="text-center py-5">
                 <div className="bg-white p-5 rounded-3 shadow-sm">
-                  <h3 className="fs-3 fw-semibold text-dark mb-3">No Media Available</h3>
-                  <p className="text-muted mb-4">We're working on adding more content. Check back soon!</p>
-                  <button 
+                  <h3 className="fs-3 fw-semibold text-dark mb-3">
+                    No Media Available
+                  </h3>
+                  <p className="text-muted mb-4">
+                    We're working on adding more content. Check back soon!
+                  </p>
+                  <button
                     className="btn btn-outline-primary me-2"
-                    onClick={() => setFilter('all')}
+                    onClick={() => setFilter("all")}
                   >
                     Reset Content Filter
                   </button>
-                  <button 
+                  <button
                     className="btn btn-outline-primary"
-                    onClick={() => setMediaTypeFilter('all')}
+                    onClick={() => setMediaTypeFilter("all")}
                   >
                     Reset Type Filter
                   </button>
@@ -206,12 +252,16 @@ const Media = () => {
                         <div className="d-flex align-items-center gap-2 mb-2">
                           {getMediaIcon(item.type)}
                           <span className="small text-muted text-capitalize">
-                            {item.type || 'Media'}
+                            {item.type || "Media"}
                           </span>
                         </div>
-                        <h5 className="card-title fs-6 fw-semibold">{item.title}</h5>
+                        <h5 className="card-title fs-6 fw-semibold">
+                          {item.title}
+                        </h5>
                         {item.description && (
-                          <p className="card-text text-muted small">{item.description}</p>
+                          <p className="card-text text-muted small">
+                            {item.description}
+                          </p>
                         )}
                       </div>
                       <div className="card-body pt-0">
@@ -219,7 +269,9 @@ const Media = () => {
                           <div className="ratio ratio-16x9 bg-light rounded mb-3 d-flex align-items-center justify-content-center overflow-hidden">
                             <div className="w-100 h-100 d-flex align-items-center justify-content-center">
                               {getMediaIcon(item.type)}
-                              <span className="ms-2 small text-muted">Click to view</span>
+                              <span className="ms-2 small text-muted">
+                                Click to view
+                              </span>
                             </div>
                           </div>
                         ) : (
@@ -248,23 +300,27 @@ const Media = () => {
       )}
 
       {/* Impact Stories Section */}
-      {activeTab === 'impact' && (
+      {activeTab === "impact" && (
         <section className="section-padding">
           <div className="container-fluid px-3">
             <div className="text-center mb-5">
-              <h2 className="h3 fw-bold text-dark mb-3">
-                Stories of Impact
-              </h2>
+              <h2 className="h3 fw-bold text-dark mb-3">Stories of Impact</h2>
               <p className="fs-5 text-muted">
-                Real stories from the communities we serve, showcasing the transformative power of our programs and initiatives.
+                Real stories from the communities we serve, showcasing the
+                transformative power of our programs and initiatives.
               </p>
             </div>
 
             {impact.length === 0 ? (
               <div className="text-center py-5">
                 <div className="bg-white p-5 rounded-3 shadow-sm">
-                  <h3 className="fs-3 fw-semibold text-dark mb-3">No Impact Stories Yet</h3>
-                  <p className="text-muted">We're collecting stories of how our programs are making a difference. Check back soon!</p>
+                  <h3 className="fs-3 fw-semibold text-dark mb-3">
+                    No Impact Stories Yet
+                  </h3>
+                  <p className="text-muted">
+                    We're collecting stories of how our programs are making a
+                    difference. Check back soon!
+                  </p>
                 </div>
               </div>
             ) : (
@@ -274,19 +330,30 @@ const Media = () => {
                     <div className="card h-100 border-0 shadow-sm hover-shadow transition">
                       <div className="card-header bg-white border-bottom-0">
                         <div className="d-flex align-items-center gap-2 mb-2">
-                          <Calendar style={{ width: '16px', height: '16px' }} className="text-primary" />
+                          <Calendar
+                            style={{ width: "16px", height: "16px" }}
+                            className="text-primary"
+                          />
                           <span className="small text-muted">
                             {new Date(story.date).toLocaleDateString()}
                           </span>
                         </div>
-                        <h5 className="card-title fs-5 fw-semibold">{story.title}</h5>
-                        <p className="card-text text-muted small">{story.description}</p>
+                        <h5 className="card-title fs-5 fw-semibold">
+                          {story.title}
+                        </h5>
+                        <p className="card-text text-muted small">
+                          {story.description}
+                        </p>
                       </div>
                       <div className="card-body pt-0">
                         {story.impact_metrics && (
                           <div className="bg-light rounded p-3 mb-3">
-                            <h6 className="fw-semibold text-dark mb-2 small">Impact Metrics</h6>
-                            <p className="small text-muted">{story.impact_metrics}</p>
+                            <h6 className="fw-semibold text-dark mb-2 small">
+                              Impact Metrics
+                            </h6>
+                            <p className="small text-muted">
+                              {story.impact_metrics}
+                            </p>
                           </div>
                         )}
                         <button className="btn btn-sm btn-primary w-100">
@@ -306,17 +373,23 @@ const Media = () => {
       <section className="hero-gradient text-white section-padding w-100">
         <div className="container-fluid px-3">
           <div className="text-center">
-            <h2 className="h3 fw-bold mb-4">
-              Be Part of Our Story
-            </h2>
+            <h2 className="h3 fw-bold mb-4">Be Part of Our Story</h2>
             <p className="fs-5 mb-4 text-gray-100">
-              Join us in creating more stories of impact and transformation. Your involvement can help us reach more communities and create lasting change.
+              Join us in creating more stories of impact and transformation.
+              Your involvement can help us reach more communities and create
+              lasting change.
             </p>
             <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
-              <Link to="/get-involved" className="btn btn-light text-primary fw-medium px-4 py-2">
+              <Link
+                to="/get-involved"
+                className="btn btn-light text-primary fw-medium px-4 py-2"
+              >
                 Get Involved
               </Link>
-              <Link to="/programs" className="btn btn-outline-light fw-medium px-4 py-2">
+              <Link
+                to="/programs"
+                className="btn btn-outline-light fw-medium px-4 py-2"
+              >
                 View Our Programs
               </Link>
             </div>

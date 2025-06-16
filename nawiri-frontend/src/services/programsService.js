@@ -1,10 +1,19 @@
-import api from './api';
+import api from "./api";
 
 export const programsService = {
   // Get all programs
   getPrograms: async () => {
-    const response = await api.get('/programs');
-    return response.data;
+    const response = await api.get("/programs");
+    const data = response.data;
+
+    if (Array.isArray(data)) {
+      return data;
+    } else if (Array.isArray(data.programs)) {
+      return data.programs;
+    } else {
+      console.warn("Unexpected response shape:", data);
+      return [];
+    }
   },
 
   // Get program by ID
@@ -15,7 +24,7 @@ export const programsService = {
 
   // Create program (admin only)
   createProgram: async (programData) => {
-    const response = await api.post('/programs', programData);
+    const response = await api.post("/programs", programData);
     return response.data;
   },
 
@@ -31,4 +40,3 @@ export const programsService = {
     return response.data;
   },
 };
-

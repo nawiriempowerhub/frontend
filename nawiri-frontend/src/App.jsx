@@ -12,6 +12,9 @@ import GetInvolved from './pages/GetInvolved';
 import Contact from './pages/Contact';
 import Events from './pages/Events';
 import EventDetail from './pages/EventDetail';
+import TeamMembers from './pages/TeamMembers';
+
+
 // Commented out imports for non-public features
 // import { AdminAuthProvider } from './context/AdminAuthContext';
 // import { UserAuthProvider } from './context/UserAuthContext';
@@ -26,6 +29,8 @@ import EventDetail from './pages/EventDetail';
 // import AdminRegister from './pages/admin/AdminRegister';
 // import AdminDashboard from './pages/admin/AdminDashboard';
 // import './App.css';
+
+
 
 function App() {
   return (
@@ -82,7 +87,14 @@ function App() {
             <EventDetail />
           </Layout>
           } />
+        <Route path="/team" element={
+          <Layout>
+            <TeamMembers />
+          </Layout>
 
+
+
+        } />
         {/* Commented out non-public routes */}
         {/* Landing Page */}
         {/* <Route path="/" element={<LandingPage />} /> */}

@@ -1,10 +1,19 @@
-import api from './api';
+import api from "./api";
 
 export const mediaService = {
   // Get all media
   getMedia: async () => {
-    const response = await api.get('/media');
-    return response.data;
+    const response = await api.get("/media");
+    const data = response.data;
+
+    if (Array.isArray(data)) {
+      return data;
+    } else if (Array.isArray(data.media)) {
+      return data.media;
+    } else {
+      console.warn("Unexpected media response shape:", data);
+      return [];
+    }
   },
 
   // Get media by program
@@ -21,7 +30,7 @@ export const mediaService = {
 
   // Create media (admin only)
   createMedia: async (mediaData) => {
-    const response = await api.post('/media', mediaData);
+    const response = await api.post("/media", mediaData);
     return response.data;
   },
 
@@ -45,8 +54,9 @@ export const mediaService = {
 
   // Update media's program (admin only)
   updateMediaProgram: async (mediaId, programId) => {
-    const response = await api.patch(`/media/${mediaId}/program`, { program_id: programId });
+    const response = await api.patch(`/media/${mediaId}/program`, {
+      program_id: programId,
+    });
     return response.data;
   },
 };
-

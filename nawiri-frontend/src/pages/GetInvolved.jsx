@@ -251,6 +251,8 @@ const GetInvolved = () => {
                   <div className="row g-4">
                     {events.map((event) => (
                       <div key={event.id} className="col-12 col-md-6">
+                        console.log("Events:", events);
+
                         <div className="card card-hover">
                           <div className="card-header">
                             <h5 className="card-title fs-5">{event.title}</h5>
