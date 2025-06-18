@@ -36,6 +36,18 @@ const Media = () => {
     fetchData();
   }, []);
 
+  function extractYouTubeID(url) {
+    try {
+      const regExp =
+        /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
+      const match = url.match(regExp);
+      return match ? match[1] : null;
+    } catch (error) {
+      console.error("Failed to extract YouTube ID:", error);
+      return null;
+    }
+  }
+
   const getMediaIcon = (type) => {
     switch (type?.toLowerCase()) {
       case "image":
@@ -166,7 +178,7 @@ const Media = () => {
                 Media Gallery
               </button>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <button
                 className={`nav-link ${
                   activeTab === "impact" ? "active fw-bold" : ""
@@ -175,14 +187,14 @@ const Media = () => {
               >
                 Impact Stories
               </button>
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>
 
       {/* Media Gallery Section */}
       {activeTab === "media" && (
-        <section className="section-padding bg-gray-50">
+        <section className="section-padding bg-white">
           <div className="container-fluid px-3">
             {/* Filter Tabs */}
             <div className="d-flex flex-wrap justify-content-center gap-3 mb-5">
@@ -267,12 +279,46 @@ const Media = () => {
                       <div className="card-body pt-0">
                         {item.file_url ? (
                           <div className="ratio ratio-16x9 bg-light rounded mb-3 d-flex align-items-center justify-content-center overflow-hidden">
-                            <div className="w-100 h-100 d-flex align-items-center justify-content-center">
-                              {getMediaIcon(item.type)}
-                              <span className="ms-2 small text-muted">
-                                Click to view
-                              </span>
-                            </div>
+                            {item.type === "YOUTUBE_EMBED" && item.file_url ? (
+                              <iframe
+                                width="100%"
+                                height="100%"
+                                src={`https://www.youtube.com/embed/${extractYouTubeID(
+                                  item.file_url
+                                )}`}
+                                title="YouTube video"
+                                frameBorder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                              ></iframe>
+                            ) : item.type === "VIDEO" && item.file_url ? (
+                              <video width="100%" height="100%" controls>
+                                <source src={item.file_url} type="video/mp4" />
+                                Your browser does not support the video tag.
+                              </video>
+                            ) : item.type === "PHOTO" && item.file_url ? (
+                              <img
+                                src={item.file_url}
+                                alt="Media"
+                                className="img-fluid rounded"
+                                style={{
+                                  maxHeight: "100%",
+                                  objectFit: "cover",
+                                }}
+                              />
+                            ) : item.type === "TESTIMONIAL" ? (
+                              <blockquote className="text-muted px-3">
+                                <i className="bi bi-quote me-2"></i>
+                                {item.description || "Testimonial goes here"}
+                              </blockquote>
+                            ) : (
+                              <div className="w-100 h-100 d-flex align-items-center justify-content-center">
+                                {getMediaIcon(item.type)}
+                                <span className="ms-2 small text-muted">
+                                  Click to view
+                                </span>
+                              </div>
+                            )}
                           </div>
                         ) : (
                           <div className="ratio ratio-16x9 bg-light rounded mb-3 d-flex align-items-center justify-content-center">
@@ -300,7 +346,7 @@ const Media = () => {
       )}
 
       {/* Impact Stories Section */}
-      {activeTab === "impact" && (
+      {/* {activeTab === "impact" && (
         <section className="section-padding">
           <div className="container-fluid px-3">
             <div className="text-center mb-5">
@@ -367,14 +413,14 @@ const Media = () => {
             )}
           </div>
         </section>
-      )}
+      )} */}
 
       {/* Call to Action */}
-      <section className="hero-gradient text-white section-padding w-100">
+      <section className=" text-grey-800 section-padding w-100">
         <div className="container-fluid px-3">
           <div className="text-center">
             <h2 className="h3 fw-bold mb-4">Be Part of Our Story</h2>
-            <p className="fs-5 mb-4 text-gray-100">
+            <p className="fs-5 mb-4 text-gray-800">
               Join us in creating more stories of impact and transformation.
               Your involvement can help us reach more communities and create
               lasting change.
@@ -382,13 +428,13 @@ const Media = () => {
             <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
               <Link
                 to="/get-involved"
-                className="btn btn-light text-primary fw-medium px-4 py-2"
+                className="fw-semibold px-4 py-3 text-white bg-primary border-0 hover:bg-success border-rounded-3 transition-all"
               >
                 Get Involved
               </Link>
               <Link
                 to="/programs"
-                className="btn btn-outline-light fw-medium px-4 py-2"
+                className="btn btn-outline-primary fw-medium px-4 py-3"
               >
                 View Our Programs
               </Link>

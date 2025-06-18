@@ -295,16 +295,16 @@ const GetInvolved = () => {
       </section>
 
       {/* Call to Action */}
-      <section className="hero-gradient text-white section-padding w-100">
+      <section className="hero-primary text-gray-700 section-padding w-100">
         <div className="container-fluid px-3">
           <div className="text-center">
-            <h2 className="h3 fw-bold mb-4">
+            <h2 className="h3 fw-bold mb-4 text-gray-600 opacity-55">
               Every Action Counts
             </h2>
-            <p className="fs-5 text-gray-100 mb-4">
+            <p className="fs-5 text-gray-700 mb-4">
               Whether you volunteer your time, make a donation, or attend our events, every action contributes to positive change in communities across Kenya.
             </p>
-            <Link to="/contact" className="btn btn-light text-primary fw-medium px-4 py-2">
+            <Link to="/contact" className="btn btn-outline-primary text-primary fw-medium px-4 py-2">
               Contact Us to Learn More
             </Link>
           </div>

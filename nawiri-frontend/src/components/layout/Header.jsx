@@ -18,20 +18,77 @@ const Header = () => {
     <header className="bg-green-600 text-white sticky-top z-50 shadow">
       <div className="container px-3">
         <div className="d-flex justify-content-between align-items-center py-3">
-          {/* Logo Section */}
-          <NavLink to="/" className="d-flex align-items-center gap-2">
-            <img
-            src={nawiriLogo}
-            alt="Nawiri Empower Hub Logo"
-            className="rounded-circle object-fit-cover border-2 border-white"
-            style={{ height: "40px", width: "40px" }}
-          />
+        <NavLink 
+            to="/" 
+            className="d-flex align-items-center gap-3 text-decoration-none group"
+            style={{ transition: 'all 0.3s ease' }}
+          >
+            <div className="position-relative">
+              <img
+                src={nawiriLogo}
+                alt="Nawiri Empower Hub Logo"
+                className="rounded-circle object-fit-cover border-3 border-white shadow-sm"
+                style={{ 
+                  height: "50px", 
+                  width: "50px",
+                  transition: 'all 0.3s ease',
+                  filter: 'brightness(1.1)'
+                }}
+                onMouseOver={(e) => {
+                  e.target.style.transform = 'scale(1.05)';
+                  e.target.style.boxShadow = '0 8px 25px rgba(0,0,0,0.2)';
+                }}
+                onMouseOut={(e) => {
+                  e.target.style.transform = 'scale(1)';
+                  e.target.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
+                }}
+              />
+              {/* Subtle glow effect */}
+              <div 
+                className="position-absolute top-0 start-0 rounded-circle"
+                style={{
+                  height: "50px",
+                  width: "50px",
+                  background: 'radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%)',
+                  pointerEvents: 'none'
+                }}
+              ></div>
+            </div>
 
-            <h2 className="fs-5 fw-semibold d-none d-sm-inline">
-              Nawiri Empower Hub
-            </h2>
+            <div className="d-none d-sm-block">
+              <h2 
+                className="fs-4 fw-bold mb-0 text-white"
+                style={{ 
+                  fontFamily: '"Segoe UI", system-ui, -apple-system, sans-serif',
+                  letterSpacing: '0.5px',
+                  textShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                  transition: 'all 0.3s ease'
+                }}
+                onMouseOver={(e) => {
+                  e.target.style.textShadow = '0 4px 8px rgba(0,0,0,0.2)';
+                  e.target.style.transform = 'translateY(-1px)';
+                }}
+                onMouseOut={(e) => {
+                  e.target.style.textShadow = '0 2px 4px rgba(0,0,0,0.1)';
+                  e.target.style.transform = 'translateY(0)';
+                }}
+              >
+                Nawiri Empower Hub
+              </h2>
+              <div 
+                className="text-green-100 fs-6 fw-light"
+                style={{ 
+                  marginTop: '-2px',
+                  letterSpacing: '1px',
+                  opacity: '0.9'
+                }}
+              >
+                Empowering Communities
+              </div>
+            </div>
           </NavLink>
 
+       
           {/* Desktop Navigation */}
           <nav className="d-none d-md-flex gap-3">
             {navigation.map((item) => (

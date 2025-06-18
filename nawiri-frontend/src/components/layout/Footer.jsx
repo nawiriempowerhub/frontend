@@ -70,7 +70,7 @@ const Footer = () => {
                   <Twitter style={{ width: '18px', height: '18px' }} />
                 </a>
                 <a 
-                  href="#" 
+                  href="https://www.instagram.com/nawiri_empowerhub/" 
                   className="btn btn-outline-light btn-sm rounded-circle p-2 d-flex align-items-center justify-content-center social-link"
                   style={{ width: '40px', height: '40px', transition: 'all 0.3s ease' }}
                   onMouseEnter={(e) => {
@@ -87,7 +87,7 @@ const Footer = () => {
                   <Instagram style={{ width: '18px', height: '18px' }} />
                 </a>
                 <a 
-                  href="#" 
+                  href="https://www.linkedin.com/company/nawiri-empowerhub" 
                   className="btn btn-outline-light btn-sm rounded-circle p-2 d-flex align-items-center justify-content-center social-link"
                   style={{ width: '40px', height: '40px', transition: 'all 0.3s ease' }}
                   onMouseEnter={(e) => {
@@ -215,8 +215,8 @@ const Footer = () => {
                 </div>
                 <div>
                   <p className="mb-1 small text-primary fw-medium">Email</p>
-                  <a href="mailto:info@nawiri.org" className="text-light text-decoration-none">
-                    info@nawiri.org
+                  <a href="mailto:nawiriempowerhub@gmail.com" className="text-light text-decoration-none">
+                    nawiriempowerhub@gmail.com
                   </a>
                 </div>
               </li>
@@ -226,8 +226,8 @@ const Footer = () => {
                 </div>
                 <div>
                   <p className="mb-1 small text-primary fw-medium">Phone</p>
-                  <a href="tel:+254700000000" className="text-light text-decoration-none">
-                    +254 700 000 000
+                  <a href="tel:+254116353925" className="text-light text-decoration-none">
+                    +254 116 353 925
                   </a>
                 </div>
               </li>
@@ -247,7 +247,7 @@ const Footer = () => {
           </div>
 
           {/* Newsletter Signup */}
-          <div className="col-12 col-lg-2">
+          {/* <div className="col-12 col-lg-2">
             <h4 className="fs-5 fw-bold mb-4 text-white position-relative">
               Stay Updated
               <div className="bg-primary" style={{ width: '30px', height: '3px', marginTop: '8px' }}></div>
@@ -266,8 +266,8 @@ const Footer = () => {
                 Subscribe
               </button>
             </div>
-          </div>
-        </div>
+          </div> */}
+        </div> 
 
         {/* Bottom Bar */}
         <div className="border-top border-secondary mt-5 pt-4">

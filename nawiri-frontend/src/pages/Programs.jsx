@@ -83,7 +83,7 @@ const Programs = () => {
       </section>
 
       {/* Programs Grid */}
-      <section className="py-5 py-md-6 bg-light">
+      <section className="py-5 py-md-6 bg-white">
         <div className="container px-3 px-md-4">
           {programs.length === 0 ? (
             <div className="text-center py-5 my-4">
@@ -139,25 +139,25 @@ const Programs = () => {
       </section>
 
       {/* Call to Action */}
-      <section className="bg-primary text-white py-5 py-md-6 w-100">
+      <section className="bg-white text-black py-5 py-md-6 w-100">
         <div className="container px-3 px-md-4">
           <div className="text-center">
             <h2 className="h3 fw-bold mb-4">
               Want to Support Our Programs?
             </h2>
-            <p className="fs-5 text-light opacity-75 mb-5 mx-auto" style={{ maxWidth: '800px' }}>
+            <p className="fs-5 text-black opacity-55 mb-5 mx-auto" style={{ maxWidth: '800px' }}>
               Your support helps us expand our reach and create more opportunities for communities to thrive.
             </p>
             <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
               <Link 
                 to="/get-involved" 
-                className="btn btn-light text-primary fw-medium px-4 d-flex align-items-center justify-content-center"
+                className="btn btn-primary text-white fw-medium px-4 d-flex align-items-center justify-content-center"
               >
                 Get Involved <ArrowRight className="ms-2" style={{ width: '16px', height: '16px' }} />
               </Link>
               <Link 
                 to="/contact" 
-                className="btn btn-outline-light fw-medium px-4"
+                className="btn btn-outline-primary fw-medium px-4"
               >
                 Contact Us
               </Link>

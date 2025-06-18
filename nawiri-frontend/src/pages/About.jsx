@@ -231,7 +231,7 @@ const About = () => {
 
       {/* Team Section */}
       {team.length > 0 && (
-        <section className="py-5 bg-light">
+        <section className="py-5 bg-white">
           <Container>
             <Row className="justify-content-center text-center mb-5">
               <Col lg={8}>
@@ -325,7 +325,7 @@ const About = () => {
       )}
 
       {/* Timeline Section */}
-      <section className="py-5 bg-light">
+      <section className="py-5 bg-white">
         <Container>
           <Row className="justify-content-center text-center mb-5">
             <Col lg={8}>
@@ -360,14 +360,14 @@ const About = () => {
       </section>
 
       {/* Call to Action */}
-      <section className="py-5 bg-primary text-white">
+      <section className="py-5 bg-white text-black">
         <Container>
           <Row className="justify-content-center text-center">
             <Col lg={8}>
               <h2 className="display-5 fw-bold mb-4">
                 Join Our Mission
               </h2>
-              <p className="fs-5 mb-5 text-white-50 lh-lg">
+              <p className="fs-5 mb-5 text-muted lh-lg">
                 Together, we can create lasting change and build stronger, more resilient communities. Your support makes all the difference.
               </p>
               <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
@@ -376,7 +376,7 @@ const About = () => {
                   to="/get-involved" 
                   size="lg" 
                   variant="light"
-                  className="fw-semibold px-4 py-3"
+                  className="fw-semibold px-4 py-3 text-white bg-primary border-0 hover:bg-success"
                 >
                   Get Involved <ArrowRight className="ms-2" size={20} />
                 </Button>
@@ -384,8 +384,8 @@ const About = () => {
                   as={Link} 
                   to="/contact" 
                   size="lg" 
-                  variant="outline-light"
-                  className="fw-semibold px-4 py-3"
+             
+                  className="fw-semibold px-4 py-3 text-white bg-primary border-0 hover:bg-secondary"
                 >
                   Contact Us
                 </Button>
