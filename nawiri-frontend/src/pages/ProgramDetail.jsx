@@ -72,10 +72,10 @@ const ProgramDetail = () => {
   return (
     <div className="w-100">
       {/* Hero Section */}
-      <section className="hero-gradient text-white section-padding w-100">
+      <section className="hero-white text-black section-padding w-100">
         <div className="container-fluid px-3">
           <div className="mb-4">
-            <a href="/programs" className="btn btn-outline-light">
+            <a href="/programs" className="btn btn-outline-primary">
               <ArrowLeft style={{ width: '16px', height: '16px' }} className="me-2" /> Back to Programs
             </a>
           </div>
@@ -83,7 +83,7 @@ const ProgramDetail = () => {
             <h1 className="display-4 fw-bold mb-4">
               {program.title}
             </h1>
-            <p className="fs-4 text-gray-100">
+            <p className="fs-4 text-gray-800">
               {program.description}
             </p>
           </div>
@@ -113,10 +113,10 @@ const ProgramDetail = () => {
                   </div>
                 )}
 
-                {program.activities && (
+                {program.target_group && (
                   <div className="mb-4">
-                    <h3 className="h4 fw-bold text-dark mb-3">Key Activities</h3>
-                    <p className="text-muted">{program.activities}</p>
+                    <h3 className="h4 fw-bold text-dark mb-3">Target <Group></Group></h3>
+                    <p className="text-muted">{program.target_group}</p>
                   </div>
                 )}
               </div>
@@ -129,25 +129,25 @@ const ProgramDetail = () => {
                   <h5 className="card-title">Program Information</h5>
                 </div>
                 <div className="card-body d-flex flex-column gap-3">
-                  {program.location && (
+                  {/* {program.location && (
                     <div className="d-flex align-items-center gap-3">
                       <MapPin style={{ width: '20px', height: '20px' }} className="text-primary" />
                       <div>
                         <p className="fw-medium">Location</p>
                         <p className="small text-muted">{program.location}</p>
-                      </div>
+                      </div> 
                     </div>
                   )}
-                  
-                  {program.participants && (
+                   */}
+                  {/* {program.participants && (
                     <div className="d-flex align-items-center gap-3">
                       <Users style={{ width: '20px', height: '20px' }} className="text-primary" />
                       <div>
                         <p className="fw-medium">Participants</p>
-                        <p className="small text-muted">{program.participants} people</p>
+                        <p className="small text-muted">{program.participants || program.team_members} people</p>
                       </div>
                     </div>
-                  )}
+                  )} */}
                   
                   {program.start_date && (
                     <div className="d-flex align-items-center gap-3">
@@ -191,34 +191,36 @@ const ProgramDetail = () => {
       </section>
 
       {/* Program Gallery */}
-      {media.length > 0 && (
-        <section className="section-padding bg-gray-50">
+      {media.length > 0 && media.some(item => item.type === 'PHOTO') && (
+        <section className="section-padding bg-white">
           <div className="container-fluid px-3">
             <h2 className="h3 fw-bold text-dark mb-4 text-center">
               Program Gallery
             </h2>
             <div className="row g-4">
-              {media.map((item) => (
-                <div key={item.id} className="col-12 col-md-6 col-lg-4">
-                  <div className="card card-hover">
-                    <div className="card-header">
-                      <h5 className="card-title fs-6">{item.title}</h5>
-                      {item.description && (
-                        <p className="card-text text-muted">{item.description}</p>
-                      )}
-                    </div>
-                    <div className="card-body p-0">
-                      <img
-                        src={`${import.meta.env.VITE_API_BASE_URL}${item.url}`}
-                        alt={item.title}
-                        className="card-img-top rounded-0 cursor-pointer"
-                        style={{ aspectRatio: '16/9', objectFit: 'cover' }}
-                        onClick={() => openLightbox(item)}
-                      />
+              {media
+                .filter(item => item.type === 'PHOTO')
+                .map((item) => (
+                  <div key={item.id} className="col-12 col-md-6 col-lg-4">
+                    <div className="card card-hover">
+                      <div className="card-header">
+                        <h5 className="card-title fs-6">{item.title}</h5>
+                        {item.description && (
+                          <p className="card-text text-muted">{item.description}</p>
+                        )}
+                      </div>
+                      <div className="card-body p-0">
+                        <img
+                          src={`${import.meta.env.VITE_API_BASE_URL}${item.file_url}`}
+                          alt={item.title}
+                          className="card-img-top rounded-0 cursor-pointer"
+                          style={{ aspectRatio: '16/9', objectFit: 'cover' }}
+                          onClick={() => openLightbox(item)}
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
           </div>
         </section>

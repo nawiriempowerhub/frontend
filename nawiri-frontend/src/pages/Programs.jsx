@@ -104,24 +104,24 @@ const Programs = () => {
                     </div>
                     <div className="card-body pt-0">
                       <div className="d-flex flex-column gap-3 mb-4">
-                        {program.location && (
+                        {/* {program.location && (
                           <div className="d-flex align-items-center gap-2 small text-muted">
                             <MapPin className="flex-shrink-0" style={{ width: '16px', height: '16px' }} />
                             <span>{program.location}</span>
                           </div>
-                        )}
-                        {program.participants && (
+                        )} */}
+                        {/* {program.participants && (
                           <div className="d-flex align-items-center gap-2 small text-muted">
                             <Users className="flex-shrink-0" style={{ width: '16px', height: '16px' }} />
                             <span>{program.participants} participants</span>
                           </div>
-                        )}
-                        {program.start_date && (
+                        )} */}
+                        {/* {program.start_date && (
                           <div className="d-flex align-items-center gap-2 small text-muted">
                             <Calendar className="flex-shrink-0" style={{ width: '16px', height: '16px' }} />
                             <span>Started {new Date(program.start_date).toLocaleDateString()}</span>
                           </div>
-                        )}
+                        )} */}
                       </div>
                       <Link 
                         to={`/programs/${program.id}`} 

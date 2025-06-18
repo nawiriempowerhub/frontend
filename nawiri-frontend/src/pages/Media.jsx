@@ -6,6 +6,8 @@ import { mediaService } from "../services/mediaService";
 import { aboutService } from "../services/aboutService";
 import { Link } from "react-router-dom";
 
+const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const Media = () => {
   const [media, setMedia] = useState([]);
   const [impact, setImpact] = useState([]);
@@ -298,7 +300,7 @@ const Media = () => {
                               </video>
                             ) : item.type === "PHOTO" && item.file_url ? (
                               <img
-                                src={item.file_url}
+                                src={`${VITE_API_BASE_URL}${item.file_url}`}
                                 alt="Media"
                                 className="img-fluid rounded"
                                 style={{
