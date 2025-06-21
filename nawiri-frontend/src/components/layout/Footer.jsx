@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <footer className="bg-dark text-light position-relative overflow-hidden">
+    <footer className="bg-white text-dark position-relative overflow-hidden border-top">
       {/* Background Pattern */}
       <div 
-        className="position-absolute top-0 start-0 w-100 h-100 opacity-10"
+        className="position-absolute top-0 start-0 w-100 h-100 opacity-5"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
           backgroundSize: '60px 60px'
         }}
       ></div>
@@ -24,11 +24,11 @@ const Footer = () => {
                   <Heart className="text-white" style={{ width: '24px', height: '24px' }} />
                 </div>
                 <div>
-                  <h3 className="fs-3 fw-bold mb-1 text-white">Nawiri EmpowerHub</h3>
+                  <h3 className="fs-3 fw-bold mb-1 text-dark">Nawiri EmpowerHub</h3>
                   <p className="small text-primary mb-0 fw-medium">Empowering Communities</p>
                 </div>
               </div>
-              <p className="text-light mb-4 lh-lg">
+              <p className="text-muted mb-4 lh-lg">
                 Empowering communities through education, healthcare, and sustainable development programs.
                 Together, we build a brighter future for all.
               </p>
@@ -37,16 +37,18 @@ const Footer = () => {
               <div className="d-flex gap-3">
                 <a 
                   href="#" 
-                  className="btn btn-outline-light btn-sm rounded-circle p-2 d-flex align-items-center justify-content-center social-link"
+                  className="btn btn-outline-primary btn-sm rounded-circle p-2 d-flex align-items-center justify-content-center social-link"
                   style={{ width: '40px', height: '40px', transition: 'all 0.3s ease' }}
                   onMouseEnter={(e) => {
                     e.target.style.backgroundColor = '#1877f2';
                     e.target.style.borderColor = '#1877f2';
+                    e.target.style.color = '#ffffff';
                     e.target.style.transform = 'translateY(-2px)';
                   }}
                   onMouseLeave={(e) => {
                     e.target.style.backgroundColor = 'transparent';
-                    e.target.style.borderColor = '#ffffff';
+                    e.target.style.borderColor = '#0d6efd';
+                    e.target.style.color = '#0d6efd';
                     e.target.style.transform = 'translateY(0)';
                   }}
                 >
@@ -54,16 +56,18 @@ const Footer = () => {
                 </a>
                 <a 
                   href="https://x.com/NEmpowerhub" 
-                  className="btn btn-outline-light btn-sm rounded-circle p-2 d-flex align-items-center justify-content-center social-link"
+                  className="btn btn-outline-primary btn-sm rounded-circle p-2 d-flex align-items-center justify-content-center social-link"
                   style={{ width: '40px', height: '40px', transition: 'all 0.3s ease' }}
                   onMouseEnter={(e) => {
                     e.target.style.backgroundColor = '#1da1f2';
                     e.target.style.borderColor = '#1da1f2';
+                    e.target.style.color = '#ffffff';
                     e.target.style.transform = 'translateY(-2px)';
                   }}
                   onMouseLeave={(e) => {
                     e.target.style.backgroundColor = 'transparent';
-                    e.target.style.borderColor = '#ffffff';
+                    e.target.style.borderColor = '#0d6efd';
+                    e.target.style.color = '#0d6efd';
                     e.target.style.transform = 'translateY(0)';
                   }}
                 >
@@ -71,16 +75,18 @@ const Footer = () => {
                 </a>
                 <a 
                   href="https://www.instagram.com/nawiri_empowerhub/" 
-                  className="btn btn-outline-light btn-sm rounded-circle p-2 d-flex align-items-center justify-content-center social-link"
+                  className="btn btn-outline-primary btn-sm rounded-circle p-2 d-flex align-items-center justify-content-center social-link"
                   style={{ width: '40px', height: '40px', transition: 'all 0.3s ease' }}
                   onMouseEnter={(e) => {
                     e.target.style.backgroundColor = '#e4405f';
                     e.target.style.borderColor = '#e4405f';
+                    e.target.style.color = '#ffffff';
                     e.target.style.transform = 'translateY(-2px)';
                   }}
                   onMouseLeave={(e) => {
                     e.target.style.backgroundColor = 'transparent';
-                    e.target.style.borderColor = '#ffffff';
+                    e.target.style.borderColor = '#0d6efd';
+                    e.target.style.color = '#0d6efd';
                     e.target.style.transform = 'translateY(0)';
                   }}
                 >
@@ -88,16 +94,18 @@ const Footer = () => {
                 </a>
                 <a 
                   href="https://www.linkedin.com/company/nawiri-empowerhub" 
-                  className="btn btn-outline-light btn-sm rounded-circle p-2 d-flex align-items-center justify-content-center social-link"
+                  className="btn btn-outline-primary btn-sm rounded-circle p-2 d-flex align-items-center justify-content-center social-link"
                   style={{ width: '40px', height: '40px', transition: 'all 0.3s ease' }}
                   onMouseEnter={(e) => {
                     e.target.style.backgroundColor = '#0077b5';
                     e.target.style.borderColor = '#0077b5';
+                    e.target.style.color = '#ffffff';
                     e.target.style.transform = 'translateY(-2px)';
                   }}
                   onMouseLeave={(e) => {
                     e.target.style.backgroundColor = 'transparent';
-                    e.target.style.borderColor = '#ffffff';
+                    e.target.style.borderColor = '#0d6efd';
+                    e.target.style.color = '#0d6efd';
                     e.target.style.transform = 'translateY(0)';
                   }}
                 >
@@ -109,7 +117,7 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div className="col-12 col-md-6 col-lg-3">
-            <h4 className="fs-5 fw-bold mb-4 text-white position-relative">
+            <h4 className="fs-5 fw-bold mb-4 text-dark position-relative">
               Quick Links
               <div className="bg-primary" style={{ width: '30px', height: '3px', marginTop: '8px' }}></div>
             </h4>
@@ -117,14 +125,14 @@ const Footer = () => {
               <li>
                 <Link 
                   to="/about" 
-                  className="text-light text-decoration-none d-flex align-items-center gap-2 footer-link"
+                  className="text-muted text-decoration-none d-flex align-items-center gap-2 footer-link"
                   style={{ transition: 'all 0.3s ease' }}
                   onMouseEnter={(e) => {
                     e.target.style.color = '#0d6efd';
                     e.target.style.paddingLeft = '8px';
                   }}
                   onMouseLeave={(e) => {
-                    e.target.style.color = '#f8f9fa';
+                    e.target.style.color = '#6c757d';
                     e.target.style.paddingLeft = '0';
                   }}
                 >
@@ -134,14 +142,14 @@ const Footer = () => {
               <li>
                 <Link 
                   to="/programs" 
-                  className="text-light text-decoration-none d-flex align-items-center gap-2 footer-link"
+                  className="text-muted text-decoration-none d-flex align-items-center gap-2 footer-link"
                   style={{ transition: 'all 0.3s ease' }}
                   onMouseEnter={(e) => {
                     e.target.style.color = '#0d6efd';
                     e.target.style.paddingLeft = '8px';
                   }}
                   onMouseLeave={(e) => {
-                    e.target.style.color = '#f8f9fa';
+                    e.target.style.color = '#6c757d';
                     e.target.style.paddingLeft = '0';
                   }}
                 >
@@ -151,14 +159,14 @@ const Footer = () => {
               <li>
                 <Link 
                   to="/media" 
-                  className="text-light text-decoration-none d-flex align-items-center gap-2 footer-link"
+                  className="text-muted text-decoration-none d-flex align-items-center gap-2 footer-link"
                   style={{ transition: 'all 0.3s ease' }}
                   onMouseEnter={(e) => {
                     e.target.style.color = '#0d6efd';
                     e.target.style.paddingLeft = '8px';
                   }}
                   onMouseLeave={(e) => {
-                    e.target.style.color = '#f8f9fa';
+                    e.target.style.color = '#6c757d';
                     e.target.style.paddingLeft = '0';
                   }}
                 >
@@ -168,14 +176,14 @@ const Footer = () => {
               <li>
                 <Link 
                   to="/get-involved" 
-                  className="text-light text-decoration-none d-flex align-items-center gap-2 footer-link"
+                  className="text-muted text-decoration-none d-flex align-items-center gap-2 footer-link"
                   style={{ transition: 'all 0.3s ease' }}
                   onMouseEnter={(e) => {
                     e.target.style.color = '#0d6efd';
                     e.target.style.paddingLeft = '8px';
                   }}
                   onMouseLeave={(e) => {
-                    e.target.style.color = '#f8f9fa';
+                    e.target.style.color = '#6c757d';
                     e.target.style.paddingLeft = '0';
                   }}
                 >
@@ -185,14 +193,14 @@ const Footer = () => {
               <li>
                 <Link 
                   to="/contact" 
-                  className="text-light text-decoration-none d-flex align-items-center gap-2 footer-link"
+                  className="text-muted text-decoration-none d-flex align-items-center gap-2 footer-link"
                   style={{ transition: 'all 0.3s ease' }}
                   onMouseEnter={(e) => {
                     e.target.style.color = '#0d6efd';
                     e.target.style.paddingLeft = '8px';
                   }}
                   onMouseLeave={(e) => {
-                    e.target.style.color = '#f8f9fa';
+                    e.target.style.color = '#6c757d';
                     e.target.style.paddingLeft = '0';
                   }}
                 >
@@ -204,40 +212,40 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div className="col-12 col-md-6 col-lg-3">
-            <h4 className="fs-5 fw-bold mb-4 text-white position-relative">
+            <h4 className="fs-5 fw-bold mb-4 text-dark position-relative">
               Contact Info
               <div className="bg-primary" style={{ width: '30px', height: '3px', marginTop: '8px' }}></div>
             </h4>
             <ul className="list-unstyled d-flex flex-column gap-4">
               <li className="d-flex align-items-start gap-3">
-                <div className="bg-primary bg-opacity-25 rounded-circle p-2 d-flex align-items-center justify-content-center flex-shrink-0">
+                <div className="bg-primary bg-opacity-10 rounded-circle p-2 d-flex align-items-center justify-content-center flex-shrink-0">
                   <Mail className="text-primary" style={{ width: '16px', height: '16px' }} />
                 </div>
                 <div>
                   <p className="mb-1 small text-primary fw-medium">Email</p>
-                  <a href="mailto:nawiriempowerhub@gmail.com" className="text-light text-decoration-none">
+                  <a href="mailto:nawiriempowerhub@gmail.com" className="text-dark text-decoration-none">
                     nawiriempowerhub@gmail.com
                   </a>
                 </div>
               </li>
               <li className="d-flex align-items-start gap-3">
-                <div className="bg-primary bg-opacity-25 rounded-circle p-2 d-flex align-items-center justify-content-center flex-shrink-0">
+                <div className="bg-primary bg-opacity-10 rounded-circle p-2 d-flex align-items-center justify-content-center flex-shrink-0">
                   <Phone className="text-primary" style={{ width: '16px', height: '16px' }} />
                 </div>
                 <div>
                   <p className="mb-1 small text-primary fw-medium">Phone</p>
-                  <a href="tel:+254116353925" className="text-light text-decoration-none">
+                  <a href="tel:+254116353925" className="text-dark text-decoration-none">
                     +254 116 353 925
                   </a>
                 </div>
               </li>
               <li className="d-flex align-items-start gap-3">
-                <div className="bg-primary bg-opacity-25 rounded-circle p-2 d-flex align-items-center justify-content-center flex-shrink-0">
+                <div className="bg-primary bg-opacity-10 rounded-circle p-2 d-flex align-items-center justify-content-center flex-shrink-0">
                   <MapPin className="text-primary" style={{ width: '16px', height: '16px' }} />
                 </div>
                 <div>
                   <p className="mb-1 small text-primary fw-medium">Address</p>
-                  <span className="text-light">
+                  <span className="text-dark">
                     Nairobi, Kenya<br />
                     P.O. Box 12345-00100
                   </span>
@@ -248,17 +256,17 @@ const Footer = () => {
 
           {/* Newsletter Signup */}
           {/* <div className="col-12 col-lg-2">
-            <h4 className="fs-5 fw-bold mb-4 text-white position-relative">
+            <h4 className="fs-5 fw-bold mb-4 text-dark position-relative">
               Stay Updated
               <div className="bg-primary" style={{ width: '30px', height: '3px', marginTop: '8px' }}></div>
             </h4>
-            <p className="text-light mb-3 small">
+            <p className="text-muted mb-3 small">
               Subscribe to our newsletter for updates on our programs and impact.
             </p>
             <div className="d-flex flex-column gap-2">
               <input 
                 type="email" 
-                className="form-control bg-dark border-secondary text-light" 
+                className="form-control bg-light border-secondary text-dark" 
                 placeholder="Your email"
                 style={{ fontSize: '14px' }}
               />
@@ -270,10 +278,10 @@ const Footer = () => {
         </div> 
 
         {/* Bottom Bar */}
-        <div className="border-top border-secondary mt-5 pt-4">
+        <div className="border-top border-light mt-5 pt-4">
           <div className="row align-items-center">
             <div className="col-12 col-md-6">
-              <p className="text-light mb-2 mb-md-0 small">
+              <p className="text-muted mb-2 mb-md-0 small">
                 © 2024 Nawiri EmpowerHub. All rights reserved. Made with 
                 <Heart className="text-danger mx-1" style={{ width: '14px', height: '14px' }} />
                 for communities.
@@ -283,28 +291,28 @@ const Footer = () => {
               <div className="d-flex gap-4 justify-content-md-end">
                 <a 
                   href="#" 
-                  className="text-light text-decoration-none small"
+                  className="text-muted text-decoration-none small"
                   style={{ transition: 'color 0.3s ease' }}
                   onMouseEnter={(e) => e.target.style.color = '#0d6efd'}
-                  onMouseLeave={(e) => e.target.style.color = '#f8f9fa'}
+                  onMouseLeave={(e) => e.target.style.color = '#6c757d'}
                 >
                   Privacy Policy
                 </a>
                 <a 
                   href="#" 
-                  className="text-light text-decoration-none small"
+                  className="text-muted text-decoration-none small"
                   style={{ transition: 'color 0.3s ease' }}
                   onMouseEnter={(e) => e.target.style.color = '#0d6efd'}
-                  onMouseLeave={(e) => e.target.style.color = '#f8f9fa'}
+                  onMouseLeave={(e) => e.target.style.color = '#6c757d'}
                 >
                   Terms of Service
                 </a>
                 <a 
                   href="#" 
-                  className="text-light text-decoration-none small"
+                  className="text-muted text-decoration-none small"
                   style={{ transition: 'color 0.3s ease' }}
                   onMouseEnter={(e) => e.target.style.color = '#0d6efd'}
-                  onMouseLeave={(e) => e.target.style.color = '#f8f9fa'}
+                  onMouseLeave={(e) => e.target.style.color = '#6c757d'}
                 >
                   Cookie Policy
                 </a>
