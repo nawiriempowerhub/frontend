@@ -3,7 +3,7 @@ import api from "./api";
 export const aboutService = {
   // Get about content
   getAbout: async () => {
-    const response = await api.get("/about/");
+    const response = await api.get("/about");
     return response.data;
   },
 
