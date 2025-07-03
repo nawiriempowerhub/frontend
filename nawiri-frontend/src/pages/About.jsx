@@ -43,10 +43,10 @@ const About = () => {
   const timelineArray = Array.isArray(aboutData?.timeline)
     ? aboutData.timeline
     : [
-        "2015 – Organization founded",
-        "2017 – Launched first education program",
-        "2019 – Expanded to healthcare outreach",
-        "2022 – Reached 10,000+ beneficiaries",
+        "2022 – Organization founded",
+        "2024 – Officially registered as a non-profit",
+        "2024 – Launched our first community program- Kilimo Kazi Agri-Youth Project",
+        "2025 – Started performing Outreach programs example the Heshima ya Dada Pad Program",
       ];
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import nawiriLogo from "../../assets/nawiri-logo.jpg"; // Adjust path as needed
+
 import "./Header.css"; // 👈 External CSS (see below)
 
 const Header = () => {
@@ -26,13 +26,12 @@ const Header = () => {
           >
             <div className="position-relative">
               <img
-                src={nawiriLogo}
+                src="/images/nawiri_logo.png"
                 alt="Nawiri Empower Hub Logo"
-                className="rounded-circle shadow-sm"
+                className="rounded-circle "
                 style={{ 
                   height: "50px", 
                   width: "50px",
-                  border: "3px solid #28a745",
                   objectFit: "cover",
                   transition: "all 0.3s ease",
                   filter: "brightness(1.1)"
