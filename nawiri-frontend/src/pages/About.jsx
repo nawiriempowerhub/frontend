@@ -1,15 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { Users, Target, Heart, ArrowRight, Calendar } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Container, Row, Col, Card, Button, Spinner, Alert } from 'react-bootstrap';
-import { aboutService } from '../services/aboutService';
+import React, { useState, useEffect } from "react";
+import { Users, Target, Heart, ArrowRight, Calendar } from "lucide-react";
+import { Link } from "react-router-dom";
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Button,
+  Spinner,
+  Alert,
+} from "react-bootstrap";
+import { aboutService } from "../services/aboutService";
 
 const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 // Custom Loading Component
-const Loading = ({ size = 'md', text = 'Loading...' }) => {
-  const spinnerSize = size === 'lg' ? 'lg' : 'md';
-  
+const Loading = ({ size = "md", text = "Loading..." }) => {
+  const spinnerSize = size === "lg" ? "lg" : "md";
+
   return (
     <div className="d-flex flex-column align-items-center">
       <Spinner animation="border" variant="primary" size={spinnerSize} />
@@ -83,8 +91,11 @@ const About = () => {
   if (error) {
     return (
       <div className="min-vh-100 d-flex align-items-center justify-content-center bg-light p-4">
-        <div style={{ maxWidth: '500px', width: '100%' }}>
-          <ErrorMessage message={error} onRetry={() => window.location.reload()} />
+        <div style={{ maxWidth: "500px", width: "100%" }}>
+          <ErrorMessage
+            message={error}
+            onRetry={() => window.location.reload()}
+          />
         </div>
       </div>
     );
@@ -93,14 +104,14 @@ const About = () => {
   return (
     <div className="bg-light">
       {/* Hero Section */}
-     <section 
+      <section
         className="text-white py-5 position-relative"
         style={{
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/hero-bg.jpg')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          minHeight: '60vh',
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          minHeight: "60vh",
         }}
       >
         <Container className="py-5">
@@ -108,25 +119,28 @@ const About = () => {
             <Col lg={10} xl={8}>
               <h1 className="display-4 fw-bold mb-4 lh-1">
                 About Nawiri EmpowerHub
-                <span className="d-block text-warning">Empowering Communities</span>
+                <span className="d-block text-warning">
+                  Empowering Communities
+                </span>
               </h1>
               <p className="fs-5 mb-5 text-white-50 lh-lg">
-                Empowering communities through sustainable development, education, and healthcare initiatives across Kenya.
+                Empowering communities through sustainable development,
+                education, and healthcare initiatives across Kenya.
               </p>
               <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
-                <Button 
-                  as={Link} 
-                  to="/get-involved" 
-                  size="lg" 
+                <Button
+                  as={Link}
+                  to="/get-involved"
+                  size="lg"
                   variant="light"
                   className="fw-semibold px-4 py-3"
                 >
                   Get Involved <ArrowRight className="ms-2" size={20} />
                 </Button>
-                <Button 
-                  as={Link} 
-                  to="/contact" 
-                  size="lg" 
+                <Button
+                  as={Link}
+                  to="/contact"
+                  size="lg"
                   variant="outline-light"
                   className="fw-semibold px-4 py-3"
                 >
@@ -147,7 +161,8 @@ const About = () => {
                 Our Mission & Vision
               </h2>
               <p className="fs-6 text-muted lh-lg">
-                Learn about our purpose, values, and the journey that drives us to create lasting change in communities.
+                Learn about our purpose, values, and the journey that drives us
+                to create lasting change in communities.
               </p>
             </Col>
           </Row>
@@ -178,15 +193,18 @@ const About = () => {
                 <Col xs={12}>
                   <Card className="h-100 border-0 shadow-sm bg-white">
                     <Card.Body className="text-center p-4">
-                      <div 
+                      <div
                         className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 bg-primary"
-                        style={{ width: '80px', height: '80px' }}
+                        style={{ width: "80px", height: "80px" }}
                       >
                         <Target className="text-white" size={32} />
                       </div>
-                      <Card.Title className="h5 fw-bold text-dark mb-3">Our Approach</Card.Title>
+                      <Card.Title className="h5 fw-bold text-dark mb-3">
+                        Our Approach
+                      </Card.Title>
                       <Card.Text className="text-muted lh-lg">
-                        We believe in community-driven solutions that address root causes and create sustainable change.
+                        We believe in community-driven solutions that address
+                        root causes and create sustainable change.
                       </Card.Text>
                     </Card.Body>
                   </Card>
@@ -194,15 +212,18 @@ const About = () => {
                 <Col xs={12}>
                   <Card className="h-100 border-0 shadow-sm bg-white">
                     <Card.Body className="text-center p-4">
-                      <div 
+                      <div
                         className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 bg-success"
-                        style={{ width: '80px', height: '80px' }}
+                        style={{ width: "80px", height: "80px" }}
                       >
                         <Heart className="text-white" size={32} />
                       </div>
-                      <Card.Title className="h5 fw-bold text-dark mb-3">Our Values</Card.Title>
+                      <Card.Title className="h5 fw-bold text-dark mb-3">
+                        Our Values
+                      </Card.Title>
                       <Card.Text className="text-muted lh-lg">
-                        Integrity, compassion, sustainability, and empowerment guide everything we do.
+                        Integrity, compassion, sustainability, and empowerment
+                        guide everything we do.
                       </Card.Text>
                     </Card.Body>
                   </Card>
@@ -210,15 +231,18 @@ const About = () => {
                 <Col xs={12}>
                   <Card className="h-100 border-0 shadow-sm bg-white">
                     <Card.Body className="text-center p-4">
-                      <div 
+                      <div
                         className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 bg-danger"
-                        style={{ width: '80px', height: '80px' }}
+                        style={{ width: "80px", height: "80px" }}
                       >
                         <Users className="text-white" size={32} />
                       </div>
-                      <Card.Title className="h5 fw-bold text-dark mb-3">Our Impact</Card.Title>
+                      <Card.Title className="h5 fw-bold text-dark mb-3">
+                        Our Impact
+                      </Card.Title>
                       <Card.Text className="text-muted lh-lg">
-                        Measurable results that transform lives and strengthen communities for generations.
+                        Measurable results that transform lives and strengthen
+                        communities for generations.
                       </Card.Text>
                     </Card.Body>
                   </Card>
@@ -239,43 +263,61 @@ const About = () => {
                   Meet Our Team
                 </h2>
                 <p className="fs-6 text-muted lh-lg">
-                  Dedicated professionals working together to create positive change in communities across Kenya.
+                  Dedicated professionals working together to create positive
+                  change in communities across Kenya.
                 </p>
               </Col>
             </Row>
+
+            {/* ✅ Only show up to 3 team members */}
             <Row className="g-4 mb-5">
-              {team.map((member) => (
+              {team.slice(0, 3).map((member) => (
                 <Col key={member.id} md={6} lg={4}>
                   <Card className="h-100 border-0 shadow-sm bg-white">
                     <Card.Body className="d-flex flex-column p-4 text-center">
-                      <div 
+                      <div
                         className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 bg-primary"
-                        style={{ width: '96px', height: '96px' }}
+                        style={{ width: "96px", height: "96px" }}
                       >
                         <span className="fs-3 fw-bold text-white">
-                          {member.name?.charAt(0) || 'N'}
+                          {member.name?.charAt(0) || "N"}
                         </span>
                       </div>
-                      <Card.Title className="h5 fw-bold text-dark mb-3">{member.name}</Card.Title>
-                      <p className="text-primary fw-medium mb-3">{member.role || "Team Member"}</p>
+                      <Card.Title className="h5 fw-bold text-dark mb-3">
+                        {member.name}
+                      </Card.Title>
+                      <p className="text-primary fw-medium mb-3">
+                        {member.role || "Team Member"}
+                      </p>
                       {member.photo_filename && (
                         <img
                           src={`${VITE_API_BASE_URL}/static/team/${member.photo_filename}`}
                           alt={member.name}
                           className="img-fluid rounded mb-3"
-                          style={{ maxHeight: '200px', objectFit: 'cover' }}
+                          style={{ maxHeight: "200px", objectFit: "cover" }}
                         />
                       )}
-                      <Card.Text className="text-muted flex-grow-1 lh-lg">{member.bio}</Card.Text>
+                      <Card.Text className="text-muted flex-grow-1 lh-lg">
+                        {member.bio}
+                      </Card.Text>
                     </Card.Body>
                   </Card>
                 </Col>
               ))}
             </Row>
+
+            {/* Button to view full team */}
             <Row className="justify-content-center">
               <Col xs="auto">
-                <Button as={Link} to="/team" size="lg" variant="outline-primary" className="px-4 py-3 fw-semibold">
-                  View All Team Members <ArrowRight className="ms-2" size={20} />
+                <Button
+                  as={Link}
+                  to="/team"
+                  size="lg"
+                  variant="outline-primary"
+                  className="px-4 py-3 fw-semibold"
+                >
+                  View All Team Members{" "}
+                  <ArrowRight className="ms-2" size={20} />
                 </Button>
               </Col>
             </Row>
@@ -293,7 +335,8 @@ const About = () => {
                   Our Impact Journey
                 </h2>
                 <p className="fs-6 text-muted lh-lg">
-                  Key milestones and achievements that mark our journey of creating positive change.
+                  Key milestones and achievements that mark our journey of
+                  creating positive change.
                 </p>
               </Col>
             </Row>
@@ -302,11 +345,17 @@ const About = () => {
                 <Col key={event.id} md={6} lg={4}>
                   <Card className="h-100 border-0 shadow-sm bg-light">
                     <Card.Body className="d-flex flex-column p-4">
-                      <Card.Title className="h5 fw-bold text-dark mb-3">{event.title}</Card.Title>
-                      <Card.Text className="text-muted flex-grow-1 lh-lg">{event.description}</Card.Text>
+                      <Card.Title className="h5 fw-bold text-dark mb-3">
+                        {event.title}
+                      </Card.Title>
+                      <Card.Text className="text-muted flex-grow-1 lh-lg">
+                        {event.description}
+                      </Card.Text>
                       <div className="d-flex align-items-center text-muted mt-auto">
                         <Calendar className="me-2" size={16} />
-                        <small className="fw-medium">{new Date(event.date).toLocaleDateString()}</small>
+                        <small className="fw-medium">
+                          {new Date(event.date).toLocaleDateString()}
+                        </small>
                       </div>
                     </Card.Body>
                   </Card>
@@ -315,8 +364,15 @@ const About = () => {
             </Row>
             <Row className="justify-content-center">
               <Col xs="auto">
-                <Button as={Link} to="/impact" size="lg" variant="outline-primary" className="px-4 py-3 fw-semibold">
-                  View More Impact Stories <ArrowRight className="ms-2" size={20} />
+                <Button
+                  as={Link}
+                  to="/impact"
+                  size="lg"
+                  variant="outline-primary"
+                  className="px-4 py-3 fw-semibold"
+                >
+                  View More Impact Stories{" "}
+                  <ArrowRight className="ms-2" size={20} />
                 </Button>
               </Col>
             </Row>
@@ -329,11 +385,10 @@ const About = () => {
         <Container>
           <Row className="justify-content-center text-center mb-5">
             <Col lg={8}>
-              <h2 className="display-5 fw-bold text-dark mb-4">
-                Our Timeline
-              </h2>
+              <h2 className="display-5 fw-bold text-dark mb-4">Our Timeline</h2>
               <p className="fs-6 text-muted lh-lg">
-                A brief history of our milestones and achievements over the years.
+                A brief history of our milestones and achievements over the
+                years.
               </p>
             </Col>
           </Row>
@@ -343,9 +398,13 @@ const About = () => {
                 <Card.Body className="p-4">
                   {timelineArray.map((event, idx) => (
                     <div key={idx} className="d-flex align-items-start mb-3">
-                      <div 
+                      <div
                         className="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold me-3"
-                        style={{ width: '48px', height: '48px', background: '#0d6efd' }}
+                        style={{
+                          width: "48px",
+                          height: "48px",
+                          background: "#0d6efd",
+                        }}
                       >
                         {idx + 1}
                       </div>
@@ -364,27 +423,25 @@ const About = () => {
         <Container>
           <Row className="justify-content-center text-center">
             <Col lg={8}>
-              <h2 className="display-5 fw-bold mb-4">
-                Join Our Mission
-              </h2>
+              <h2 className="display-5 fw-bold mb-4">Join Our Mission</h2>
               <p className="fs-5 mb-5 text-muted lh-lg">
-                Together, we can create lasting change and build stronger, more resilient communities. Your support makes all the difference.
+                Together, we can create lasting change and build stronger, more
+                resilient communities. Your support makes all the difference.
               </p>
               <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
-                <Button 
-                  as={Link} 
-                  to="/get-involved" 
-                  size="lg" 
+                <Button
+                  as={Link}
+                  to="/get-involved"
+                  size="lg"
                   variant="light"
                   className="fw-semibold px-4 py-3 text-white bg-primary border-0 hover:bg-success"
                 >
                   Get Involved <ArrowRight className="ms-2" size={20} />
                 </Button>
-                <Button 
-                  as={Link} 
-                  to="/contact" 
-                  size="lg" 
-             
+                <Button
+                  as={Link}
+                  to="/contact"
+                  size="lg"
                   className="fw-semibold px-4 py-3 text-white bg-primary border-0 hover:bg-secondary"
                 >
                   Contact Us
