@@ -1,7 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Spinner, Alert, Button, Card, Container, Row, Col } from 'react-bootstrap';
-import { ChevronDown, ChevronUp, Loader2, AlertCircle } from 'lucide-react';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import {
+  Spinner,
+  Alert,
+  Button,
+  Card,
+  Container,
+  Row,
+  Col,
+} from "react-bootstrap";
+import { ChevronDown, ChevronUp, Loader2, AlertCircle } from "lucide-react";
 
 const TeamMembers = () => {
   const [teamMembers, setTeamMembers] = useState([]);
@@ -13,10 +21,12 @@ const TeamMembers = () => {
     const fetchTeamMembers = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/about/team`);
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}/about/team`
+        );
         setTeamMembers(response.data);
       } catch (err) {
-        setError('Failed to load team members');
+        setError("Failed to load team members");
       } finally {
         setLoading(false);
       }
@@ -31,7 +41,9 @@ const TeamMembers = () => {
     return (
       <div className="d-flex flex-column justify-content-center align-items-center min-vh-100 bg-light">
         <Spinner animation="border" variant="primary" size="lg" />
-        <span className="ms-3 text-lg text-muted mt-3">Loading team members...</span>
+        <span className="ms-3 text-lg text-muted mt-3">
+          Loading team members...
+        </span>
       </div>
     );
   }
@@ -53,11 +65,11 @@ const TeamMembers = () => {
     <section className="py-5 bg-light">
       <Container>
         <div className="text-center mb-5">
-          <h2 className="display-4 fw-bold text-primary mb-3">
-            Meet Our Team
-          </h2>
-          <p className="lead text-muted mx-auto" style={{ maxWidth: '700px' }}>
-            Our dedicated team at Nawiri EmpowerHub is committed to empowering communities through education, healthcare, and sustainable development.
+          <h2 className="display-4 fw-bold text-primary mb-3">Meet Our Team</h2>
+          <p className="lead text-muted mx-auto" style={{ maxWidth: "700px" }}>
+            Our dedicated team at Nawiri EmpowerHub is committed to empowering
+            communities through education, healthcare, and sustainable
+            development.
           </p>
         </div>
         <Row className="g-4 justify-content-center">
@@ -65,12 +77,22 @@ const TeamMembers = () => {
             <Col xs={12} sm={6} lg={4} key={member.id}>
               <Card className="h-100 border-0 shadow-sm team-card">
                 <div className="position-relative overflow-hidden">
-                  <Card.Img 
-                    variant="top" 
-                    src={`${import.meta.env.VITE_API_BASE_URL}/static/team/${member.photo_filename}`}
+                  <Card.Img
+                    variant="top"
+                    src={`${import.meta.env.VITE_API_BASE_URL}/static/team/${
+                      member.photo_filename
+                    }`}
                     alt={`${member.name}, ${member.role}`}
                     className="team-photo"
+                    style={{
+                      maxHeight: "250px", // or '300px'
+                      width: "100%",
+                      objectFit: "cover",
+                      borderTopLeftRadius: "0.5rem",
+                      borderTopRightRadius: "0.5rem",
+                    }}
                   />
+
                   <div className="overlay"></div>
                 </div>
                 <Card.Body className="p-4">
@@ -114,4 +136,3 @@ const TeamMembers = () => {
 };
 
 export default TeamMembers;
-

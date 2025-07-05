@@ -104,7 +104,7 @@ const ProgramDetail = () => {
                   About This Program
                 </h2>
                 <p className="text-muted mb-4">
-                  {program.long_description ||
+                  {program.description ||
                     "The Heshima ya Dada Pad Program is a grassroots menstrual health initiative under the Nawiri EmpowerHub umbrella, dedicated to restoring dignity, confidence, and opportunity to girls and women across underserved communities in Kenya. We believe that menstruation should never be a barrier to education, participation, or self-worth. Yet, thousands of girls miss school or drop out entirely due to period poverty, stigma, and lack of access to sanitary products. Heshima ya Dada, meaning “A Girl’s Dignity” in Swahili, was created as a powerful response to this injustice."}
                 </p>
 
