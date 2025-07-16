@@ -13,6 +13,7 @@ import {
 import { programsService } from "../services/programsService";
 import { aboutService } from "../services/aboutService";
 import { eventsService } from "../services/eventsService";
+import CountUp from "react-countup";
 
 // Custom Loading Component
 const Loading = ({ size = "md", text = "Loading..." }) => {
@@ -96,45 +97,64 @@ const Home = () => {
     <div className="bg-light">
       {/* Hero Section */}
       <section
-        className="text-white py-5 position-relative"
+        className="bg-white py-4 position-relative"
         style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/hero-bg.jpg')`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          minHeight: "60vh",
+          minHeight: "40vh",
         }}
       >
-        <Container className="py-5">
-          <Row className="align-items-center justify-content-center text-center">
-            <Col lg={10} xl={8}>
-              <h1 className="display-4 fw-bold mb-4 lh-1">
-                Empowering Communities,
-                <span className="d-block text-warning">Building Futures</span>
-              </h1>
-              <p className="fs-5 mb-5 text-white-50 lh-lg">
-                Join us in creating lasting change through education,
-                healthcare, and sustainable development programs across Kenya.
-              </p>
-              <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
-                <Button
-                  as={Link}
-                  to="/get-involved"
-                  size="lg"
-                  variant="light"
-                  className="fw-semibold px-4 py-3"
-                >
-                  Get Involved <ArrowRight className="ms-2" size={20} />
-                </Button>
-                <Button
-                  as={Link}
-                  to="/programs"
-                  size="lg"
-                  variant="outline-light"
-                  className="fw-semibold px-4 py-3"
-                >
-                  Our Programs
-                </Button>
+        <Container className="py-4">
+          <Row className="align-items-center">
+            {/* Image Column - Left Side */}
+            <Col lg={6} className="mb-4 mb-lg-0">
+              <div className="position-relative">
+                <img
+                  src="/images/hero-bg.jpg"
+                  alt="Nawiri Empowerhub Community Impact"
+                  className="img-fluid rounded shadow-lg"
+                  style={{
+                    width: "100%",
+                    height: "450px",
+                    objectFit: "cover",
+                    boxShadow: "0 4px 40px rgba(0, 0, 0, 0.3)",
+                  }}
+                />
+              </div>
+            </Col>
+
+            {/* Text Content Column - Right Side */}
+            <Col lg={6}>
+              <div className="ps-lg-4">
+                <h6 className="display-5 fw-semibold mb-4 lh-1 text-dark">
+                  Empowering Communities, Building Futures
+                </h6>
+                <p className="fs-5 mb-4 text-muted lh-lg">
+                  Welcome to <strong>Nawiri EmpowerHub</strong> a grassroots
+                  initiative dedicated to uplifting communities across Kenya. We
+                  believe in the power of education, healthcare and sustainable
+                  agricultural practices to transform lives. Join us as we build
+                  a brighter, more equitable future together.
+                </p>
+
+                <div className="d-flex flex-column flex-sm-row gap-3">
+                  <Button
+                    as={Link}
+                    to="/get-involved"
+                    size="lg"
+                    variant="primary"
+                    className="fw-semibold px-4 py-3"
+                  >
+                    Get Involved <ArrowRight className="ms-2" size={20} />
+                  </Button>
+                  <Button
+                    as={Link}
+                    to="/programs"
+                    size="lg"
+                    variant="outline-primary"
+                    className="fw-semibold px-4 py-3"
+                  >
+                    Our Programs
+                  </Button>
+                </div>
               </div>
             </Col>
           </Row>
@@ -142,7 +162,7 @@ const Home = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="py-5 bg-white">
+      <section className="py-3 bg-white">
         <Container>
           <Row className="g-4">
             <Col sm={6} lg={3} className="text-center">
@@ -152,95 +172,49 @@ const Home = () => {
               >
                 <Users className="text-white" size={32} />
               </div>
-              <h3 className="display-6 fw-bold text-dark mb-2">100+</h3>
+              <h3 className="display-6 fw-bold text-dark mb-2">
+                <CountUp end={100} duration={5} />+
+              </h3>
               <p className="text-muted mb-0 fw-medium">Lives Impacted</p>
             </Col>
+
             <Col sm={6} lg={3} className="text-center">
               <div
-                className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 bg-success"
+                className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 bg-primary"
                 style={{ width: "80px", height: "80px" }}
               >
                 <Target className="text-white" size={32} />
               </div>
-              <h3 className="display-6 fw-bold text-dark mb-2">3+</h3>
+              <h3 className="display-6 fw-bold text-dark mb-2">
+                <CountUp end={3} duration={5} />+
+              </h3>
               <p className="text-muted mb-0 fw-medium">Active Programs</p>
             </Col>
+
             <Col sm={6} lg={3} className="text-center">
               <div
-                className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 bg-danger"
+                className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 bg-primary"
                 style={{ width: "80px", height: "80px" }}
               >
                 <Heart className="text-white" size={32} />
               </div>
-              <h3 className="display-6 fw-bold text-dark mb-2">20+</h3>
+              <h3 className="display-6 fw-bold text-dark mb-2">
+                <CountUp end={20} duration={5} />+
+              </h3>
               <p className="text-muted mb-0 fw-medium">Volunteers</p>
             </Col>
+
             <Col sm={6} lg={3} className="text-center">
               <div
-                className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 bg-warning"
+                className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 bg-primary"
                 style={{ width: "80px", height: "80px" }}
               >
                 <Calendar className="text-white" size={32} />
               </div>
-              <h3 className="display-6 fw-bold text-dark mb-2">2+</h3>
+              <h3 className="display-6 fw-bold text-dark mb-2">
+                <CountUp end={2} duration={2} />+
+              </h3>
               <p className="text-muted mb-0 fw-medium">Years of Impact</p>
-            </Col>
-          </Row>
-        </Container>
-      </section>
-
-      {/* Featured Programs */}
-      <section className="py-5 bg-white">
-        <Container>
-          <Row className="justify-content-center text-center mb-5">
-            <Col lg={8}>
-              <h2 className="display-5 fw-bold text-dark mb-4">
-                Our Featured Programs
-              </h2>
-              <p className="fs-6 text-muted lh-lg">
-                Discover how we're making a difference through our comprehensive
-                programs designed to empower communities and create lasting
-                change.
-              </p>
-            </Col>
-          </Row>
-
-          <Row className="g-4 mb-5">
-            {programs.map((program) => (
-              <Col key={program.id} md={6} lg={4}>
-                <Card className="h-100 border-0 shadow-sm bg-white">
-                  <Card.Body className="d-flex flex-column p-4">
-                    <Card.Title className="h5 fw-bold text-dark mb-3">
-                      {program.title}
-                    </Card.Title>
-                    <Card.Text className="text-muted flex-grow-1 lh-lg">
-                      {program.description}
-                    </Card.Text>
-                    <Button
-                      as={Link}
-                      to={`/programs/${program.id}`}
-                      variant="outline-primary"
-                      className="mt-auto fw-medium"
-                    >
-                      Learn More <ArrowRight className="ms-2" size={16} />
-                    </Button>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-
-          <Row className="justify-content-center">
-            <Col xs="auto">
-              <Button
-                as={Link}
-                to="/programs"
-                size="lg"
-                variant="primary"
-                className="px-4 py-3 fw-semibold"
-              >
-                View All Programs <ArrowRight className="ms-2" size={20} />
-              </Button>
             </Col>
           </Row>
         </Container>
@@ -305,12 +279,19 @@ const Home = () => {
           <Container>
             <Row className="justify-content-center text-center mb-5">
               <Col lg={8}>
-                <h2 className="display-5 fw-bold text-dark mb-4">
+                <h4 className="display-5 fw-semibold text-dark mb-4">
                   Upcoming Events
-                </h2>
-                <p className="fs-6 text-muted lh-lg">
-                  Join us at our upcoming events and be part of the change you
-                  want to see in the world.
+                </h4>
+                <p className=" text-muted lh-lg">
+                  Stay connected with Nawiri EmpowerHub through our upcoming
+                  events across Kenya. From community outreaches and youth
+                  forums to healthcare drives and empowerment workshops, every
+                  event is an opportunity to learn, serve, and grow together.
+                  <br className="d-none d-md-block" />
+                  <strong>
+                    Don't miss your chance to be part of real, on-the-ground
+                    impact.
+                  </strong>
                 </p>
               </Col>
             </Row>
@@ -357,38 +338,41 @@ const Home = () => {
 
       {/* Call to Action */}
       <section className="py-5 bg-white text-black">
-        <Container>
-          <Row className="justify-content-center text-center">
-            <Col lg={8}>
-              <h2 className="display-5 fw-bold mb-4">
-                Ready to Make a Difference?
-              </h2>
-              <p className="fs-5 mb-5 text-black-50 lh-lg">
-                Your support can transform lives and build stronger communities.
-                Join us today and be part of something bigger.
-              </p>
-              <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
-                <Button
-                  as={Link}
-                  to="/get-involved"
-                  size="lg"
-                  className="fw-semibold px-4 py-3 text-white bg-primary border-0 hover:bg-success"
-                >
-                  Volunteer Now <ArrowRight className="ms-2" size={20} />
-                </Button>
-                <Button
-                  as={Link}
-                  to="/contact"
-                  size="lg"
-                  className="fw-semibold px-4 py-3 text-white bg-primary border-0 hover:bg-success"
-                >
-                  Contact Us
-                </Button>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </section>
+  <Container>
+    <Row className="justify-content-center text-center">
+      <Col lg={8}>
+        <h6 className="display-5 fw-semibold mb-4">
+          Ready to Make a Difference?
+        </h6>
+        <p className="fs-5 mb-4 text-black-50 lh-lg">
+          Every action—no matter how small—can change a life. Whether you lend your time, share your skills,
+          or contribute resources, you become part of a growing movement to uplift communities in need.
+          <br className="d-none d-md-block" />
+          <strong>Take the first step today and join hands with Nawiri EmpowerHub in driving real, lasting change.</strong>
+        </p>
+        <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+          <Button
+            as={Link}
+            to="/get-involved"
+            size="lg"
+            className="fw-semibold px-4 py-3 text-white bg-primary border-0 hover:bg-success"
+          >
+            Volunteer Now <ArrowRight className="ms-2" size={20} />
+          </Button>
+          <Button
+            as={Link}
+            to="/contact"
+            size="lg"
+            className="fw-semibold px-4 py-3 text-black bg-white  border-3 hover:bg-primary"
+          > 
+            Contact Us <ArrowRight className="ms-2" size={20} />
+          </Button>
+        </div>
+      </Col>
+    </Row>
+  </Container>
+</section>
+
     </div>
   );
 };

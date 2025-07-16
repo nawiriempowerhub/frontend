@@ -11,6 +11,7 @@ import {
   Alert,
 } from "react-bootstrap";
 import { aboutService } from "../services/aboutService";
+import { Carousel } from "react-bootstrap";
 
 const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -104,48 +105,98 @@ const About = () => {
   return (
     <div className="bg-light">
       {/* Hero Section */}
-      <section
-        className="text-white py-5 position-relative"
-        style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/hero-bg.jpg')`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          minHeight: "60vh",
-        }}
-      >
-        <Container className="py-5">
-          <Row className="align-items-center justify-content-center text-center">
-            <Col lg={10} xl={8}>
-              <h1 className="display-4 fw-bold mb-4 lh-1">
-                About Nawiri EmpowerHub
-                <span className="d-block text-warning">
-                  Empowering Communities
-                </span>
-              </h1>
-              <p className="fs-5 mb-5 text-white-50 lh-lg">
-                Empowering communities through sustainable development,
-                education, and healthcare initiatives across Kenya.
-              </p>
-              <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
-                <Button
-                  as={Link}
-                  to="/get-involved"
-                  size="lg"
-                  variant="light"
-                  className="fw-semibold px-4 py-3"
-                >
-                  Get Involved <ArrowRight className="ms-2" size={20} />
-                </Button>
-                <Button
-                  as={Link}
-                  to="/contact"
-                  size="lg"
-                  variant="outline-light"
-                  className="fw-semibold px-4 py-3"
-                >
-                  Contact Us
-                </Button>
+      <section className="bg-white py-4" style={{ minHeight: "40vh" }}>
+        <Container className="py-4">
+          <Row className="align-items-center">
+            {/* Image Column - Left Side */}
+            <Col lg={6} className="mb-4 mb-lg-0">
+              <div className="position-relative rounded shadow-lg overflow-hidden">
+                <Carousel fade indicators={false}>
+                  <Carousel.Item>
+                    <img
+                      src="/images/about-nawiri-1.jpg"
+                      className="d-block w-100"
+                      alt="Empowering women through skills"
+                      style={{
+                        height: "600px",
+                        objectFit: "cover",
+                      }}
+                    />
+                  </Carousel.Item>
+                  <Carousel.Item>
+                    <img
+                      src="/images/about-nawiri-2.jpg"
+                      className="d-block w-100"
+                      alt="Youth engagement at Nawiri"
+                      style={{
+                        height: "600px",
+                        objectFit: "cover",
+                      }}
+                    />
+                  </Carousel.Item>
+                  <Carousel.Item>
+                    <img
+                      src="/images/about-nawiri.jpg"
+                      className="d-block w-100"
+                      alt="Community-led agriculture session"
+                      style={{
+                        height: "600px",
+                        objectFit: "cover",
+                      }}
+                    />
+                  </Carousel.Item>
+                </Carousel>
+              </div>
+            </Col>
+
+            {/* Text Content Column - Right Side */}
+            <Col lg={6}>
+              <div className="ps-lg-4">
+                {/* <h6 className="display-5 fw-semibold mb-4 lh-1 text-dark">
+                  Nawiri EmpowerHub
+                  <span className="d-block ">Empowering Communities</span>
+                </h6> */}
+                <p className="fs-5 mb-5 text-black-50 lh-lg">
+                  Nawiri EmpowerHub is a community-driven organization focused
+                  on empowering women and young girls through education, health
+                  and economic inclusion. Our work spans menstrual health
+                  awareness, digital literacy training, youth leadership and
+                  sustainable agriculture.
+                  <br />
+                  <br />
+                  We champion the rights and well-being of marginalized girls
+                  and women by equipping them with life skills, sanitary
+                  equipments, and agricultural knowledge to lead change in their
+                  communities. Through climate-smart agriculture and food
+                  security initiatives, we also support rural women and youth to
+                  build resilient livelihoods and address hunger at the
+                  grassroots.
+                  <br />
+                  <br />
+                  At Nawiri EmpowerHub, we believe that empowering women and
+                  ensuring access to health, education, and food is the
+                  foundation for thriving, equitable communities.
+                </p>
+                <div className="d-flex flex-column flex-sm-row gap-3">
+                  <Button
+                    as={Link}
+                    to="/get-involved"
+                    size="lg"
+                    variant="primary"
+                    className="fw-semibold px-4 py-3"
+                  >
+                    Get Involved <ArrowRight className="ms-2" size={20} />
+                  </Button>
+                  <Button
+                    as={Link}
+                    to="/contact"
+                    size="lg"
+                    variant="outline-primary"
+                    className="fw-semibold px-4 py-3"
+                  >
+                    Contact Us
+                  </Button>
+                </div>
               </div>
             </Col>
           </Row>
