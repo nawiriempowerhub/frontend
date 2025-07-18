@@ -5,6 +5,7 @@ import ErrorMessage from "../components/ui/ErrorMessage";
 import { mediaService } from "../services/mediaService";
 import { aboutService } from "../services/aboutService";
 import { Link } from "react-router-dom";
+import { Container } from "react-bootstrap";
 
 const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -122,48 +123,46 @@ const Media = () => {
   }
 
   return (
-    <div className="w-100">
+    <div className="w-80">
       {/* Hero Section with Background Image */}
       <section
-        className="text-white section-padding w-100 position-relative"
+        className="text-black py-2 w-100 position-relative"
         style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/hero-bg.jpg')`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          minHeight: "60vh",
+          minHeight: "20vh",
         }}
-        aria-label="Hero section with community background"
+        aria-label="Media & Impact Section"
       >
-        <div className="container-fluid px-3">
-          <div className="text-center py-5">
-            <h2 className="display-4 fw-bold mb-4">
-              Media & Impact
-              <span className="d-block text-warning">Stories That Inspire</span>
+        <Container className="py-5">
+          <div className="text-center">
+            <h2 className="display-6 fw-semibold mb-4">
+              Media & Impact Stories That Inspire
             </h2>
             <p
-              className="fs-4 text-white opacity-75 mb-5 mx-auto"
-              style={{ maxWidth: "800px" }}
+              className="fs-5 text-black-50 opacity-75 mb-5 mx-auto"
+              style={{ maxWidth: "800px", lineHeight: "1.8" }}
             >
               Explore our gallery of photos, videos, and stories that showcase
-              the impact of our programs and the communities we serve.
+              the powerful impact of our programs and the resilience of the
+              communities we serve. Every image tells a story — of hope, empowerment, and progress —
+              as we work together to uplift women, youth, and entire communities
+              across Kenya.
             </p>
             <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
               <Link
                 to="/get-involved"
-                className="btn btn-light text-primary fw-medium px-4 py-2"
+                className="btn btn-primary text-white fw-medium px-4 py-3"
               >
                 Get Involved
               </Link>
               <Link
                 to="/programs"
-                className="btn btn-outline-light fw-medium px-4 py-2"
+                className="btn btn-outline-primary fw-medium px-4 py-3"
               >
                 View Our Programs
               </Link>
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       {/* Tab Navigation */}

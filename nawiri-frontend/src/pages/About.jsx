@@ -208,7 +208,7 @@ const About = () => {
         <Container>
           <Row className="justify-content-center text-center mb-5">
             <Col lg={8}>
-              <h2 className="display-5 fw-bold text-dark mb-4">
+              <h2 className="h3 fw-bold text-dark mb-4">
                 Our Mission & Vision
               </h2>
               <p className="fs-6 text-muted lh-lg">
@@ -219,7 +219,7 @@ const About = () => {
           </Row>
           <Row className="g-4 align-items-center">
             <Col lg={6}>
-              <h3 className="h5 fw-bold text-dark mb-3">Our Mission</h3>
+              <h4 className="h5 fw-bold text-dark mb-3">Our Mission</h4>
               <p className="text-muted lh-lg mb-4">
                 {aboutData?.mission ||
                   "To empower communities through sustainable development programs that focus on education, healthcare, and economic empowerment, creating lasting positive change in the lives of those we serve."}
@@ -242,10 +242,10 @@ const About = () => {
             <Col lg={6}>
               <Row className="g-4">
                 <Col xs={12}>
-                  <Card className="h-100 border-0 shadow-sm bg-white">
+                  <Card className="h-100 border-0 shadow-lg bg-white">
                     <Card.Body className="text-center p-4">
                       <div
-                        className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 bg-primary"
+                        className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 bg-success"
                         style={{ width: "80px", height: "80px" }}
                       >
                         <Target className="text-white" size={32} />
@@ -261,7 +261,7 @@ const About = () => {
                   </Card>
                 </Col>
                 <Col xs={12}>
-                  <Card className="h-100 border-0 shadow-sm bg-white">
+                  <Card className="h-100 border-0 shadow-lg bg-white">
                     <Card.Body className="text-center p-4">
                       <div
                         className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 bg-success"
@@ -280,10 +280,10 @@ const About = () => {
                   </Card>
                 </Col>
                 <Col xs={12}>
-                  <Card className="h-100 border-0 shadow-sm bg-white">
+                  <Card className="h-100 border-0 shadow-lg bg-white">
                     <Card.Body className="text-center p-4">
                       <div
-                        className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 bg-danger"
+                        className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 bg-success"
                         style={{ width: "80px", height: "80px" }}
                       >
                         <Users className="text-white" size={32} />
@@ -474,7 +474,7 @@ const About = () => {
         <Container>
           <Row className="justify-content-center text-center">
             <Col lg={8}>
-              <h2 className="display-5 fw-bold mb-4">Join Our Mission</h2>
+              <h2 className="display-6 fw-bold mb-4">Join Our Mission</h2>
               <p className="fs-5 mb-5 text-muted lh-lg">
                 Together, we can create lasting change and build stronger, more
                 resilient communities. Your support makes all the difference.
