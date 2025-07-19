@@ -348,9 +348,9 @@ const About = () => {
                           style={{ maxHeight: "340px", objectFit: "cover" }}
                         />
                       )}
-                      <Card.Text className="text-muted flex-grow-1 lh-lg">
+                      {/* <Card.Text className="text-muted flex-grow-1 lh-lg">
                         {member.bio}
-                      </Card.Text>
+                      </Card.Text> */}
                     </Card.Body>
                   </Card>
                 </Col>
