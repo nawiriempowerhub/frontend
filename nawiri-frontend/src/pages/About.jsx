@@ -345,7 +345,7 @@ const About = () => {
                           src={`${VITE_API_BASE_URL}/static/team/${member.photo_filename}`}
                           alt={member.name}
                           className="img-fluid rounded mb-3"
-                          style={{ maxHeight: "200px", objectFit: "cover" }}
+                          style={{ maxHeight: "340px", objectFit: "cover" }}
                         />
                       )}
                       <Card.Text className="text-muted flex-grow-1 lh-lg">

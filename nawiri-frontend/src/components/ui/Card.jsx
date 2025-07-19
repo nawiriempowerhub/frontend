@@ -63,7 +63,7 @@ const CardImage = React.forwardRef(({ src, alt = '', className, ...props }, ref)
     src={src}
     alt={alt}
     className={`card-img-top object-fit-cover ${className || ''}`}
-    style={{ height: '250px', width: '100%', objectFit: 'cover' }}
+    style={{ height: '350px', width: '100%', objectFit: 'cover' }}
     {...props}
   />
 ));

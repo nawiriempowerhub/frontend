@@ -143,7 +143,7 @@ const Media = () => {
             >
               Explore our gallery of photos, videos, and stories that showcase
               the powerful impact of our programs and the resilience of the
-              communities we serve. Every image tells a story — of hope, empowerment, and progress —
+              communities we serve. Every image tells a story of hope, empowerment, and progress —
               as we work together to uplift women, youth, and entire communities
               across Kenya.
             </p>

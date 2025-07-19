@@ -85,7 +85,7 @@ const TeamMembers = () => {
                     alt={`${member.name}, ${member.role}`}
                     className="team-photo"
                     style={{
-                      maxHeight: "265px", // or '300px'
+                      maxHeight: "350px", // or '300px'
                       width: "100%",
                       objectFit: "cover",
                       borderTopLeftRadius: "0.5rem",
