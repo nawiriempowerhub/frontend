@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Image, Video, FileText, Calendar } from "lucide-react";
+import { Image, Video, FileText, Calendar, UploadCloud, Trash2 } from "lucide-react";
 import Loading from "../components/ui/Loading";
 import ErrorMessage from "../components/ui/ErrorMessage";
 import { mediaService } from "../services/mediaService";
 import { aboutService } from "../services/aboutService";
+import { getImageUrl } from "../utils/imageUrl";
 import { Link } from "react-router-dom";
 import { Container } from "react-bootstrap";
 
@@ -17,6 +18,27 @@ const Media = () => {
   const [filter, setFilter] = useState("all");
   const [mediaTypeFilter, setMediaTypeFilter] = useState("all");
   const [activeTab, setActiveTab] = useState("media");
+  const [deletingId, setDeletingId] = useState(null);
+
+  const isAdmin = Boolean(
+    localStorage.getItem("authToken") || localStorage.getItem("admin_token")
+  );
+
+  const handleDeleteMedia = async (id, title) => {
+    if (!window.confirm(`Are you sure you want to delete "${title || "this media item"}"?`)) {
+      return;
+    }
+    try {
+      setDeletingId(id);
+      await mediaService.deleteMedia(id);
+      setMedia((prev) => prev.filter((item) => item.id !== id));
+    } catch (err) {
+      console.error("Delete media error:", err);
+      alert(err.response?.data?.detail || err.message || "Failed to delete media item.");
+    } finally {
+      setDeletingId(null);
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -160,6 +182,14 @@ const Media = () => {
               >
                 View Our Programs
               </Link>
+              {isAdmin && (
+                <Link
+                  to="/admin/media-upload"
+                  className="btn btn-dark fw-medium px-4 py-3 d-inline-flex align-items-center justify-content-center rounded-pill"
+                >
+                  <UploadCloud size={18} className="me-2 text-success" /> Upload Media
+                </Link>
+              )}
             </div>
           </div>
         </Container>
@@ -299,12 +329,15 @@ const Media = () => {
                               </video>
                             ) : item.type === "PHOTO" && item.file_url ? (
                               <img
-                                src={`${VITE_API_BASE_URL}${item.file_url}`}
+                                src={getImageUrl(item.file_url)}
                                 alt="Media"
                                 className="img-fluid rounded"
                                 style={{
                                   maxHeight: "100%",
                                   objectFit: "cover",
+                                }}
+                                onError={(e) => {
+                                  e.target.style.display = "none";
                                 }}
                               />
                             ) : item.type === "TESTIMONIAL" ? (
@@ -326,16 +359,26 @@ const Media = () => {
                             {getMediaIcon(item.type)}
                           </div>
                         )}
-                        {item.created_at && (
-                          <div className="d-flex justify-content-between align-items-center">
+                        <div className="d-flex justify-content-between align-items-center pt-2">
+                          {item.created_at ? (
                             <p className="small text-muted mb-0">
                               {new Date(item.created_at).toLocaleDateString()}
                             </p>
-                            {/* <button className="btn btn-sm btn-outline-primary">
-                              View Details
-                            </button> */}
-                          </div>
-                        )}
+                          ) : <span />}
+                          {isAdmin && (
+                            <button
+                              className="btn btn-sm btn-outline-danger rounded-pill p-1 px-2 d-inline-flex align-items-center gap-1"
+                              onClick={() => handleDeleteMedia(item.id, item.title)}
+                              disabled={deletingId === item.id}
+                              title="Delete this media item"
+                            >
+                              <Trash2 size={13} />
+                              <span style={{ fontSize: "0.75rem" }}>
+                                {deletingId === item.id ? "Deleting..." : "Delete"}
+                              </span>
+                            </button>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
