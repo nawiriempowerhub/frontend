@@ -1,7 +1,6 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Heart, Calendar, MapPin, Users, DollarSign, Target } from 'lucide-react';
+import { Heart, Calendar, MapPin, Users, DollarSign, Target, Sparkles, ArrowRight } from 'lucide-react';
 import Loading from '../components/ui/Loading';
 import ErrorMessage from '../components/ui/ErrorMessage';
 import VolunteerForm from '../components/forms/VolunteerForm';
@@ -19,7 +18,7 @@ const GetInvolved = () => {
       try {
         setLoading(true);
         const data = await eventsService.getEvents();
-        setEvents(data);
+        setEvents(data || []);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -38,7 +37,7 @@ const GetInvolved = () => {
 
   if (loading) {
     return (
-      <div classNameName="min-vh-100 d-flex align-items-center justify-content-center">
+      <div className="min-vh-100 d-flex align-items-center justify-content-center bg-light">
         <Loading size="lg" text="Loading opportunities..." />
       </div>
     );
@@ -46,47 +45,49 @@ const GetInvolved = () => {
 
   if (error) {
     return (
-      <div classNameName="min-vh-100 d-flex align-items-center justify-content-center">
+      <div className="min-vh-100 d-flex align-items-center justify-content-center bg-light p-4">
         <ErrorMessage message={error} onRetry={() => window.location.reload()} />
       </div>
     );
   }
 
   return (
-    <div className="w-100">
-      {/* Hero Section with Background Image */}
+    <div className="w-100 overflow-hidden">
+      {/* Hero Section with High-Contrast Background Overlay */}
       <section 
         className="text-white section-padding w-100 position-relative"
         style={{
-          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/hero-bg.jpg')`,
+          backgroundImage: `linear-gradient(180deg, rgba(15, 23, 42, 0.88) 0%, rgba(20, 83, 45, 0.88) 100%), url('/images/hero-bg.jpg')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
-          minHeight: '60vh',
         }}
         aria-label="Hero section with community background"
       >
-        <div className="container-fluid px-3">
-          <div className="text-center py-5">
-            <h1 className="display-4 fw-bold mb-4">
-              Get Involved
-              <span className="d-block text-warning">Make a Difference</span>
+        <div className="container-max px-3">
+          <div className="text-center py-4 py-md-5">
+            <div className="hero-badge hero-badge-dark mb-3">
+              <Sparkles size={16} /> Partner With Us
+            </div>
+            <h1 className="display-4 fw-bold mb-3 text-white">
+              Get Involved, <span style={{ color: "#86efac" }}>Make a Difference</span>
             </h1>
-            <p className="fs-4 text-white opacity-75 mb-5 mx-auto" style={{ maxWidth: '800px' }}>
-              Join our mission to empower communities. Whether through volunteering, donating, or participating in events, your contribution makes a difference.
+            <p className="fs-5 text-white-50 mb-4 mx-auto lh-lg" style={{ maxWidth: '720px' }}>
+              Join our mission to empower grassroots communities across Kenya. Whether through volunteering,
+              donating, or participating in events, your contribution sparks lasting change.
             </p>
             <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
               <Link 
                 to="/contact" 
-                className="btn btn-light text-primary fw-medium px-4 py-2"
+                className="btn btn-light-custom d-inline-flex align-items-center justify-content-center"
               >
-                Contact Us
+                Contact Our Team <ArrowRight className="ms-2" size={16} />
               </Link>
               <Link 
                 to="/programs" 
-                className="btn btn-outline-light fw-medium px-4 py-2"
+                className="btn btn-outline-light rounded-pill px-4 py-2 fw-semibold d-inline-flex align-items-center justify-content-center"
               >
-                View Our Programs
+                Explore Programs
               </Link>
             </div>
           </div>
@@ -94,22 +95,19 @@ const GetInvolved = () => {
       </section>
 
       {/* Tab Navigation */}
-      <section className="section-padding">
-        <div className="container-fluid px-3">
-          <div className="d-flex flex-wrap justify-content-center gap-3 mb-5">
+      <section className="section-padding bg-light">
+        <div className="container-max px-3">
+          <div className="d-flex flex-wrap justify-content-center gap-2 gap-sm-3 mb-5">
             {tabs.map((tab) => {
               const Icon = tab.icon;
               return (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`d-flex align-items-center gap-2 px-4 py-2 rounded-pill fw-medium transition-colors ${
-                    activeTab === tab.id
-                      ? 'bg-primary text-white'
-                      : 'bg-white text-gray-700 hover-bg-gray-100 border border-gray-200'
-                  }`}
+                  className={`tab-pill-btn ${activeTab === tab.id ? 'active' : ''}`}
+                  type="button"
                 >
-                  <Icon className="w-5 h-5" />
+                  <Icon size={18} />
                   <span>{tab.label}</span>
                 </button>
               );
@@ -117,170 +115,171 @@ const GetInvolved = () => {
           </div>
 
           {/* Tab Content */}
-          <div>
+          <div className="mx-auto" style={{ maxWidth: '960px' }}>
             {activeTab === 'volunteer' && (
               <div>
                 <div className="text-center mb-5">
-                  <h2 className="h3 fw-bold text-dark mb-3">
+                  <h2 className="display-6 fw-bold text-dark mb-3">
                     Become a Volunteer
                   </h2>
-                  <p className="fs-5 text-muted">
-                    Join our team of dedicated volunteers and help us create positive change in communities across Kenya.
+                  <p className="text-muted mx-auto" style={{ maxWidth: '640px' }}>
+                    Join our team of dedicated volunteers and help us create positive, measurable change in communities across Kenya.
                   </p>
                 </div>
 
                 <div className="row g-4 mb-5">
                   <div className="col-12 col-md-4">
-                    <div className="card text-center">
-                      <div className="card-header">
-                        <div className="bg-primary rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3" style={{ width: '64px', height: '64px' }}>
-                          <Heart className="text-white" style={{ width: '32px', height: '32px' }} />
-                        </div>
-                        <h5 className="card-title">Make a Difference</h5>
-                        <p className="card-text text-muted">
-                          Directly impact lives and contribute to meaningful change in communities.
-                        </p>
+                    <div className="card card-hover h-100 text-center p-4">
+                      <div className="stat-card-icon">
+                        <Heart size={28} />
                       </div>
+                      <h3 className="h5 fw-bold text-dark mb-2">Make a Difference</h3>
+                      <p className="text-muted small mb-0 lh-base">
+                        Directly impact lives and contribute to meaningful community programs.
+                      </p>
                     </div>
                   </div>
 
                   <div className="col-12 col-md-4">
-                    <div className="card text-center">
-                      <div className="card-header">
-                        <div className="bg-accent rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3" style={{ width: '64px', height: '64px' }}>
-                          <Users className="text-white" style={{ width: '32px', height: '32px' }} />
-                        </div>
-                        <h5 className="card-title">Build Connections</h5>
-                        <p className="card-text text-muted">
-                          Connect with like-minded individuals and build lasting relationships.
-                        </p>
+                    <div className="card card-hover h-100 text-center p-4">
+                      <div className="stat-card-icon">
+                        <Users size={28} />
                       </div>
+                      <h3 className="h5 fw-bold text-dark mb-2">Build Connections</h3>
+                      <p className="text-muted small mb-0 lh-base">
+                        Connect with passionate changemakers and build lasting relationships.
+                      </p>
                     </div>
                   </div>
 
                   <div className="col-12 col-md-4">
-                    <div className="card text-center">
-                      <div className="card-header">
-                        <div className="bg-primary rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3" style={{ width: '64px', height: '64px' }}>
-                          <Target className="text-white" style={{ width: '32px', height: '32px' }} />
-                        </div>
-                        <h5 className="card-title">Develop Skills</h5>
-                        <p className="card-text text-muted">
-                          Gain valuable experience and develop new skills while serving others.
-                        </p>
+                    <div className="card card-hover h-100 text-center p-4">
+                      <div className="stat-card-icon">
+                        <Target size={28} />
                       </div>
+                      <h3 className="h5 fw-bold text-dark mb-2">Develop Skills</h3>
+                      <p className="text-muted small mb-0 lh-base">
+                        Gain valuable field experience in community leadership and empowerment.
+                      </p>
                     </div>
                   </div>
                 </div>
 
-                <VolunteerForm />
+                <div className="card card-hover p-4 p-md-5 border-0 shadow-sm">
+                  <VolunteerForm />
+                </div>
               </div>
             )}
 
             {activeTab === 'donate' && (
               <div>
                 <div className="text-center mb-5">
-                  <h2 className="h3 fw-bold text-dark mb-3">
+                  <h2 className="display-6 fw-bold text-dark mb-3">
                     Support Our Mission
                   </h2>
-                  <p className="fs-5 text-muted">
-                    Your donation helps us expand our programs and reach more communities in need.
+                  <p className="text-muted mx-auto" style={{ maxWidth: '640px' }}>
+                    Your contribution directly powers our education, healthcare, and sustainable agriculture programs.
                   </p>
                 </div>
 
                 <div className="row g-4 mb-5">
                   <div className="col-12 col-md-4">
-                    <div className="card text-center">
-                      <div className="card-header">
-                        <h5 className="card-title fs-3 text-primary">sh250</h5>
-                        <p className="card-text text-muted">
-                          Provides educational materials for one child for a month.
-                        </p>
-                      </div>
+                    <div className="card card-hover h-100 text-center p-4">
+                      <div className="fs-2 fw-bold text-primary mb-2">KES 250</div>
+                      <h3 className="h6 fw-semibold text-dark mb-2">Student Learning Pack</h3>
+                      <p className="text-muted small mb-0 lh-base">
+                        Provides essential stationery and learning materials for one child for a month.
+                      </p>
                     </div>
                   </div>
 
                   <div className="col-12 col-md-4">
-                    <div className="card text-center">
-                      <div className="card-header">
-                        <h5 className="card-title fs-3 text-primary">sh500</h5>
-                        <p className="card-text text-muted">
-                          Supports healthcare services for a family for one month.
-                        </p>
-                      </div>
+                    <div className="card card-hover h-100 text-center p-4 border-primary">
+                      <div className="badge bg-primary text-white mx-auto mb-2 rounded-pill px-3 py-1">Popular</div>
+                      <div className="fs-2 fw-bold text-primary mb-2">KES 500</div>
+                      <h3 className="h6 fw-semibold text-dark mb-2">Healthcare Outreach</h3>
+                      <p className="text-muted small mb-0 lh-base">
+                        Supports primary healthcare checkups and wellness kits for a family.
+                      </p>
                     </div>
                   </div>
 
                   <div className="col-12 col-md-4">
-                    <div className="card text-center">
-                      <div className="card-header">
-                        <h5 className="card-title fs-3 text-primary">sh1000</h5>
-                        <p className="card-text text-muted">
-                          Funds a complete skills training workshop for 10 participants.
-                        </p>
-                      </div>
+                    <div className="card card-hover h-100 text-center p-4">
+                      <div className="fs-2 fw-bold text-primary mb-2">KES 1,000</div>
+                      <h3 className="h6 fw-semibold text-dark mb-2">Community Workshop</h3>
+                      <p className="text-muted small mb-0 lh-base">
+                        Helps fund vocational skills training modules for youth and women groups.
+                      </p>
                     </div>
                   </div>
                 </div>
 
-                <DonationForm />
+                <div className="card card-hover p-4 p-md-5 border-0 shadow-sm">
+                  <DonationForm />
+                </div>
               </div>
             )}
 
             {activeTab === 'events' && (
               <div>
                 <div className="text-center mb-5">
-                  <h2 className="h3 fw-bold text-dark mb-3">
-                    Upcoming Events
+                  <h2 className="display-6 fw-bold text-dark mb-3">
+                    Upcoming Community Events
                   </h2>
-                  <p className="fs-5 text-muted">
-                    Join us at our upcoming events and be part of the change you want to see.
+                  <p className="text-muted mx-auto" style={{ maxWidth: '640px' }}>
+                    Join us in person at our upcoming forums, health camps, and volunteer drives.
                   </p>
                 </div>
 
                 {events.length === 0 ? (
-                  <div className="text-center py-5">
-                    <Calendar className="text-gray-400 mx-auto mb-3" style={{ width: '64px', height: '64px' }} />
-                    <h3 className="fs-3 fw-semibold text-dark mb-3">No Upcoming Events</h3>
-                    <p className="text-muted mb-4">We're planning exciting new events. Check back soon!</p>
-                    <Link to="/contact" className="btn btn-primary">
-                      Contact Us for Updates
-                    </Link>
+                  <div className="text-center py-5 card card-hover p-5">
+                    <Calendar className="text-muted mx-auto mb-3" size={48} />
+                    <h3 className="h5 fw-bold text-dark mb-2">No Upcoming Events Scheduled</h3>
+                    <p className="text-muted mb-4 small">We are organizing upcoming activities. Reach out to get notified first!</p>
+                    <div>
+                      <Link to="/contact" className="btn btn-primary">
+                        Contact Us for Updates
+                      </Link>
+                    </div>
                   </div>
                 ) : (
                   <div className="row g-4">
                     {events.map((event) => (
                       <div key={event.id} className="col-12 col-md-6">
-                        console.log("Events:", events);
-
-                        <div className="card card-hover">
-                          <div className="card-header">
-                            <h5 className="card-title fs-5">{event.title}</h5>
-                            <p className="card-text text-muted">{event.description}</p>
-                          </div>
-                          <div className="card-body">
-                            <div className="d-flex flex-column gap-3">
+                        <div className="card card-hover h-100">
+                          <div className="card-body d-flex flex-column p-4">
+                            <h3 className="h5 fw-bold text-dark mb-2">{event.title}</h3>
+                            <p className="text-muted small flex-grow-1 mb-4">{event.description}</p>
+                            
+                            <div className="d-flex flex-column gap-2 small text-muted mb-4 pt-3 border-top">
                               {event.date && (
-                                <div className="d-flex align-items-center gap-2 small text-muted">
-                                  <Calendar style={{ width: '16px', height: '16px' }} />
-                                  <span>{new Date(event.date).toLocaleDateString()}</span>
+                                <div className="d-flex align-items-center gap-2">
+                                  <Calendar size={16} className="text-primary" />
+                                  <span>{new Date(event.date).toLocaleDateString(undefined, {
+                                    weekday: 'short',
+                                    year: 'numeric',
+                                    month: 'short',
+                                    day: 'numeric'
+                                  })}</span>
                                 </div>
                               )}
                               {event.location && (
-                                <div className="d-flex align-items-center gap-2 small text-muted">
-                                  <MapPin style={{ width: '16px', height: '16px' }} />
+                                <div className="d-flex align-items-center gap-2">
+                                  <MapPin size={16} className="text-primary" />
                                   <span>{event.location}</span>
                                 </div>
                               )}
                               {event.capacity && (
-                                <div className="d-flex align-items-center gap-2 small text-muted">
-                                  <Users style={{ width: '16px', height: '16px' }} />
+                                <div className="d-flex align-items-center gap-2">
+                                  <Users size={16} className="text-primary" />
                                   <span>{event.capacity} participants</span>
                                 </div>
                               )}
                             </div>
-                            <Link to={`/events/${event.id}`} className="btn btn-primary w-100 mt-3">
-                              Register for Event
+                            
+                            <Link to={`/events/${event.id}`} className="btn btn-outline-primary btn-sm w-100">
+                              Register for Event &rarr;
                             </Link>
                           </div>
                         </div>
@@ -294,20 +293,19 @@ const GetInvolved = () => {
         </div>
       </section>
 
-      {/* Call to Action */}
-      <section className="hero-primary text-gray-700 section-padding w-100">
-        <div className="container-fluid px-3">
-          <div className="text-center">
-            <h2 className="h3 fw-bold mb-4 text-gray-600 opacity-55">
-              Every Action Counts
-            </h2>
-            <p className="fs-5 text-gray-700 mb-4">
-              Whether you volunteer your time, make a donation, or attend our events, every action contributes to positive change in communities across Kenya.
-            </p>
-            <Link to="/contact" className="btn btn-outline-primary text-primary fw-medium px-4 py-2">
-              Contact Us to Learn More
-            </Link>
-          </div>
+      {/* Call to Action Footer */}
+      <section className="section-padding bg-white border-top">
+        <div className="container-max px-3 text-center">
+          <div className="hero-badge mb-2">Every Action Counts</div>
+          <h2 className="display-6 fw-bold text-dark mb-3">
+            Ready to Take The Next Step?
+          </h2>
+          <p className="fs-5 text-muted mb-4 mx-auto" style={{ maxWidth: '640px' }}>
+            Whether you volunteer your time, make a donation, or share our mission, every contribution creates ripples of positive change.
+          </p>
+          <Link to="/contact" className="btn btn-primary d-inline-flex align-items-center">
+            Contact Us to Learn More <ArrowRight className="ms-2" size={16} />
+          </Link>
         </div>
       </section>
     </div>
