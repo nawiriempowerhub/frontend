@@ -16,6 +16,7 @@ import TeamMembers from './pages/TeamMembers';
 
 // Admin Portal pages & layout
 import AdminLogin from './pages/admin/AdminLogin';
+import AdminRegister from './pages/admin/AdminRegister';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminMediaUpload from './pages/admin/AdminMediaUpload';
 import AdminLayout from './components/admin/AdminLayout';
@@ -36,8 +37,9 @@ function App() {
         <Route path="/events/:id" element={<Layout><EventDetail /></Layout>} />
         <Route path="/team" element={<Layout><TeamMembers /></Layout>} />
 
-        {/* Admin Authentication Route (Standalone) */}
+        {/* Admin Authentication Routes (Standalone) */}
         <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/register" element={<AdminRegister />} />
 
         {/* Admin Protected Routes (wrapped in AdminLayout) */}
         <Route

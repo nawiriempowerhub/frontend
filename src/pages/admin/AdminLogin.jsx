@@ -162,10 +162,16 @@ const AdminLogin = () => {
               </Button>
             </Form>
 
-            <div className="text-center pt-2">
+            <div className="text-center pt-2 d-flex flex-column gap-2">
+              <span className="small text-muted">
+                Forgot credentials or need access?{" "}
+                <Link to="/admin/register" className="text-success fw-semibold text-decoration-none">
+                  Register new Admin
+                </Link>
+              </span>
               <Link 
                 to="/" 
-                className="text-muted text-decoration-none small d-inline-flex align-items-center gap-1 hover-text-primary"
+                className="text-muted text-decoration-none small d-inline-flex align-items-center justify-content-center gap-1 hover-text-primary mt-1"
               >
                 <ArrowLeft size={14} /> Return to Public Website
               </Link>
