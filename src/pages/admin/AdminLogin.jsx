@@ -1,124 +1,180 @@
-// import React, { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
-// // import { useAdminAuth } from '../../context/AdminAuthContext';
-// import { Button } from '../../components/ui/Button';
-// import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/Card';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Container, Card, Form, Button, Alert, Spinner } from "react-bootstrap";
+import { Lock, Mail, Eye, EyeOff, ArrowLeft, ShieldCheck } from "lucide-react";
+import api from "../../services/api";
 
-// const AdminLogin = () => {
-//   const [credentials, setCredentials] = useState({
-//     email: '',
-//     password: ''
-//   });
-//   const [loading, setLoading] = useState(false);
-//   const [error, setError] = useState('');
+const AdminLogin = () => {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-//   const { login } = useAdminAuth();
-//   const navigate = useNavigate();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
 
-//   const handleChange = (e) => {
-//     setCredentials({
-//       ...credentials,
-//       [e.target.name]: e.target.value
-//     });
-//   };
+    try {
+      const formData = new URLSearchParams();
+      formData.append("username", email.trim());
+      formData.append("password", password);
 
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     setLoading(true);
-//     setError('');
+      const response = await api.post("/api/users/login", formData, {
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      });
 
-//     const result = await login(credentials);
-    
-//     if (result.success) {
-//       navigate('/admin/dashboard');
-//     } else {
-//       setError(result.error || 'Login failed');
-//     }
-    
-//     setLoading(false);
-//   };
+      if (response.data && response.data.access_token) {
+        localStorage.setItem("authToken", response.data.access_token);
+        localStorage.setItem("admin_token", response.data.access_token);
+        localStorage.setItem("user_role", "ADMIN");
+        navigate("/admin/dashboard");
+      } else {
+        setError("Invalid response from server. Missing access token.");
+      }
+    } catch (err) {
+      console.error("Admin login error:", err);
+      const detail =
+        err.response?.data?.detail ||
+        err.response?.data?.message ||
+        "Login failed. Please check your credentials and try again.";
+      setError(typeof detail === "string" ? detail : JSON.stringify(detail));
+    } finally {
+      setLoading(false);
+    }
+  };
 
-//   return (
-//     <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-//       <div className="max-w-md w-full space-y-8">
-//         <div className="text-center">
-//           <div className="flex items-center justify-center w-16 h-16 bg-primary rounded-full mx-auto mb-4">
-//             <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-//               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-//             </svg>
-//           </div>
-//           <h2 className="text-3xl font-bold text-gray-900">Admin Login</h2>
-//           <p className="mt-2 text-sm text-gray-600">
-//             Sign in to access the admin dashboard
-//           </p>
-//         </div>
+  return (
+    <div 
+      className="min-vh-100 d-flex align-items-center justify-content-center p-3 position-relative"
+      style={{
+        background: "linear-gradient(135deg, #0f172a 0%, #14532d 100%)",
+      }}
+    >
+      {/* Background radial pattern */}
+      <div 
+        className="position-absolute top-0 start-0 w-100 h-100 opacity-10"
+        style={{
+          backgroundImage: `radial-gradient(#22c55e 1px, transparent 1px)`,
+          backgroundSize: '24px 24px',
+          pointerEvents: 'none'
+        }}
+      />
 
-//         <Card>
-//           <CardContent className="p-6">
-//             <form onSubmit={handleSubmit} className="space-y-6">
-//               {error && (
-//                 <div className="bg-red-50 border border-red-200 rounded-md p-4">
-//                   <p className="text-red-600 text-sm">{error}</p>
-//                 </div>
-//               )}
+      <Container style={{ maxWidth: "460px", zIndex: 1 }}>
+        <div className="text-center mb-4">
+          <Link to="/" className="text-decoration-none d-inline-flex align-items-center gap-2 mb-3">
+            <img
+              src="/images/nawiri_logo.png"
+              alt="Nawiri Logo"
+              className="rounded-circle shadow"
+              style={{ width: "54px", height: "54px", border: "2px solid #22c55e" }}
+            />
+          </Link>
+          <h2 className="fs-3 fw-bold text-white mb-1">Nawiri Admin Portal</h2>
+          <p className="text-white-50 small mb-0">Authorized personnel only</p>
+        </div>
 
-//               <div>
-//                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-//                   Email Address
-//                 </label>
-//                 <input
-//                   type="email"
-//                   id="email"
-//                   name="email"
-//                   value={credentials.email}
-//                   onChange={handleChange}
-//                   required
-//                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-//                   placeholder="Enter your email"
-//                 />
-//               </div>
+        <Card className="border-0 shadow-lg rounded-4 overflow-hidden bg-white">
+          <Card.Body className="p-4 p-sm-5">
+            <div className="d-flex align-items-center justify-content-center gap-2 mb-4 text-success fw-semibold small bg-success-subtle py-2 px-3 rounded-pill mx-auto" style={{ maxWidth: "fit-content" }}>
+              <ShieldCheck size={18} />
+              <span>Secure Authentication</span>
+            </div>
 
-//               <div>
-//                 <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-//                   Password
-//                 </label>
-//                 <input
-//                   type="password"
-//                   id="password"
-//                   name="password"
-//                   value={credentials.password}
-//                   onChange={handleChange}
-//                   required
-//                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-//                   placeholder="Enter your password"
-//                 />
-//               </div>
+            {error && (
+              <Alert variant="danger" className="border-0 small rounded-3 mb-4">
+                {error}
+              </Alert>
+            )}
 
-//               <Button type="submit" disabled={loading} className="w-full">
-//                 {loading ? 'Signing in...' : 'Sign In'}
-//               </Button>
+            <Form onSubmit={handleSubmit}>
+              <Form.Group className="mb-3">
+                <Form.Label className="small fw-semibold text-muted mb-1">
+                  Admin Email / Username
+                </Form.Label>
+                <div className="position-relative">
+                  <Form.Control
+                    type="text"
+                    placeholder="admin@nawiri.org"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    autoFocus
+                    className="ps-5"
+                    style={{ height: "48px", borderRadius: "10px" }}
+                  />
+                  <Mail 
+                    size={18} 
+                    className="text-muted position-absolute top-50 translate-middle-y" 
+                    style={{ left: "16px" }}
+                  />
+                </div>
+              </Form.Group>
 
-//               <div className="text-center">
-//                 <p className="text-sm text-gray-600">
-//                   Need to create an admin account?{' '}
-//                   <Link to="/admin/register" className="font-medium text-primary hover:text-primary/80">
-//                     Register here
-//                   </Link>
-//                 </p>
-//               </div>
+              <Form.Group className="mb-4">
+                <Form.Label className="small fw-semibold text-muted mb-1">
+                  Password
+                </Form.Label>
+                <div className="position-relative">
+                  <Form.Control
+                    type={showPassword ? "text" : "password"}
+                    placeholder="••••••••••••"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    className="ps-5 pe-5"
+                    style={{ height: "48px", borderRadius: "10px" }}
+                  />
+                  <Lock 
+                    size={18} 
+                    className="text-muted position-absolute top-50 translate-middle-y" 
+                    style={{ left: "16px" }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="btn btn-link text-muted position-absolute top-50 translate-middle-y p-0 end-0 me-3"
+                    style={{ border: "none", background: "none" }}
+                    aria-label="Toggle password visibility"
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
+              </Form.Group>
 
-//               <div className="text-center">
-//                 <p className="text-xs text-gray-500">
-//                   Demo: Use any email and password to login
-//                 </p>
-//               </div>
-//             </form>
-//           </CardContent>
-//         </Card>
-//       </div>
-//     </div>
-//   );
-// };
+              <Button
+                type="submit"
+                disabled={loading}
+                className="w-100 btn-primary py-2 fw-semibold d-flex align-items-center justify-content-center gap-2 mb-3"
+                style={{ height: "48px" }}
+              >
+                {loading ? (
+                  <>
+                    <Spinner size="sm" animation="border" />
+                    <span>Signing in...</span>
+                  </>
+                ) : (
+                  <span>Log In to Dashboard</span>
+                )}
+              </Button>
+            </Form>
 
-// export default AdminLogin;
+            <div className="text-center pt-2">
+              <Link 
+                to="/" 
+                className="text-muted text-decoration-none small d-inline-flex align-items-center gap-1 hover-text-primary"
+              >
+                <ArrowLeft size={14} /> Return to Public Website
+              </Link>
+            </div>
+          </Card.Body>
+        </Card>
+      </Container>
+    </div>
+  );
+};
 
+export default AdminLogin;
