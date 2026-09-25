@@ -42,6 +42,51 @@ const ErrorMessage = ({ message, onRetry }) => {
   );
 };
 
+// Resilient Team Member Card with Automatic Fallback for Missing Photos
+const TeamMemberCard = ({ member }) => {
+  const [imgError, setImgError] = useState(false);
+
+  const getImageUrl = (path) => {
+    if (!path) return null;
+    if (path.startsWith("http://") || path.startsWith("https://")) return path;
+    const clean = path.startsWith("/") ? path : `/${path}`;
+    return `${VITE_API_BASE_URL}${clean}`;
+  };
+
+  const imageUrl = getImageUrl(member.photo_filename);
+
+  return (
+    <Card className="h-100 card-hover border-0 shadow-sm bg-white">
+      <Card.Body className="d-flex flex-column p-4 text-center align-items-center">
+        {imageUrl && !imgError ? (
+          <img
+            src={imageUrl}
+            alt={member.name}
+            className="rounded-circle mb-3 shadow-sm border border-2 border-success-subtle"
+            style={{ width: "96px", height: "96px", objectFit: "cover" }}
+            onError={() => setImgError(true)}
+          />
+        ) : (
+          <div
+            className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 bg-primary shadow-sm"
+            style={{ width: "96px", height: "96px" }}
+          >
+            <span className="fs-3 fw-bold text-white">
+              {member.name?.charAt(0) || "N"}
+            </span>
+          </div>
+        )}
+        <Card.Title className="h5 fw-bold text-dark mb-1">
+          {member.name}
+        </Card.Title>
+        <p className="text-primary fw-semibold small mb-0">
+          {member.role || "Team Member"}
+        </p>
+      </Card.Body>
+    </Card>
+  );
+};
+
 const About = () => {
   const [aboutData, setAboutData] = useState(null);
   const [team, setTeam] = useState([]);
@@ -324,35 +369,7 @@ const About = () => {
             <Row className="g-4 mb-5">
               {team.slice(0, 3).map((member) => (
                 <Col key={member.id} md={6} lg={4}>
-                  <Card className="h-100 border-0 shadow-sm bg-white">
-                    <Card.Body className="d-flex flex-column p-4 text-center">
-                      <div
-                        className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 bg-primary"
-                        style={{ width: "96px", height: "96px" }}
-                      >
-                        <span className="fs-3 fw-bold text-white">
-                          {member.name?.charAt(0) || "N"}
-                        </span>
-                      </div>
-                      <Card.Title className="h5 fw-bold text-dark mb-3">
-                        {member.name}
-                      </Card.Title>
-                      <p className="text-primary fw-medium mb-3">
-                        {member.role || "Team Member"}
-                      </p>
-                      {member.photo_filename && (
-                        <img
-                          src={`${VITE_API_BASE_URL}/static/team/${member.photo_filename}`}
-                          alt={member.name}
-                          className="img-fluid rounded mb-3"
-                          style={{ maxHeight: "340px", objectFit: "cover" }}
-                        />
-                      )}
-                      {/* <Card.Text className="text-muted flex-grow-1 lh-lg">
-                        {member.bio}
-                      </Card.Text> */}
-                    </Card.Body>
-                  </Card>
+                  <TeamMemberCard member={member} />
                 </Col>
               ))}
             </Row>
@@ -450,11 +467,10 @@ const About = () => {
                   {timelineArray.map((event, idx) => (
                     <div key={idx} className="d-flex align-items-start mb-3">
                       <div
-                        className="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold me-3"
+                        className="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold me-3 bg-primary shadow-sm flex-shrink-0"
                         style={{
-                          width: "48px",
-                          height: "48px",
-                          background: "#0d6efd",
+                          width: "42px",
+                          height: "42px",
                         }}
                       >
                         {idx + 1}

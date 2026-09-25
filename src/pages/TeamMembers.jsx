@@ -11,6 +11,59 @@ import {
 } from "react-bootstrap";
 import { ChevronDown, ChevronUp, Loader2, AlertCircle } from "lucide-react";
 
+const TeamMemberCard = ({ member }) => {
+  const [imgError, setImgError] = useState(false);
+
+  const getImageUrl = (path) => {
+    if (!path) return null;
+    if (path.startsWith("http://") || path.startsWith("https://")) return path;
+    const clean = path.startsWith("/") ? path : `/${path}`;
+    return `${import.meta.env.VITE_API_BASE_URL}${clean}`;
+  };
+
+  const imageUrl = getImageUrl(member.photo_filename);
+
+  return (
+    <Card className="h-100 border-0 card-hover shadow-sm text-center">
+      <Card.Body className="p-4 d-flex flex-column align-items-center">
+        {imageUrl && !imgError ? (
+          <img
+            src={imageUrl}
+            alt={`${member.name}, ${member.role}`}
+            className="rounded-circle mb-3 shadow-sm border border-2 border-success-subtle"
+            style={{
+              width: "110px",
+              height: "110px",
+              objectFit: "cover",
+            }}
+            onError={() => setImgError(true)}
+          />
+        ) : (
+          <div
+            className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3 bg-primary shadow-sm"
+            style={{ width: "110px", height: "110px" }}
+          >
+            <span className="fs-2 fw-bold text-white">
+              {member.name?.charAt(0) || "N"}
+            </span>
+          </div>
+        )}
+        <Card.Title className="h5 fw-bold text-dark mb-1">
+          {member.name}
+        </Card.Title>
+        <Card.Subtitle className="mb-3 text-primary fw-semibold small">
+          {member.role}
+        </Card.Subtitle>
+        {member.bio && (
+          <Card.Text className="text-muted small lh-base">
+            {member.bio}
+          </Card.Text>
+        )}
+      </Card.Body>
+    </Card>
+  );
+};
+
 const TeamMembers = () => {
   const [teamMembers, setTeamMembers] = useState([]);
   const [showAll, setShowAll] = useState(false);
@@ -40,7 +93,7 @@ const TeamMembers = () => {
   if (loading) {
     return (
       <div className="d-flex flex-column justify-content-center align-items-center min-vh-100 bg-light">
-        <Spinner animation="border" variant="primary" size="lg" />
+        <Spinner animation="border" variant="success" size="lg" />
         <span className="ms-3 text-lg text-muted mt-3">
           Loading team members...
         </span>
@@ -65,7 +118,7 @@ const TeamMembers = () => {
     <section className="py-5 bg-light">
       <Container>
         <div className="text-center mb-5">
-          <h2 className="display-4 fw-bold text-primary mb-3">Meet Our Team</h2>
+          <h2 className="display-4 fw-bold text-dark mb-3">Meet Our Team</h2>
           <p className="lead text-muted mx-auto" style={{ maxWidth: "700px" }}>
             Our dedicated team at Nawiri EmpowerHub is committed to empowering
             communities through education, healthcare, and sustainable
@@ -73,40 +126,9 @@ const TeamMembers = () => {
           </p>
         </div>
         <Row className="g-4 justify-content-center">
-          {displayedMembers.map((member, index) => (
+          {displayedMembers.map((member) => (
             <Col xs={12} sm={6} lg={4} key={member.id}>
-              <Card className="h-100 border-0 shadow-sm team-card">
-                <div className="position-relative overflow-hidden">
-                  <Card.Img
-                    variant="top"
-                    src={`${import.meta.env.VITE_API_BASE_URL}/static/team/${
-                      member.photo_filename
-                    }`}
-                    alt={`${member.name}, ${member.role}`}
-                    className="team-photo"
-                    style={{
-                      maxHeight: "350px", // or '300px'
-                      width: "100%",
-                      objectFit: "cover",
-                      borderTopLeftRadius: "0.5rem",
-                      borderTopRightRadius: "0.5rem",
-                    }}
-                  />
-
-                  <div className="overlay"></div>
-                </div>
-                <Card.Body className="p-4">
-                  <Card.Title className="h5 fw-bold text-dark mb-1">
-                    {member.name}
-                  </Card.Title>
-                  <Card.Subtitle className="mb-3 text-primary fw-semibold small">
-                    {member.role}
-                  </Card.Subtitle>
-                  <Card.Text className="text-muted small lh-base">
-                    {member.bio}
-                  </Card.Text>
-                </Card.Body>
-              </Card>
+              <TeamMemberCard member={member} />
             </Col>
           ))}
         </Row>
