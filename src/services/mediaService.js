@@ -59,4 +59,45 @@ export const mediaService = {
     });
     return response.data;
   },
+
+  // Upload batch media (admin multi-file upload with automatic single-file fallback)
+  uploadBatchMedia: async (formData) => {
+    try {
+      const response = await api.post("/media/batch", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response.data;
+    } catch (err) {
+      if (err.response?.status === 405 || err.response?.status === 404) {
+        console.warn("/media/batch endpoint returned 405/404, performing fallback sequential upload.");
+        
+        const files = formData.getAll("files");
+        const programId = formData.get("program_id");
+        const titlePrefix = formData.get("title_prefix") || "Media Item";
+        const type = formData.get("type") || "PHOTO";
+        const description = formData.get("description");
+
+        const results = [];
+        for (let i = 0; i < files.length; i++) {
+          const file = files[i];
+          const singleData = new FormData();
+          singleData.append("title", files.length > 1 ? `${titlePrefix} #${i + 1}` : titlePrefix);
+          singleData.append("type", type);
+          if (description) singleData.append("description", description);
+          if (programId) singleData.append("program_id", programId);
+          singleData.append("file_url", file);
+
+          const res = await api.post("/media", singleData, {
+            headers: { "Content-Type": "multipart/form-data" },
+          });
+          results.push(res.data);
+        }
+        return results;
+      }
+      throw err;
+    }
+  },
 };
+
