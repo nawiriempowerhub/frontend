@@ -29,22 +29,29 @@ export const aboutService = {
   },
 
   // Add team member (admin only)
-  // addTeamMember: async (memberData) => {
-  //   const response = await api.post('/about/team', memberData);
-  //   return response.data;
-  // },
+  addTeamMember: async (memberData) => {
+    // Determine if we need multipart headers
+    const config = memberData instanceof FormData 
+      ? { headers: { "Content-Type": "multipart/form-data" } }
+      : {};
+    const response = await api.post('/about/team', memberData, config);
+    return response.data;
+  },
 
   // Update team member (admin only)
-  // updateTeamMember: async (id, memberData) => {
-  //   const response = await api.put(`/about/team/${id}`, memberData);
-  //   return response.data;
-  // },
+  updateTeamMember: async (id, memberData) => {
+    const config = memberData instanceof FormData 
+      ? { headers: { "Content-Type": "multipart/form-data" } }
+      : {};
+    const response = await api.put(`/about/team/${id}`, memberData, config);
+    return response.data;
+  },
 
   // Delete team member (admin only)
-  // deleteTeamMember: async (id) => {
-  //   const response = await api.delete(`/about/team/${id}`);
-  //   return response.data;
-  // },
+  deleteTeamMember: async (id) => {
+    const response = await api.delete(`/about/team/${id}`);
+    return response.data;
+  },
 
   // Get impact events
   getImpact: async () => {

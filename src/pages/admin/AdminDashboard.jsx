@@ -28,11 +28,13 @@ import {
   Layers,
   CheckCircle,
   AlertTriangle,
+  Users,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { mediaService } from "../../services/mediaService";
 import { programsService } from "../../services/programsService";
 import { eventsService } from "../../services/eventsService";
+import { aboutService } from "../../services/aboutService";
 import { getImageUrl } from "../../utils/imageUrl";
 
 const AdminDashboard = () => {
@@ -44,12 +46,14 @@ const AdminDashboard = () => {
   const [mediaList, setMediaList] = useState([]);
   const [programsList, setProgramsList] = useState([]);
   const [eventsList, setEventsList] = useState([]);
+  const [teamList, setTeamList] = useState([]);
 
   // Search filters
   const [mediaSearch, setMediaSearch] = useState("");
   const [mediaTypeFilter, setMediaTypeFilter] = useState("ALL");
   const [programSearch, setProgramSearch] = useState("");
   const [eventSearch, setEventSearch] = useState("");
+  const [teamSearch, setTeamSearch] = useState("");
 
   // Feedback notifications
   const [alertInfo, setAlertInfo] = useState({ show: false, message: "", variant: "success" });
@@ -57,6 +61,7 @@ const AdminDashboard = () => {
   // Modal states
   const [showProgramModal, setShowProgramModal] = useState(false);
   const [showEventModal, setShowEventModal] = useState(false);
+  const [showTeamModal, setShowTeamModal] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState({ show: false, type: "", id: null, title: "" });
 
   // Form states
@@ -73,6 +78,13 @@ const AdminDashboard = () => {
     location: "Nairobi, Kenya",
     capacity: 50,
   });
+  const [teamForm, setTeamForm] = useState({
+    id: null,
+    name: "",
+    role: "",
+    bio: "",
+    file_url: null,
+  });
   const [formSubmitting, setFormSubmitting] = useState(false);
 
   const showAlert = (message, variant = "success") => {
@@ -85,15 +97,17 @@ const AdminDashboard = () => {
   const loadAllData = async () => {
     try {
       setRefreshing(true);
-      const [mediaData, programsData, eventsData] = await Promise.all([
+      const [mediaData, programsData, eventsData, teamData] = await Promise.all([
         mediaService.getMedia().catch(() => []),
         programsService.getPrograms().catch(() => []),
         eventsService.getEvents().catch(() => []),
+        aboutService.getTeam().catch(() => []),
       ]);
 
       setMediaList(Array.isArray(mediaData) ? mediaData : []);
       setProgramsList(Array.isArray(programsData) ? programsData : []);
       setEventsList(Array.isArray(eventsData) ? eventsData : []);
+      setTeamList(Array.isArray(teamData) ? teamData : []);
     } catch (err) {
       console.error("Dashboard data load error:", err);
       showAlert("Error loading some dashboard data.", "danger");
@@ -125,6 +139,10 @@ const AdminDashboard = () => {
         await eventsService.deleteEvent(id);
         setEventsList((prev) => prev.filter((e) => e.id !== id));
         showAlert(`Event "${title}" successfully removed.`);
+      } else if (type === "team") {
+        await aboutService.deleteTeamMember(id);
+        setTeamList((prev) => prev.filter((t) => t.id !== id));
+        showAlert(`Team member "${title}" successfully removed.`);
       }
     } catch (err) {
       console.error(`Failed to delete ${type}:`, err);
@@ -165,6 +183,36 @@ const AdminDashboard = () => {
     } catch (err) {
       console.error("Create event error:", err);
       showAlert(err.response?.data?.detail || "Failed to create event.", "danger");
+    } finally {
+      setFormSubmitting(false);
+    }
+  };
+
+  // Handler for saving team member
+  const handleSaveTeamMember = async (e) => {
+    e.preventDefault();
+    setFormSubmitting(true);
+    try {
+      const formData = new FormData();
+      formData.append("name", teamForm.name);
+      formData.append("role", teamForm.role);
+      if (teamForm.bio) formData.append("bio", teamForm.bio);
+      if (teamForm.file_url) formData.append("file_url", teamForm.file_url);
+
+      if (teamForm.id) {
+        const updated = await aboutService.updateTeamMember(teamForm.id, formData);
+        setTeamList((prev) => prev.map((t) => (t.id === teamForm.id ? updated : t)));
+        showAlert(`Team member "${teamForm.name}" updated successfully!`);
+      } else {
+        const created = await aboutService.addTeamMember(formData);
+        setTeamList((prev) => [created, ...prev]);
+        showAlert(`Team member "${teamForm.name}" added successfully!`);
+      }
+      setShowTeamModal(false);
+      setTeamForm({ id: null, name: "", role: "", bio: "", file_url: null });
+    } catch (err) {
+      console.error("Save team member error:", err);
+      showAlert(err.response?.data?.detail || "Failed to save team member.", "danger");
     } finally {
       setFormSubmitting(false);
     }
@@ -330,6 +378,19 @@ const AdminDashboard = () => {
               <Calendar size={18} /> Events
               <Badge bg={activeTab === "events" ? "light" : "secondary"} text={activeTab === "events" ? "success" : "light"} className="ms-1 rounded-pill bg-opacity-75">
                 {eventsList.length}
+              </Badge>
+            </Button>
+
+            <Button
+              variant={activeTab === "team" ? "success" : "light"}
+              onClick={() => setActiveTab("team")}
+              className={`rounded-pill px-3 px-md-4 py-2 fw-semibold d-inline-flex align-items-center gap-2 transition-all shadow-sm ${
+                activeTab !== "team" ? "text-muted border bg-white hover-bg-light" : ""
+              }`}
+            >
+              <Users size={18} /> Team Members
+              <Badge bg={activeTab === "team" ? "light" : "secondary"} text={activeTab === "team" ? "success" : "light"} className="ms-1 rounded-pill bg-opacity-75">
+                {teamList.length}
               </Badge>
             </Button>
           </div>
@@ -660,6 +721,92 @@ const AdminDashboard = () => {
               )}
             </div>
           )}
+
+          {/* TAB 4: TEAM MANAGEMENT */}
+          {activeTab === "team" && (
+            <div>
+              <div className="d-flex flex-column flex-md-row justify-content-between gap-3 mb-4">
+                <InputGroup style={{ maxWidth: "340px" }}>
+                  <InputGroup.Text className="bg-light border-end-0">
+                    <Search size={16} className="text-muted" />
+                  </InputGroup.Text>
+                  <Form.Control
+                    placeholder="Search team members..."
+                    value={teamSearch}
+                    onChange={(e) => setTeamSearch(e.target.value)}
+                    className="border-start-0"
+                  />
+                </InputGroup>
+
+                <Button
+                  variant="primary"
+                  className="btn btn-primary btn-sm rounded-pill px-3 d-inline-flex align-items-center gap-1"
+                  onClick={() => {
+                    setTeamForm({ id: null, name: "", role: "", bio: "", file_url: null });
+                    setShowTeamModal(true);
+                  }}
+                >
+                  <Plus size={16} /> Add Member
+                </Button>
+              </div>
+
+              {teamList.filter(t => t.name.toLowerCase().includes(teamSearch.toLowerCase()) || t.role.toLowerCase().includes(teamSearch.toLowerCase())).length === 0 ? (
+                <div className="text-center py-5 text-muted">
+                  <Users size={48} className="text-muted mb-2 opacity-50" />
+                  <p className="mb-0">No team members found.</p>
+                </div>
+              ) : (
+                <Row className="g-3">
+                  {teamList
+                    .filter(t => t.name.toLowerCase().includes(teamSearch.toLowerCase()) || t.role.toLowerCase().includes(teamSearch.toLowerCase()))
+                    .map((t) => (
+                    <Col key={t.id} xs={12} sm={6} lg={4}>
+                      <Card className="h-100 border rounded-4 p-3 transition-all d-flex flex-column align-items-center text-center shadow-sm admin-list-card hover-bg-light">
+                        <div className="position-relative mb-3">
+                          {t.photo_filename ? (
+                            <img
+                              src={getImageUrl(t.photo_filename)}
+                              alt={t.name}
+                              className="rounded-circle shadow-sm border border-2 border-success-subtle"
+                              style={{ width: "90px", height: "90px", objectFit: "cover" }}
+                              onError={(e) => { e.target.style.display = "none"; }}
+                            />
+                          ) : (
+                            <div className="rounded-circle d-flex align-items-center justify-content-center bg-primary text-white shadow-sm" style={{ width: "90px", height: "90px" }}>
+                              <span className="fs-3 fw-bold">{t.name?.charAt(0) || "U"}</span>
+                            </div>
+                          )}
+                        </div>
+                        <h6 className="fw-bold text-dark mb-1">{t.name}</h6>
+                        <Badge bg="success-subtle" text="success" className="mb-2 rounded-pill px-2 py-1">{t.role}</Badge>
+                        <p className="text-muted small mb-3 flex-grow-1" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{t.bio || "No bio available."}</p>
+                        
+                        <div className="d-flex gap-2 mt-auto border-top pt-3 w-100 justify-content-center">
+                          <Button
+                            variant="light"
+                            className="rounded-pill px-3 py-1 text-primary border d-inline-flex align-items-center justify-content-center hover-bg-primary-subtle transition-all small fw-semibold"
+                            onClick={() => {
+                              setTeamForm({ id: t.id, name: t.name, role: t.role, bio: t.bio || "", file_url: null });
+                              setShowTeamModal(true);
+                            }}
+                          >
+                            Edit
+                          </Button>
+                          <Button
+                            variant="light"
+                            className="rounded-pill px-3 py-1 text-danger border d-inline-flex align-items-center justify-content-center hover-bg-danger-subtle transition-all small fw-semibold"
+                            onClick={() => setDeleteConfirm({ show: true, type: "team", id: t.id, title: t.name })}
+                          >
+                            Delete
+                          </Button>
+                        </div>
+                      </Card>
+                    </Col>
+                  ))}
+                </Row>
+              )}
+            </div>
+          )}
         </Card.Body>
       </Card>
 
@@ -803,6 +950,70 @@ const AdminDashboard = () => {
             </Button>
             <Button variant="primary" type="submit" disabled={formSubmitting}>
               {formSubmitting ? <Spinner size="sm" animation="border" /> : "Publish Event"}
+            </Button>
+          </Modal.Footer>
+        </Form>
+      </Modal>
+
+      {/* ADD / EDIT TEAM MEMBER MODAL */}
+      <Modal show={showTeamModal} onHide={() => setShowTeamModal(false)} centered>
+        <Form onSubmit={handleSaveTeamMember}>
+          <Modal.Header closeButton>
+            <Modal.Title className="h5 fw-bold">{teamForm.id ? "Edit Team Member" : "Add Team Member"}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form.Group className="mb-3">
+              <Form.Label className="small fw-semibold">Full Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="e.g. Jane Doe"
+                value={teamForm.name}
+                onChange={(e) => setTeamForm({ ...teamForm, name: e.target.value })}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label className="small fw-semibold">Role / Title</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="e.g. Lead Developer"
+                value={teamForm.role}
+                onChange={(e) => setTeamForm({ ...teamForm, role: e.target.value })}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label className="small fw-semibold">Short Bio</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                placeholder="A brief background about the member..."
+                value={teamForm.bio}
+                onChange={(e) => setTeamForm({ ...teamForm, bio: e.target.value })}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label className="small fw-semibold">Profile Photo (Optional)</Form.Label>
+              <Form.Control
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                onChange={(e) => setTeamForm({ ...teamForm, file_url: e.target.files[0] })}
+              />
+              <Form.Text className="text-muted">
+                {teamForm.id ? "Leave empty to keep current photo. " : ""}
+                Upload a square photo for best results.
+              </Form.Text>
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="outline-secondary" onClick={() => setShowTeamModal(false)}>
+              Cancel
+            </Button>
+            <Button variant="primary" type="submit" disabled={formSubmitting}>
+              {formSubmitting ? <Spinner size="sm" animation="border" /> : "Save Member"}
             </Button>
           </Modal.Footer>
         </Form>
