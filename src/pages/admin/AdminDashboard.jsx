@@ -292,37 +292,47 @@ const AdminDashboard = () => {
 
       {/* Main Tabbed Management Sections */}
       <Card className="border-0 shadow-sm rounded-4 overflow-hidden bg-white mb-4">
-        <Card.Header className="bg-white border-bottom p-0">
-          <Tabs
-            activeKey={activeTab}
-            onSelect={(k) => setActiveTab(k)}
-            className="px-3 pt-2 border-0 custom-admin-tabs"
-          >
-            <Tab
-              eventKey="media"
-              title={
-                <span className="d-inline-flex align-items-center gap-2 py-2">
-                  <ImageIcon size={16} /> Media Gallery ({mediaList.length})
-                </span>
-              }
-            />
-            <Tab
-              eventKey="programs"
-              title={
-                <span className="d-inline-flex align-items-center gap-2 py-2">
-                  <FileText size={16} /> Programs ({programsList.length})
-                </span>
-              }
-            />
-            <Tab
-              eventKey="events"
-              title={
-                <span className="d-inline-flex align-items-center gap-2 py-2">
-                  <Calendar size={16} /> Events ({eventsList.length})
-                </span>
-              }
-            />
-          </Tabs>
+        <Card.Header className="bg-white border-bottom p-3 p-md-4">
+          <div className="d-flex flex-wrap gap-2 gap-md-3">
+            <Button
+              variant={activeTab === "media" ? "success" : "light"}
+              onClick={() => setActiveTab("media")}
+              className={`rounded-pill px-3 px-md-4 py-2 fw-semibold d-inline-flex align-items-center gap-2 transition-all shadow-sm ${
+                activeTab !== "media" ? "text-muted border bg-white hover-bg-light" : ""
+              }`}
+            >
+              <ImageIcon size={18} /> Media Gallery
+              <Badge bg={activeTab === "media" ? "light" : "secondary"} text={activeTab === "media" ? "success" : "light"} className="ms-1 rounded-pill bg-opacity-75">
+                {mediaList.length}
+              </Badge>
+            </Button>
+            
+            <Button
+              variant={activeTab === "programs" ? "success" : "light"}
+              onClick={() => setActiveTab("programs")}
+              className={`rounded-pill px-3 px-md-4 py-2 fw-semibold d-inline-flex align-items-center gap-2 transition-all shadow-sm ${
+                activeTab !== "programs" ? "text-muted border bg-white hover-bg-light" : ""
+              }`}
+            >
+              <FileText size={18} /> Programs
+              <Badge bg={activeTab === "programs" ? "light" : "secondary"} text={activeTab === "programs" ? "success" : "light"} className="ms-1 rounded-pill bg-opacity-75">
+                {programsList.length}
+              </Badge>
+            </Button>
+
+            <Button
+              variant={activeTab === "events" ? "success" : "light"}
+              onClick={() => setActiveTab("events")}
+              className={`rounded-pill px-3 px-md-4 py-2 fw-semibold d-inline-flex align-items-center gap-2 transition-all shadow-sm ${
+                activeTab !== "events" ? "text-muted border bg-white hover-bg-light" : ""
+              }`}
+            >
+              <Calendar size={18} /> Events
+              <Badge bg={activeTab === "events" ? "light" : "secondary"} text={activeTab === "events" ? "success" : "light"} className="ms-1 rounded-pill bg-opacity-75">
+                {eventsList.length}
+              </Badge>
+            </Button>
+          </div>
         </Card.Header>
 
         <Card.Body className="p-3 p-md-4">
