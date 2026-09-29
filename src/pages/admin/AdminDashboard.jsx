@@ -471,67 +471,74 @@ const AdminDashboard = () => {
                   <p className="mb-0">No programs found.</p>
                 </div>
               ) : (
-                <div className="table-responsive">
-                  <Table hover className="align-middle mb-0">
-                    <thead className="table-light">
-                      <tr>
-                        <th>Title</th>
-                        <th>Category</th>
-                        <th>Status</th>
-                        <th className="text-end">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {filteredPrograms.map((p) => (
-                        <tr key={p.id}>
-                          <td>
-                            <div className="fw-semibold text-dark">{p.title}</div>
-                            <small className="text-muted text-truncate d-block" style={{ maxWidth: "350px" }}>
-                              {p.description}
-                            </small>
-                          </td>
-                          <td>
-                            <Badge bg="light" className="text-dark border">
-                              {p.category || "General"}
-                            </Badge>
-                          </td>
-                          <td>
-                            <Badge bg={p.status === "Completed" ? "secondary" : "success"}>
-                              {p.status || "Active"}
-                            </Badge>
-                          </td>
-                          <td className="text-end">
-                            <div className="d-inline-flex gap-2">
-                              <Link
-                                to={`/programs/${p.id}`}
-                                target="_blank"
-                                className="btn btn-outline-secondary btn-sm p-1 px-2 rounded-2"
-                                title="View Public Page"
-                              >
-                                <ExternalLink size={14} />
-                              </Link>
-                              <Button
-                                variant="outline-danger"
-                                size="sm"
-                                className="p-1 px-2 rounded-2"
-                                onClick={() =>
-                                  setDeleteConfirm({
-                                    show: true,
-                                    type: "program",
-                                    id: p.id,
-                                    title: p.title,
-                                  })
-                                }
-                                title="Delete Program"
-                              >
-                                <Trash2 size={14} />
-                              </Button>
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </Table>
+                <div className="d-flex flex-column gap-3">
+                  {filteredPrograms.map((p) => (
+                    <div 
+                      key={p.id} 
+                      className="bg-white border rounded-4 p-3 p-md-4 transition-all d-flex flex-column flex-md-row align-items-md-center gap-3 gap-md-4 admin-list-card"
+                      style={{ transition: 'all 0.2s ease-in-out', cursor: 'default' }}
+                      onMouseEnter={(e) => { e.currentTarget.classList.add('shadow-sm'); e.currentTarget.style.borderColor = '#198754'; }}
+                      onMouseLeave={(e) => { e.currentTarget.classList.remove('shadow-sm'); e.currentTarget.style.borderColor = 'var(--bs-border-color)'; }}
+                    >
+                      {/* Icon Area */}
+                      <div className="d-none d-md-flex align-items-center justify-content-center bg-success-subtle text-success rounded-circle flex-shrink-0" style={{ width: '56px', height: '56px' }}>
+                        <FileText size={24} />
+                      </div>
+
+                      {/* Content Area */}
+                      <div className="flex-grow-1 min-w-0">
+                        <h5 className="fw-bold text-dark mb-1 text-truncate" title={p.title}>{p.title}</h5>
+                        <p className="text-muted small mb-0 text-truncate" style={{ maxWidth: '600px' }} title={p.description}>
+                          {p.description || "No description provided."}
+                        </p>
+                      </div>
+
+                      {/* Metadata Badges */}
+                      <div className="d-flex flex-wrap gap-2 flex-shrink-0 align-items-center" style={{ minWidth: '160px' }}>
+                        <Badge bg="light" text="dark" className="border px-2 py-1 fw-medium text-start d-inline-flex align-items-center gap-1">
+                          <Layers size={12} className="text-muted"/> {p.category || "General"}
+                        </Badge>
+                        <Badge bg={p.status === "Completed" ? "secondary" : "success"} className="px-2 py-1 fw-medium">
+                          {p.status || "Active"}
+                        </Badge>
+                      </div>
+
+                      {/* Action Buttons */}
+                      <div className="d-flex gap-2 flex-shrink-0 ms-md-auto pt-3 pt-md-0 border-top border-md-0 mt-2 mt-md-0">
+                        <Button
+                          as={Link}
+                          to={`/programs/${p.id}`}
+                          target="_blank"
+                          variant="light"
+                          className="rounded-circle p-2 text-primary border d-inline-flex align-items-center justify-content-center hover-scale"
+                          style={{ width: '40px', height: '40px', transition: 'all 0.2s' }}
+                          title="View Public Page"
+                          onMouseEnter={(e) => e.currentTarget.classList.add('bg-primary-subtle')}
+                          onMouseLeave={(e) => e.currentTarget.classList.remove('bg-primary-subtle')}
+                        >
+                          <ExternalLink size={16} />
+                        </Button>
+                        <Button
+                          variant="light"
+                          className="rounded-circle p-2 text-danger border d-inline-flex align-items-center justify-content-center hover-scale"
+                          style={{ width: '40px', height: '40px', transition: 'all 0.2s' }}
+                          onClick={() =>
+                            setDeleteConfirm({
+                              show: true,
+                              type: "program",
+                              id: p.id,
+                              title: p.title,
+                            })
+                          }
+                          title="Delete Program"
+                          onMouseEnter={(e) => e.currentTarget.classList.add('bg-danger-subtle')}
+                          onMouseLeave={(e) => e.currentTarget.classList.remove('bg-danger-subtle')}
+                        >
+                          <Trash2 size={16} />
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               )}
             </div>
@@ -568,67 +575,77 @@ const AdminDashboard = () => {
                   <p className="mb-0">No events found.</p>
                 </div>
               ) : (
-                <div className="table-responsive">
-                  <Table hover className="align-middle mb-0">
-                    <thead className="table-light">
-                      <tr>
-                        <th>Title & Description</th>
-                        <th>Date</th>
-                        <th>Location</th>
-                        <th>Capacity</th>
-                        <th className="text-end">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {filteredEvents.map((e) => (
-                        <tr key={e.id}>
-                          <td>
-                            <div className="fw-semibold text-dark">{e.title}</div>
-                            <small className="text-muted text-truncate d-block" style={{ maxWidth: "350px" }}>
-                              {e.description}
-                            </small>
-                          </td>
-                          <td className="small text-muted">
-                            {e.date ? new Date(e.date).toLocaleDateString() : "TBD"}
-                          </td>
-                          <td className="small text-muted">{e.location || "N/A"}</td>
-                          <td className="small">
-                            <Badge bg="light" className="text-dark border">
-                              {e.capacity || 0} attendees
-                            </Badge>
-                          </td>
-                          <td className="text-end">
-                            <div className="d-inline-flex gap-2">
-                              <Link
-                                to={`/events/${e.id}`}
-                                target="_blank"
-                                className="btn btn-outline-secondary btn-sm p-1 px-2 rounded-2"
-                                title="View Public Page"
-                              >
-                                <ExternalLink size={14} />
-                              </Link>
-                              <Button
-                                variant="outline-danger"
-                                size="sm"
-                                className="p-1 px-2 rounded-2"
-                                onClick={() =>
-                                  setDeleteConfirm({
-                                    show: true,
-                                    type: "event",
-                                    id: e.id,
-                                    title: e.title,
-                                  })
-                                }
-                                title="Delete Event"
-                              >
-                                <Trash2 size={14} />
-                              </Button>
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </Table>
+                <div className="d-flex flex-column gap-3">
+                  {filteredEvents.map((e) => (
+                    <div 
+                      key={e.id} 
+                      className="bg-white border rounded-4 p-3 p-md-4 transition-all d-flex flex-column flex-md-row align-items-md-center gap-3 gap-md-4 admin-list-card"
+                      style={{ transition: 'all 0.2s ease-in-out', cursor: 'default' }}
+                      onMouseEnter={(ev) => { ev.currentTarget.classList.add('shadow-sm'); ev.currentTarget.style.borderColor = '#0d6efd'; }}
+                      onMouseLeave={(ev) => { ev.currentTarget.classList.remove('shadow-sm'); ev.currentTarget.style.borderColor = 'var(--bs-border-color)'; }}
+                    >
+                      {/* Icon Area */}
+                      <div className="d-none d-md-flex align-items-center justify-content-center bg-primary-subtle text-primary rounded-circle flex-shrink-0" style={{ width: '56px', height: '56px' }}>
+                        <Calendar size={24} />
+                      </div>
+
+                      {/* Content Area */}
+                      <div className="flex-grow-1 min-w-0">
+                        <h5 className="fw-bold text-dark mb-1 text-truncate" title={e.title}>{e.title}</h5>
+                        <p className="text-muted small mb-0 text-truncate" style={{ maxWidth: '500px' }} title={e.description}>
+                          {e.description || "No description provided."}
+                        </p>
+                      </div>
+
+                      {/* Metadata Badges */}
+                      <div className="d-flex flex-wrap gap-2 flex-shrink-0 align-items-center" style={{ minWidth: '220px' }}>
+                        <Badge bg="light" text="dark" className="border px-2 py-1 fw-medium text-start">
+                          {e.date ? new Date(e.date).toLocaleDateString() : "TBD"}
+                        </Badge>
+                        <Badge bg="light" text="dark" className="border px-2 py-1 fw-medium text-start">
+                          {e.location || "N/A"}
+                        </Badge>
+                        <Badge bg="primary" className="bg-opacity-75 px-2 py-1 fw-medium text-start">
+                          {e.capacity || 0} attendees
+                        </Badge>
+                      </div>
+
+                      {/* Action Buttons */}
+                      <div className="d-flex gap-2 flex-shrink-0 ms-md-auto pt-3 pt-md-0 border-top border-md-0 mt-2 mt-md-0">
+                        <Button
+                          as={Link}
+                          to={`/events/${e.id}`}
+                          target="_blank"
+                          variant="light"
+                          className="rounded-circle p-2 text-primary border d-inline-flex align-items-center justify-content-center hover-scale"
+                          style={{ width: '40px', height: '40px', transition: 'all 0.2s' }}
+                          title="View Public Page"
+                          onMouseEnter={(ev) => ev.currentTarget.classList.add('bg-primary-subtle')}
+                          onMouseLeave={(ev) => ev.currentTarget.classList.remove('bg-primary-subtle')}
+                        >
+                          <ExternalLink size={16} />
+                        </Button>
+                        <Button
+                          variant="light"
+                          className="rounded-circle p-2 text-danger border d-inline-flex align-items-center justify-content-center hover-scale"
+                          style={{ width: '40px', height: '40px', transition: 'all 0.2s' }}
+                          onClick={() =>
+                            setDeleteConfirm({
+                              show: true,
+                              type: "event",
+                              id: e.id,
+                              title: e.title,
+                            })
+                          }
+                          title="Delete Event"
+                          onMouseEnter={(ev) => ev.currentTarget.classList.add('bg-danger-subtle')}
+                          onMouseLeave={(ev) => ev.currentTarget.classList.remove('bg-danger-subtle')}
+                        >
+                          <Trash2 size={16} />
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               )}
             </div>

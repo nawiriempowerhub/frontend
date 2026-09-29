@@ -164,9 +164,9 @@ const AdminLogin = () => {
 
             <div className="text-center pt-2 d-flex flex-column gap-2">
               <span className="small text-muted">
-                Forgot credentials or need access?{" "}
+                Need to set up credentials?{" "}
                 <Link to="/admin/register" className="text-success fw-semibold text-decoration-none">
-                  Register new Admin
+                  Register via Security Passkey
                 </Link>
               </span>
               <Link 
