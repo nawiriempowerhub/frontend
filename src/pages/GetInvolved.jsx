@@ -4,7 +4,7 @@ import { Heart, Calendar, MapPin, Users, DollarSign, Target, Sparkles, ArrowRigh
 import Loading from '../components/ui/Loading';
 import ErrorMessage from '../components/ui/ErrorMessage';
 import VolunteerForm from '../components/forms/VolunteerForm';
-import DonationForm from '../components/forms/DonationForm';
+import DonationCard from '../components/donation/DonationCard';
 import { eventsService } from '../services/eventsService';
 
 const GetInvolved = () => {
@@ -173,50 +173,17 @@ const GetInvolved = () => {
 
             {activeTab === 'donate' && (
               <div>
-                <div className="text-center mb-5">
+                <div className="text-center mb-4">
                   <h2 className="display-6 fw-bold text-dark mb-3">
                     Support Our Mission
                   </h2>
-                  <p className="text-muted mx-auto" style={{ maxWidth: '640px' }}>
-                    Your contribution directly powers our education, healthcare, and sustainable agriculture programs.
+                  <p className="text-muted mx-auto fs-5" style={{ maxWidth: '640px' }}>
+                    Your contribution directly powers our education, healthcare, and sustainable development programs. Giving is quick and seamless with M-Pesa.
                   </p>
                 </div>
 
-                <div className="row g-4 mb-5">
-                  <div className="col-12 col-md-4">
-                    <div className="card card-hover h-100 text-center p-4">
-                      <div className="fs-2 fw-bold text-primary mb-2">KES 250</div>
-                      <h3 className="h6 fw-semibold text-dark mb-2">Student Learning Pack</h3>
-                      <p className="text-muted small mb-0 lh-base">
-                        Provides essential stationery and learning materials for one child for a month.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="col-12 col-md-4">
-                    <div className="card card-hover h-100 text-center p-4 border-primary">
-                      <div className="badge bg-primary text-white mx-auto mb-2 rounded-pill px-3 py-1">Popular</div>
-                      <div className="fs-2 fw-bold text-primary mb-2">KES 500</div>
-                      <h3 className="h6 fw-semibold text-dark mb-2">Healthcare Outreach</h3>
-                      <p className="text-muted small mb-0 lh-base">
-                        Supports primary healthcare checkups and wellness kits for a family.
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="col-12 col-md-4">
-                    <div className="card card-hover h-100 text-center p-4">
-                      <div className="fs-2 fw-bold text-primary mb-2">KES 1,000</div>
-                      <h3 className="h6 fw-semibold text-dark mb-2">Community Workshop</h3>
-                      <p className="text-muted small mb-0 lh-base">
-                        Helps fund vocational skills training modules for youth and women groups.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="card card-hover p-4 p-md-5 border-0 shadow-sm">
-                  <DonationForm />
+                <div className="mx-auto" style={{ maxWidth: "560px" }}>
+                  <DonationCard />
                 </div>
               </div>
             )}

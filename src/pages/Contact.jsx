@@ -1,8 +1,9 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Send, Star, Clock } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Star, Clock, Heart } from 'lucide-react';
 import ContactForm from '../components/forms/ContactForm';
+import DonationCard from '../components/donation/DonationCard';
 
 const Contact = () => {
   return (
@@ -29,6 +30,13 @@ const Contact = () => {
               Get in touch with us to learn more about our programs, volunteer opportunities, or how you can support our mission.
             </p>
             <div className="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+              <a 
+                href="#donate" 
+                className="btn btn-warning text-dark fw-bold px-4 py-2"
+                style={{ backgroundColor: '#fbbf24', border: 'none' }}
+              >
+                Make a Donation
+              </a>
               <Link 
                 to="/get-involved" 
                 className="btn btn-light text-primary fw-medium px-4 py-2"
@@ -298,6 +306,35 @@ const Contact = () => {
                   <ContactForm />
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Donation Section for Nawiri EmpowerHub */}
+      <section id="donate" className="section-padding bg-white border-top border-bottom">
+        <div className="container-fluid px-3">
+          <div className="text-center mb-5">
+            <div 
+              className="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill mb-3 small fw-bold"
+              style={{
+                backgroundColor: "rgba(5, 150, 105, 0.1)",
+                color: "#059669",
+              }}
+            >
+              <Heart size={16} className="text-success" /> Make an Impact
+            </div>
+            <h2 className="display-6 fw-bold text-dark mb-3">
+              Support Nawiri EmpowerHub
+            </h2>
+            <p className="text-muted mx-auto fs-5" style={{ maxWidth: "680px" }}>
+              Your contribution directly powers grassroots education, healthcare, and sustainable development initiatives across Kenya.
+            </p>
+          </div>
+
+          <div className="row justify-content-center">
+            <div className="col-12 col-md-8 col-lg-6 col-xl-5">
+              <DonationCard />
             </div>
           </div>
         </div>

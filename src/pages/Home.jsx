@@ -14,6 +14,7 @@ import { programsService } from "../services/programsService";
 import { aboutService } from "../services/aboutService";
 import { eventsService } from "../services/eventsService";
 import CountUp from "react-countup";
+import DonationCard from "../components/donation/DonationCard";
 
 // Custom Loading Component
 const Loading = ({ size = "md", text = "Loading..." }) => {
@@ -99,37 +100,9 @@ const Home = () => {
       <section className="bg-white section-padding position-relative border-bottom">
         <Container>
           <Row className="align-items-center g-4 g-lg-5">
-            {/* Image Column - Left Side */}
-            <Col lg={6} className="order-2 order-lg-1">
-              <div className="position-relative">
-                <div 
-                  className="position-absolute rounded-4"
-                  style={{
-                    inset: "-12px",
-                    background: "radial-gradient(circle, rgba(22, 163, 74, 0.2) 0%, rgba(22, 163, 74, 0) 70%)",
-                    zIndex: 0,
-                    pointerEvents: "none",
-                  }}
-                />
-                <img
-                  src="/images/hero-bg.jpg"
-                  alt="Nawiri EmpowerHub Community Impact"
-                  className="img-fluid rounded-4 position-relative"
-                  style={{
-                    width: "100%",
-                    maxHeight: "480px",
-                    minHeight: "280px",
-                    objectFit: "cover",
-                    zIndex: 1,
-                    boxShadow: "0 20px 40px -15px rgba(0, 0, 0, 0.15)",
-                  }}
-                />
-              </div>
-            </Col>
-
-            {/* Text Content Column - Right Side */}
-            <Col lg={6} className="order-1 order-lg-2">
-              <div className="ps-lg-3">
+            {/* Text Content Column */}
+            <Col lg={7} xl={7}>
+              <div className="pe-lg-3">
                 <div className="hero-badge mb-3">
                   <Sparkles size={16} /> Empowering Grassroots Communities
                 </div>
@@ -146,7 +119,7 @@ const Home = () => {
                   practices to transform lives.
                 </p>
 
-                <div className="d-flex flex-column flex-sm-row gap-3 pt-2">
+                <div className="d-flex flex-wrap gap-3 pt-2">
                   <Button
                     as={Link}
                     to="/get-involved"
@@ -165,6 +138,11 @@ const Home = () => {
                   </Button>
                 </div>
               </div>
+            </Col>
+
+            {/* Easy Support Column */}
+            <Col lg={5} xl={5}>
+              <DonationCard />
             </Col>
           </Row>
         </Container>
