@@ -1,0 +1,221 @@
+/* Styles for Nawiri EmpowerHub Donation Card */
+
+.nawiri-donation-card {
+  background: linear-gradient(145deg, #065f46 0%, #047857 100%);
+  border-radius: 24px;
+  padding: 1.75rem;
+  color: #ffffff;
+  box-shadow: 0 20px 45px -10px rgba(5, 150, 105, 0.35),
+              0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+@media (min-width: 576px) {
+  .nawiri-donation-card {
+    padding: 2.25rem;
+  }
+}
+
+.donation-card-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #a7f3d0;
+  text-transform: uppercase;
+  margin-bottom: 0.35rem;
+}
+
+.donation-card-underline {
+  width: 44px;
+  height: 3px;
+  background-color: #34d399;
+  border-radius: 2px;
+  margin-bottom: 1rem;
+}
+
+.donation-card-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #ffffff;
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.01em;
+}
+
+@media (min-width: 576px) {
+  .donation-card-title {
+    font-size: 1.5rem;
+  }
+}
+
+/* Frequency Toggle Pills */
+.frequency-toggle-wrapper {
+  display: inline-flex;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 50rem;
+  padding: 3px;
+  margin-bottom: 1.25rem;
+}
+
+.frequency-btn {
+  border: none;
+  background: transparent;
+  padding: 0.35rem 0.9rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #d1fae5;
+  border-radius: 50rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.frequency-btn.active {
+  background-color: #ffffff;
+  color: #065f46;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Preset Amount Pills Grid */
+.amount-pills-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 1.25rem;
+}
+
+.amount-pill {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.55rem 1.15rem;
+  border-radius: 50rem;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.amount-pill:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.amount-pill.active {
+  background-color: #ffffff;
+  color: #065f46;
+  border-color: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  transform: translateY(-1px);
+}
+
+/* Custom Input Field */
+.custom-amount-wrapper {
+  margin-bottom: 1.25rem;
+  animation: fadeInDown 0.25s ease-out;
+}
+
+.custom-amount-input-group {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border-radius: 50rem;
+  padding: 0.35rem 1rem;
+  border: 2px solid #34d399;
+  transition: all 0.2s ease;
+}
+
+.custom-amount-input-group:focus-within {
+  box-shadow: 0 0 0 4px rgba(52, 211, 153, 0.35);
+}
+
+.custom-amount-prefix {
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: #065f46;
+  margin-right: 0.5rem;
+}
+
+.custom-amount-input {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0f172a;
+  width: 100%;
+}
+
+/* Main CTA Button */
+.donation-submit-btn {
+  width: 100%;
+  border: none;
+  background-color: #ffffff;
+  color: #065f46;
+  font-size: 1.05rem;
+  font-weight: 800;
+  padding: 0.85rem 1.5rem;
+  border-radius: 50rem;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  margin-bottom: 1rem;
+}
+
+.donation-submit-btn:hover {
+  background-color: #f0fdf4;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.donation-submit-btn:active {
+  transform: translateY(0);
+}
+
+/* Footer / Methods Info */
+.donation-card-footer {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #d1fae5;
+  text-align: center;
+  margin: 0;
+}
+
+.donation-paybill-badge {
+  background: rgba(255, 255, 255, 0.18);
+  padding: 0.2rem 0.55rem;
+  border-radius: 6px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  display: inline-block;
+  margin-top: 0.25rem;
+}
+
+.donation-paybill-badge:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
