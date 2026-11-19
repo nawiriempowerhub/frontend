@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Check, Loader2, AlertCircle } from 'lucide-react';
-import axios from 'axios';
+import { contactService } from '../../services/contactService';
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -22,7 +22,7 @@ const ContactForm = () => {
     e.preventDefault();
     setStatus(null);
     try {
-      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/contact`, formData);
+      await contactService.submitContact(formData);
       setStatus({ type: 'success', message: 'Message sent successfully! We will respond soon.' });
       setFormData({
         name: '',

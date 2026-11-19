@@ -5,6 +5,7 @@ import Loading from "../components/ui/Loading";
 import ErrorMessage from "../components/ui/ErrorMessage";
 import { programsService } from "../services/programsService";
 import { mediaService } from "../services/mediaService";
+import { getImageUrl } from "../utils/imageUrl";
 
 const ProgramDetail = () => {
   const { id } = useParams();
@@ -414,7 +415,7 @@ const ProgramDetail = () => {
                     <div className="card border-0 shadow-sm h-100 overflow-hidden position-relative group">
                       <div className="position-relative overflow-hidden">
                         <img
-                          src={`${import.meta.env.VITE_API_BASE_URL}${item.file_url}`}
+                          src={getImageUrl(item.file_url)}
                           alt={item.title}
                           className="card-img-top transition-transform"
                           style={{ 
@@ -491,7 +492,7 @@ const ProgramDetail = () => {
               </div>
               <div className="modal-body p-0 text-center">
                 <img
-                  src={`${import.meta.env.VITE_API_BASE_URL}${selectedImage.file_url}`}
+                  src={getImageUrl(selectedImage.file_url)}
                   alt={selectedImage.title}
                   className="img-fluid rounded shadow-lg"
                   style={{

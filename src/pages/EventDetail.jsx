@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import { eventsService } from '../services/eventsService';
 import { Alert, Button } from 'react-bootstrap';
 import { Loader2, AlertCircle } from 'lucide-react';
 
@@ -16,8 +16,8 @@ const EventDetail = () => {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/events/${id}`);
-        setEvent(response.data);
+        const data = await eventsService.getEvent(id);
+        setEvent(data);
       } catch (err) {
         setError('Failed to load event details');
       } finally {
@@ -36,7 +36,7 @@ const EventDetail = () => {
     e.preventDefault();
     setFormStatus(null);
     try {
-      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/events/register`, formData);
+      await eventsService.registerForEvent(formData);
       setFormStatus({ type: 'success', message: 'Registration submitted successfully! We will contact you soon.' });
       setFormData({ name: '', email: '', event_id: id });
     } catch (error) {

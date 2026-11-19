@@ -8,7 +8,7 @@ import { getImageUrl } from "../utils/imageUrl";
 import { Link } from "react-router-dom";
 import { Container } from "react-bootstrap";
 
-const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const VITE_API_BASE_URL = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || "https://backend-production-df3a.up.railway.app";
 
 const Media = () => {
   const [media, setMedia] = useState([]);

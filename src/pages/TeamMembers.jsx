@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { aboutService } from "../services/aboutService";
 import {
   Spinner,
   Alert,
@@ -18,7 +18,8 @@ const TeamMemberCard = ({ member }) => {
     if (!path) return null;
     if (path.startsWith("http://") || path.startsWith("https://")) return path;
     const clean = path.startsWith("/") ? path : `/${path}`;
-    return `${import.meta.env.VITE_API_BASE_URL}${clean}`;
+    const baseUrl = (import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || "https://backend-production-df3a.up.railway.app").replace(/\/$/, "");
+    return `${baseUrl}${clean}`;
   };
 
   const imageUrl = getImageUrl(member.photo_filename);
@@ -74,10 +75,8 @@ const TeamMembers = () => {
     const fetchTeamMembers = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_BASE_URL}/about/team`
-        );
-        setTeamMembers(response.data);
+        const data = await aboutService.getTeam();
+        setTeamMembers(data || []);
       } catch (err) {
         setError("Failed to load team members");
       } finally {

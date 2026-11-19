@@ -55,16 +55,7 @@ const Events = () => {
     setRegisterError(null);
 
     try {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/events/register`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...formData, event_id: selectedEvent.id }),
-        }
-      );
-
-      if (!res.ok) throw new Error("Failed to register");
+      await eventsService.registerForEvent({ ...formData, event_id: selectedEvent.id });
 
       setRegisterSuccess(true);
       setTimeout(() => {

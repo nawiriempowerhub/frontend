@@ -55,16 +55,25 @@ const Home = () => {
       try {
         setLoading(true);
         const [programsData, impactData, eventsData] = await Promise.all([
-          programsService.getPrograms(),
-          aboutService.getImpact(),
-          eventsService.getEvents(),
+          programsService.getPrograms().catch((err) => {
+            console.warn("Could not load programs:", err);
+            return [];
+          }),
+          aboutService.getImpact().catch((err) => {
+            console.warn("Could not load impact:", err);
+            return [];
+          }),
+          eventsService.getEvents().catch((err) => {
+            console.warn("Could not load events:", err);
+            return [];
+          }),
         ]);
 
-        setPrograms(programsData ? programsData.slice(0, 3) : []);
-        setImpact(impactData ? impactData.slice(0, 3) : []);
-        setEvents(eventsData ? eventsData.slice(0, 2) : []);
+        setPrograms(Array.isArray(programsData) ? programsData.slice(0, 3) : []);
+        setImpact(Array.isArray(impactData) ? impactData.slice(0, 3) : []);
+        setEvents(Array.isArray(eventsData) ? eventsData.slice(0, 2) : []);
       } catch (err) {
-        setError(err.message);
+        console.warn("Home data fetch fallback:", err);
       } finally {
         setLoading(false);
       }

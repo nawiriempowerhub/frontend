@@ -1,7 +1,7 @@
 import api from "./api";
 
 const getApiBaseUrl = () => {
-  let url = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
+  let url = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || "https://backend-production-df3a.up.railway.app";
   return url.replace(/\/$/, "").replace(/\/api$/, "");
 };
 

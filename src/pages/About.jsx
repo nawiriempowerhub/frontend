@@ -13,7 +13,7 @@ import {
 import { aboutService } from "../services/aboutService";
 import { Carousel } from "react-bootstrap";
 
-const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const VITE_API_BASE_URL = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || "https://backend-production-df3a.up.railway.app";
 
 // Custom Loading Component
 const Loading = ({ size = "md", text = "Loading..." }) => {

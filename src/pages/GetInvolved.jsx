@@ -17,10 +17,11 @@ const GetInvolved = () => {
     const fetchEvents = async () => {
       try {
         setLoading(true);
-        const data = await eventsService.getEvents();
+        const data = await eventsService.getEvents().catch(() => []);
         setEvents(data || []);
       } catch (err) {
-        setError(err.message);
+        console.warn('Events load:', err);
+        setEvents([]);
       } finally {
         setLoading(false);
       }
