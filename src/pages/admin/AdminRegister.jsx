@@ -16,14 +16,14 @@ import {
 } from "lucide-react";
 import api from "../../services/api";
 
-const DEFAULT_ALLOWED_EMAIL = "emarube89@gmail.com";
+
 const ALLOWED_ADMIN_EMAIL = (
-  import.meta.env.VITE_ALLOWED_ADMIN_EMAIL || DEFAULT_ALLOWED_EMAIL
+  import.meta.env.VITE_ALLOWED_ADMIN_EMAIL
 ).toLowerCase().trim();
 
-const DEFAULT_SECRET = "NAWIRI_ADMIN_SECURE_2026!";
+
 const ADMIN_SECRET = (
-  import.meta.env.VITE_ADMIN_REGISTRATION_SECRET || DEFAULT_SECRET
+  import.meta.env.VITE_ADMIN_REGISTRATION_SECRET
 ).trim();
 
 const AdminRegister = () => {

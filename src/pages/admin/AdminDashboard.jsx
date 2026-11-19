@@ -29,12 +29,14 @@ import {
   CheckCircle,
   AlertTriangle,
   Users,
+  DollarSign,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { mediaService } from "../../services/mediaService";
 import { programsService } from "../../services/programsService";
 import { eventsService } from "../../services/eventsService";
 import { aboutService } from "../../services/aboutService";
+import { getDonations } from "../../services/donationsService";
 import { getImageUrl } from "../../utils/imageUrl";
 
 const AdminDashboard = () => {
@@ -47,6 +49,7 @@ const AdminDashboard = () => {
   const [programsList, setProgramsList] = useState([]);
   const [eventsList, setEventsList] = useState([]);
   const [teamList, setTeamList] = useState([]);
+  const [donationsList, setDonationsList] = useState([]);
 
   // Search filters
   const [mediaSearch, setMediaSearch] = useState("");
@@ -54,6 +57,7 @@ const AdminDashboard = () => {
   const [programSearch, setProgramSearch] = useState("");
   const [eventSearch, setEventSearch] = useState("");
   const [teamSearch, setTeamSearch] = useState("");
+  const [donationSearch, setDonationSearch] = useState("");
 
   // Feedback notifications
   const [alertInfo, setAlertInfo] = useState({ show: false, message: "", variant: "success" });
@@ -97,17 +101,19 @@ const AdminDashboard = () => {
   const loadAllData = async () => {
     try {
       setRefreshing(true);
-      const [mediaData, programsData, eventsData, teamData] = await Promise.all([
+      const [mediaData, programsData, eventsData, teamData, donationsData] = await Promise.all([
         mediaService.getMedia().catch(() => []),
         programsService.getPrograms().catch(() => []),
         eventsService.getEvents().catch(() => []),
         aboutService.getTeam().catch(() => []),
+        getDonations().catch(() => []),
       ]);
 
       setMediaList(Array.isArray(mediaData) ? mediaData : []);
       setProgramsList(Array.isArray(programsData) ? programsData : []);
       setEventsList(Array.isArray(eventsData) ? eventsData : []);
       setTeamList(Array.isArray(teamData) ? teamData : []);
+      setDonationsList(Array.isArray(donationsData) ? donationsData : []);
     } catch (err) {
       console.error("Dashboard data load error:", err);
       showAlert("Error loading some dashboard data.", "danger");
@@ -197,7 +203,7 @@ const AdminDashboard = () => {
       formData.append("name", teamForm.name);
       formData.append("role", teamForm.role);
       if (teamForm.bio) formData.append("bio", teamForm.bio);
-      if (teamForm.file_url) formData.append("file_url", teamForm.file_url);
+      if (teamForm.file_url) formData.append("photo", teamForm.file_url);
 
       if (teamForm.id) {
         const updated = await aboutService.updateTeamMember(teamForm.id, formData);
@@ -250,9 +256,9 @@ const AdminDashboard = () => {
     <Container className="py-2">
       {/* Top Banner Alert */}
       {alertInfo.show && (
-        <Alert 
-          variant={alertInfo.variant} 
-          onClose={() => setAlertInfo({ show: false, message: "", variant: "success" })} 
+        <Alert
+          variant={alertInfo.variant}
+          onClose={() => setAlertInfo({ show: false, message: "", variant: "success" })}
           dismissible
           className="shadow-sm rounded-3 d-flex align-items-center gap-2 mb-4"
         >
@@ -295,7 +301,7 @@ const AdminDashboard = () => {
 
       {/* Metric Stat Cards */}
       <Row className="g-3 mb-4">
-        <Col xs={12} sm={4}>
+        <Col xs={12} sm={6} lg={3}>
           <Card className="border-0 shadow-sm rounded-4 h-100 p-3 bg-white border-start border-4 border-success">
             <div className="d-flex justify-content-between align-items-center">
               <div>
@@ -309,7 +315,7 @@ const AdminDashboard = () => {
           </Card>
         </Col>
 
-        <Col xs={12} sm={4}>
+        <Col xs={12} sm={6} lg={3}>
           <Card className="border-0 shadow-sm rounded-4 h-100 p-3 bg-white border-start border-4 border-primary">
             <div className="d-flex justify-content-between align-items-center">
               <div>
@@ -323,7 +329,7 @@ const AdminDashboard = () => {
           </Card>
         </Col>
 
-        <Col xs={12} sm={4}>
+        <Col xs={12} sm={6} lg={3}>
           <Card className="border-0 shadow-sm rounded-4 h-100 p-3 bg-white border-start border-4 border-warning">
             <div className="d-flex justify-content-between align-items-center">
               <div>
@@ -332,6 +338,23 @@ const AdminDashboard = () => {
               </div>
               <div className="bg-warning-subtle text-warning p-3 rounded-circle">
                 <Calendar size={24} />
+              </div>
+            </div>
+          </Card>
+        </Col>
+
+        <Col xs={12} sm={6} lg={3}>
+          <Card className="border-0 shadow-sm rounded-4 h-100 p-3 bg-white border-start border-4 border-emerald" style={{ borderLeftColor: "#059669 !important" }}>
+            <div className="d-flex justify-content-between align-items-center">
+              <div>
+                <p className="text-muted small fw-semibold text-uppercase mb-1">Donations (PayHero)</p>
+                <h3 className="fw-bold mb-0 text-dark">
+                  Ksh {donationsList.filter((d) => (d.payment_status || d.status) === "SUCCESS").reduce((acc, curr) => acc + (Number(curr.amount) || 0), 0).toLocaleString()}
+                </h3>
+                <small className="text-muted">{donationsList.length} total entries</small>
+              </div>
+              <div className="bg-success-subtle text-success p-3 rounded-circle">
+                <DollarSign size={24} />
               </div>
             </div>
           </Card>
@@ -345,22 +368,20 @@ const AdminDashboard = () => {
             <Button
               variant={activeTab === "media" ? "success" : "light"}
               onClick={() => setActiveTab("media")}
-              className={`rounded-pill px-3 px-md-4 py-2 fw-semibold d-inline-flex align-items-center gap-2 transition-all shadow-sm ${
-                activeTab !== "media" ? "text-muted border bg-white hover-bg-light" : ""
-              }`}
+              className={`rounded-pill px-3 px-md-4 py-2 fw-semibold d-inline-flex align-items-center gap-2 transition-all shadow-sm ${activeTab !== "media" ? "text-muted border bg-white hover-bg-light" : ""
+                }`}
             >
               <ImageIcon size={18} /> Media Gallery
               <Badge bg={activeTab === "media" ? "light" : "secondary"} text={activeTab === "media" ? "success" : "light"} className="ms-1 rounded-pill bg-opacity-75">
                 {mediaList.length}
               </Badge>
             </Button>
-            
+
             <Button
               variant={activeTab === "programs" ? "success" : "light"}
               onClick={() => setActiveTab("programs")}
-              className={`rounded-pill px-3 px-md-4 py-2 fw-semibold d-inline-flex align-items-center gap-2 transition-all shadow-sm ${
-                activeTab !== "programs" ? "text-muted border bg-white hover-bg-light" : ""
-              }`}
+              className={`rounded-pill px-3 px-md-4 py-2 fw-semibold d-inline-flex align-items-center gap-2 transition-all shadow-sm ${activeTab !== "programs" ? "text-muted border bg-white hover-bg-light" : ""
+                }`}
             >
               <FileText size={18} /> Programs
               <Badge bg={activeTab === "programs" ? "light" : "secondary"} text={activeTab === "programs" ? "success" : "light"} className="ms-1 rounded-pill bg-opacity-75">
@@ -371,9 +392,8 @@ const AdminDashboard = () => {
             <Button
               variant={activeTab === "events" ? "success" : "light"}
               onClick={() => setActiveTab("events")}
-              className={`rounded-pill px-3 px-md-4 py-2 fw-semibold d-inline-flex align-items-center gap-2 transition-all shadow-sm ${
-                activeTab !== "events" ? "text-muted border bg-white hover-bg-light" : ""
-              }`}
+              className={`rounded-pill px-3 px-md-4 py-2 fw-semibold d-inline-flex align-items-center gap-2 transition-all shadow-sm ${activeTab !== "events" ? "text-muted border bg-white hover-bg-light" : ""
+                }`}
             >
               <Calendar size={18} /> Events
               <Badge bg={activeTab === "events" ? "light" : "secondary"} text={activeTab === "events" ? "success" : "light"} className="ms-1 rounded-pill bg-opacity-75">
@@ -384,13 +404,24 @@ const AdminDashboard = () => {
             <Button
               variant={activeTab === "team" ? "success" : "light"}
               onClick={() => setActiveTab("team")}
-              className={`rounded-pill px-3 px-md-4 py-2 fw-semibold d-inline-flex align-items-center gap-2 transition-all shadow-sm ${
-                activeTab !== "team" ? "text-muted border bg-white hover-bg-light" : ""
-              }`}
+              className={`rounded-pill px-3 px-md-4 py-2 fw-semibold d-inline-flex align-items-center gap-2 transition-all shadow-sm ${activeTab !== "team" ? "text-muted border bg-white hover-bg-light" : ""
+                }`}
             >
               <Users size={18} /> Team Members
               <Badge bg={activeTab === "team" ? "light" : "secondary"} text={activeTab === "team" ? "success" : "light"} className="ms-1 rounded-pill bg-opacity-75">
                 {teamList.length}
+              </Badge>
+            </Button>
+
+            <Button
+              variant={activeTab === "donations" ? "success" : "light"}
+              onClick={() => setActiveTab("donations")}
+              className={`rounded-pill px-3 px-md-4 py-2 fw-semibold d-inline-flex align-items-center gap-2 transition-all shadow-sm ${activeTab !== "donations" ? "text-muted border bg-white hover-bg-light" : ""
+                }`}
+            >
+              <DollarSign size={18} /> Live Donations
+              <Badge bg={activeTab === "donations" ? "light" : "secondary"} text={activeTab === "donations" ? "success" : "light"} className="ms-1 rounded-pill bg-opacity-75">
+                {donationsList.length}
               </Badge>
             </Button>
           </div>
@@ -544,8 +575,8 @@ const AdminDashboard = () => {
               ) : (
                 <div className="d-flex flex-column gap-3">
                   {filteredPrograms.map((p) => (
-                    <div 
-                      key={p.id} 
+                    <div
+                      key={p.id}
                       className="bg-white border rounded-4 p-3 p-md-4 transition-all d-flex flex-column flex-md-row align-items-md-center gap-3 gap-md-4 admin-list-card"
                       style={{ transition: 'all 0.2s ease-in-out', cursor: 'default' }}
                       onMouseEnter={(e) => { e.currentTarget.classList.add('shadow-sm'); e.currentTarget.style.borderColor = '#198754'; }}
@@ -567,7 +598,7 @@ const AdminDashboard = () => {
                       {/* Metadata Badges */}
                       <div className="d-flex flex-wrap gap-2 flex-shrink-0 align-items-center" style={{ minWidth: '160px' }}>
                         <Badge bg="light" text="dark" className="border px-2 py-1 fw-medium text-start d-inline-flex align-items-center gap-1">
-                          <Layers size={12} className="text-muted"/> {p.category || "General"}
+                          <Layers size={12} className="text-muted" /> {p.category || "General"}
                         </Badge>
                         <Badge bg={p.status === "Completed" ? "secondary" : "success"} className="px-2 py-1 fw-medium">
                           {p.status || "Active"}
@@ -648,8 +679,8 @@ const AdminDashboard = () => {
               ) : (
                 <div className="d-flex flex-column gap-3">
                   {filteredEvents.map((e) => (
-                    <div 
-                      key={e.id} 
+                    <div
+                      key={e.id}
                       className="bg-white border rounded-4 p-3 p-md-4 transition-all d-flex flex-column flex-md-row align-items-md-center gap-3 gap-md-4 admin-list-card"
                       style={{ transition: 'all 0.2s ease-in-out', cursor: 'default' }}
                       onMouseEnter={(ev) => { ev.currentTarget.classList.add('shadow-sm'); ev.currentTarget.style.borderColor = '#0d6efd'; }}
@@ -760,50 +791,161 @@ const AdminDashboard = () => {
                   {teamList
                     .filter(t => t.name.toLowerCase().includes(teamSearch.toLowerCase()) || t.role.toLowerCase().includes(teamSearch.toLowerCase()))
                     .map((t) => (
-                    <Col key={t.id} xs={12} sm={6} lg={4}>
-                      <Card className="h-100 border rounded-4 p-3 transition-all d-flex flex-column align-items-center text-center shadow-sm admin-list-card hover-bg-light">
-                        <div className="position-relative mb-3">
-                          {t.photo_filename ? (
-                            <img
-                              src={getImageUrl(t.photo_filename)}
-                              alt={t.name}
-                              className="rounded-circle shadow-sm border border-2 border-success-subtle"
-                              style={{ width: "90px", height: "90px", objectFit: "cover" }}
-                              onError={(e) => { e.target.style.display = "none"; }}
-                            />
-                          ) : (
-                            <div className="rounded-circle d-flex align-items-center justify-content-center bg-primary text-white shadow-sm" style={{ width: "90px", height: "90px" }}>
-                              <span className="fs-3 fw-bold">{t.name?.charAt(0) || "U"}</span>
-                            </div>
-                          )}
-                        </div>
-                        <h6 className="fw-bold text-dark mb-1">{t.name}</h6>
-                        <Badge bg="success-subtle" text="success" className="mb-2 rounded-pill px-2 py-1">{t.role}</Badge>
-                        <p className="text-muted small mb-3 flex-grow-1" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{t.bio || "No bio available."}</p>
-                        
-                        <div className="d-flex gap-2 mt-auto border-top pt-3 w-100 justify-content-center">
-                          <Button
-                            variant="light"
-                            className="rounded-pill px-3 py-1 text-primary border d-inline-flex align-items-center justify-content-center hover-bg-primary-subtle transition-all small fw-semibold"
-                            onClick={() => {
-                              setTeamForm({ id: t.id, name: t.name, role: t.role, bio: t.bio || "", file_url: null });
-                              setShowTeamModal(true);
-                            }}
-                          >
-                            Edit
-                          </Button>
-                          <Button
-                            variant="light"
-                            className="rounded-pill px-3 py-1 text-danger border d-inline-flex align-items-center justify-content-center hover-bg-danger-subtle transition-all small fw-semibold"
-                            onClick={() => setDeleteConfirm({ show: true, type: "team", id: t.id, title: t.name })}
-                          >
-                            Delete
-                          </Button>
-                        </div>
-                      </Card>
-                    </Col>
-                  ))}
+                      <Col key={t.id} xs={12} sm={6} lg={4}>
+                        <Card className="h-100 border rounded-4 p-3 transition-all d-flex flex-column align-items-center text-center shadow-sm admin-list-card hover-bg-light">
+                          <div className="position-relative mb-3">
+                            {t.photo_filename ? (
+                              <img
+                                src={getImageUrl(t.photo_filename)}
+                                alt={t.name}
+                                className="rounded-circle shadow-sm border border-2 border-success-subtle"
+                                style={{ width: "90px", height: "90px", objectFit: "cover" }}
+                                onError={(e) => { e.target.style.display = "none"; }}
+                              />
+                            ) : (
+                              <div className="rounded-circle d-flex align-items-center justify-content-center bg-primary text-white shadow-sm" style={{ width: "90px", height: "90px" }}>
+                                <span className="fs-3 fw-bold">{t.name?.charAt(0) || "U"}</span>
+                              </div>
+                            )}
+                          </div>
+                          <h6 className="fw-bold text-dark mb-1">{t.name}</h6>
+                          <Badge bg="success-subtle" text="success" className="mb-2 rounded-pill px-2 py-1">{t.role}</Badge>
+                          <p className="text-muted small mb-3 flex-grow-1" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{t.bio || "No bio available."}</p>
+
+                          <div className="d-flex gap-2 mt-auto border-top pt-3 w-100 justify-content-center">
+                            <Button
+                              variant="light"
+                              className="rounded-pill px-3 py-1 text-primary border d-inline-flex align-items-center justify-content-center hover-bg-primary-subtle transition-all small fw-semibold"
+                              onClick={() => {
+                                setTeamForm({ id: t.id, name: t.name, role: t.role, bio: t.bio || "", file_url: null });
+                                setShowTeamModal(true);
+                              }}
+                            >
+                              Edit
+                            </Button>
+                            <Button
+                              variant="light"
+                              className="rounded-pill px-3 py-1 text-danger border d-inline-flex align-items-center justify-content-center hover-bg-danger-subtle transition-all small fw-semibold"
+                              onClick={() => setDeleteConfirm({ show: true, type: "team", id: t.id, title: t.name })}
+                            >
+                              Delete
+                            </Button>
+                          </div>
+                        </Card>
+                      </Col>
+                    ))}
                 </Row>
+              )}
+            </div>
+          )}
+
+          {/* TAB 5: REAL-TIME DONATIONS */}
+          {activeTab === "donations" && (
+            <div>
+              <div className="d-flex flex-column flex-md-row justify-content-between gap-3 mb-4">
+                <div className="d-flex flex-column flex-sm-row gap-2 flex-grow-1">
+                  <InputGroup style={{ maxWidth: "360px" }}>
+                    <InputGroup.Text className="bg-light border-end-0">
+                      <Search size={16} className="text-muted" />
+                    </InputGroup.Text>
+                    <Form.Control
+                      placeholder="Search by name, phone, or ref..."
+                      value={donationSearch}
+                      onChange={(e) => setDonationSearch(e.target.value)}
+                      className="border-start-0"
+                    />
+                  </InputGroup>
+                </div>
+
+                <div className="d-flex gap-2">
+                  <Button
+                    variant="outline-success"
+                    className="rounded-pill px-3 py-2 fw-semibold d-inline-flex align-items-center gap-2"
+                    onClick={loadAllData}
+                    disabled={refreshing}
+                  >
+                    <RefreshCw size={16} className={refreshing ? "animate-spin" : ""} />
+                    <span>Refresh Live Payments</span>
+                  </Button>
+                </div>
+              </div>
+
+              {donationsList.length === 0 ? (
+                <div className="text-center py-5 border rounded-4 bg-light">
+                  <DollarSign size={48} className="text-muted mb-3 opacity-50" />
+                  <h5 className="fw-bold text-dark">No Donations Recorded Yet</h5>
+                  <p className="text-muted small mx-auto mb-0" style={{ maxWidth: "420px" }}>
+                    Live donations completed through the M-Pesa PayHero integration will automatically appear here with their transaction receipts and statuses.
+                  </p>
+                </div>
+              ) : (
+                <div className="table-responsive border rounded-4 overflow-hidden">
+                  <Table hover className="align-middle mb-0">
+                    <thead className="bg-light text-muted small text-uppercase">
+                      <tr>
+                        <th className="py-3 px-3">Date</th>
+                        <th className="py-3 px-3">Donor</th>
+                        <th className="py-3 px-3">Phone</th>
+                        <th className="py-3 px-3">Amount</th>
+                        <th className="py-3 px-3">Status</th>
+                        <th className="py-3 px-3">Reference / Receipt</th>
+                        <th className="py-3 px-3">Message</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {donationsList
+                        .filter((d) => {
+                          if (!donationSearch.trim()) return true;
+                          const q = donationSearch.toLowerCase();
+                          return (
+                            (d.donor_name || "").toLowerCase().includes(q) ||
+                            (d.donor_phone || "").toLowerCase().includes(q) ||
+                            (d.external_ref || d.reference || d.mpesa_receipt || "").toLowerCase().includes(q) ||
+                            String(d.amount || "").includes(q)
+                          );
+                        })
+                        .map((d, index) => {
+                          const status = (d.payment_status || d.status || "PENDING").toUpperCase();
+                          return (
+                            <tr key={d.id || index}>
+                              <td className="px-3 small text-muted">
+                                {d.created_at ? new Date(d.created_at).toLocaleDateString() : "Just now"}
+                              </td>
+                              <td className="px-3 fw-semibold text-dark">
+                                {d.donor_name || <span className="text-muted fst-italic">Anonymous</span>}
+                              </td>
+                              <td className="px-3 font-monospace small">
+                                {d.donor_phone || "—"}
+                              </td>
+                              <td className="px-3 fw-bold text-success">
+                                Ksh {Number(d.amount || 0).toLocaleString()}
+                              </td>
+                              <td className="px-3">
+                                <Badge
+                                  bg={
+                                    status === "SUCCESS" || status === "COMPLETED"
+                                      ? "success"
+                                      : status === "FAILED" || status === "CANCELLED"
+                                      ? "danger"
+                                      : "warning"
+                                  }
+                                  className="rounded-pill px-2.5 py-1"
+                                >
+                                  {status}
+                                </Badge>
+                              </td>
+                              <td className="px-3 font-monospace small text-muted">
+                                {d.mpesa_receipt || d.receipt_number || d.external_ref || d.reference || "—"}
+                              </td>
+                              <td className="px-3 small text-muted" style={{ maxWidth: "200px" }}>
+                                {d.message || "—"}
+                              </td>
+                            </tr>
+                          );
+                        })}
+                    </tbody>
+                  </Table>
+                </div>
               )}
             </div>
           )}

@@ -113,8 +113,8 @@ const Media = () => {
   }
   const mediaTypes = Array.isArray(media)
     ? [...new Set(media.map((item) => item.type?.toLowerCase()))].filter(
-        Boolean
-      )
+      Boolean
+    )
     : [];
 
   const filteredMedia = media.filter((item) => {
@@ -201,9 +201,8 @@ const Media = () => {
           <ul className="nav nav-tabs border-0">
             <li className="nav-item">
               <button
-                className={`nav-link ${
-                  activeTab === "media" ? "active fw-bold" : ""
-                }`}
+                className={`nav-link ${activeTab === "media" ? "active fw-bold" : ""
+                  }`}
                 onClick={() => setActiveTab("media")}
               >
                 Media Gallery
@@ -237,11 +236,10 @@ const Media = () => {
                 <div className="d-flex flex-wrap justify-content-center gap-3">
                   <button
                     onClick={() => setMediaTypeFilter("all")}
-                    className={`btn btn-sm px-4 py-2 rounded-pill fw-medium ${
-                      mediaTypeFilter === "all"
+                    className={`btn btn-sm px-4 py-2 rounded-pill fw-medium ${mediaTypeFilter === "all"
                         ? "btn-primary"
                         : "btn-outline-primary"
-                    }`}
+                      }`}
                   >
                     All Media Types
                   </button>
@@ -249,11 +247,10 @@ const Media = () => {
                     <button
                       key={type}
                       onClick={() => setMediaTypeFilter(type)}
-                      className={`btn btn-sm px-4 py-2 rounded-pill fw-medium ${
-                        mediaTypeFilter === type
+                      className={`btn btn-sm px-4 py-2 rounded-pill fw-medium ${mediaTypeFilter === type
                           ? "btn-primary"
                           : "btn-outline-primary"
-                      }`}
+                        }`}
                     >
                       {type.charAt(0).toUpperCase() + type.slice(1)}
                     </button>
