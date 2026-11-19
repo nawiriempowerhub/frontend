@@ -1,12 +1,15 @@
 import axios from 'axios';
 
-let rawBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+let rawBaseUrl = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || 'https://backend-production-df3a.up.railway.app';
 rawBaseUrl = rawBaseUrl.replace(/\/$/, '').replace(/\/api$/, '');
 
 const api = axios.create({
   baseURL: rawBaseUrl,
   headers: {
     'Content-Type': 'application/json',
+    'Cache-Control': 'no-cache, no-store, must-revalidate',
+    'Pragma': 'no-cache',
+    'Expires': '0',
   },
 });
 
